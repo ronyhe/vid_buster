@@ -1,25 +1,21 @@
 {
-  "manifest_version": 3,
-  "name": "Vid Buster - Download HLS Videos",
-  "description": "HLS Video Downloader",
-  "version": "0.0.0",
-  "background": {
-    "service_worker": "src/background.js",
-    "type": "module"
-  },
-  "action": {
-    "default_popup": "html/default_popup.html",
-    "default_icon": "resources/default_icon.png"
-  },
-  "permissions": ["contextMenus"],
-  "content_scripts": [
-    {
-      "js": ["src/content.js"],
-      "matches": [
-        "http://*/",
-        "https://*/",
-        "file://*/"
-      ]
-    }
-  ]
+    "manifest_version": 3,
+    "name": "Vid Buster - Download HLS Videos",
+    "description": "HLS Video Downloader",
+    "version": "0.0.0",
+    "background": {
+        "service_worker": "src/background.js",
+        "type": "module"
+    },
+    "action": {
+        "default_popup": "html/default_popup.html",
+        "default_icon": "resources/default_icon.png"
+    },
+    "permissions": ["contextMenus"],
+    "content_scripts": [
+        {
+            "js": ["src/content.js"],
+            "matches": ["http://*/", "https://*/", "file://*/"]
+        }
+    ]
 }

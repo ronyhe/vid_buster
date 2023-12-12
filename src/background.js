@@ -13,7 +13,7 @@
 // limitations under the License.
 
 // A generic onclick callback function.
-chrome.contextMenus.onClicked.addListener(genericOnClick);
+chrome.contextMenus.onClicked.addListener(genericOnClick)
 
 // A generic onclick callback function.
 function genericOnClick(info) {
@@ -25,7 +25,7 @@ chrome.runtime.onInstalled.addListener(function () {
     chrome.contextMenus.create({
         title: 'Bust it!',
         contexts: ['video'],
-        id: 'bustIt'
+        id: 'bustIt',
     })
     // Create one test item for each context type.
     // let contexts = [
@@ -76,4 +76,4 @@ chrome.runtime.onInstalled.addListener(function () {
     //     type: 'checkbox',
     //     id: 'checkbox'
     // });
-});
+})
