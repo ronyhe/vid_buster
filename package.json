@@ -1,0 +1,14 @@
+{
+  "name": "vid_buster",
+  "version": "0.0.0",
+  "description": "HLS video downloader",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "HLS"
+  ],
+  "author": "ronyhe",
+  "license": "MIT"
+}
