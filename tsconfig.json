@@ -3,6 +3,7 @@
     "src/**/*.ts"
   ],
   "compilerOptions": {
+    "types": ["./node_modules/chrome-types/index.d.ts"],
     "outDir": "./dist/src",
     "target": "esnext",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
     "module": "esnext",                                /* Specify what module code is generated. */

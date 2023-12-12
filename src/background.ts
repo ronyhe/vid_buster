@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // A generic onclick callback function.
-/// <reference path="../node_modules/chrome-types/index.d.ts"/>
 chrome.contextMenus.onClicked.addListener((info, tab) => {
     if (info.menuItemId === 'bustIt') {
         console.log('Bust it!')
