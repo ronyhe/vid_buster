@@ -11,16 +11,14 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 // A generic onclick callback function.
-chrome.contextMenus.onClicked.addListener(genericOnClick)
-
-// A generic onclick callback function.
-function genericOnClick(info) {
+/// <reference path="../node_modules/chrome-types/index.d.ts"/>
+chrome.contextMenus.onClicked.addListener((info, tab) => {
     if (info.menuItemId === 'bustIt') {
         console.log('Bust it!')
     }
-}
+})
+
 chrome.runtime.onInstalled.addListener(function () {
     chrome.contextMenus.create({
         title: 'Bust it!',
