@@ -4,6 +4,10 @@
     "description": "HLS video downloader",
     "main": "index.js",
     "scripts": {
+        "clean": "rm -rf dist",
+        "build": "npm run ensure-dirs && npx tsc && npm run copy-files",
+        "copy-files": "cp manifest.json dist/manifest.json && cp html/* dist/html/* && cp resources/* dist/resources/*",
+        "ensure-dirs": "mkdir -p dist/html && mkdir -p dist/resources",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [
