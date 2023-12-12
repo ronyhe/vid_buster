@@ -3,16 +3,20 @@
   "name": "Vid Buster - Download HLS Videos",
   "description": "HLS Video Downloader",
   "version": "0.0.0",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
   "action": {
     "default_popup": "default_popup.html",
     "default_icon": "default_icon.png"
   },
+  "permissions": ["contextMenus"],
   "content_scripts": [
     {
       "js": ["content.js"],
       "matches": [
-        "https://developer.chrome.com/docs/extensions/*",
-        "https://developer.chrome.com/docs/webstore/*"
+        "*"
       ]
     }
   ]
