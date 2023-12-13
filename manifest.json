@@ -15,7 +15,7 @@
         {
             "js": ["src/content.js"],
             "matches": ["http://*/", "https://*/", "file://*/"],
-            "run_at": "document_end"
+            "run_at": "document_start"
         }
     ]
 }

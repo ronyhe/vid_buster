@@ -23,6 +23,8 @@ async function checkVideos() {
         const err = document.createElement('p')
         err.textContent =
             'No response from content script. Right-click and inspect this popup to see the error'
+        document.body.appendChild(err)
+        return
     }
     const { videos }: VideoResponseMessage = asVideoResponseMessage(response)
     videos.forEach(({ title, src }) => {
@@ -40,13 +42,11 @@ async function sendMessage(
         return await chrome.tabs.sendMessage(tabId, message)
     } catch (e) {
         const message = `Failed to send message to tab ${tabId}: ${e}`
-        console.error(message)
+        console.log(message)
         return null
     }
 }
 
 checkVideos().catch((e) => {
-    console.error(e)
-    alert(e.message)
     throw e
 })
