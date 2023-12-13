@@ -21,6 +21,7 @@ async function checkVideos() {
     const response = await sendMessage(id, message)
     if (!response) {
         const err = document.createElement('p')
+        err.classList.add('vid-buster')
         err.textContent =
             'No response from content script. Right-click and inspect this popup to see the error'
         document.body.appendChild(err)
@@ -29,6 +30,7 @@ async function checkVideos() {
     const { videos }: VideoResponseMessage = asVideoResponseMessage(response)
     videos.forEach(({ title, src }) => {
         const li = document.createElement('li')
+        li.classList.add('vid-buster')
         li.textContent = `${title} (${src})`
         document.body.appendChild(li)
     })
@@ -38,6 +40,7 @@ async function sendMessage(
     tabId: number,
     message: VideoRequestMessage,
 ): Promise<VideoResponseMessage | null> {
+    document.querySelectorAll('.vid-buster').forEach((el) => el.remove())
     try {
         return await chrome.tabs.sendMessage(tabId, message)
     } catch (e) {
