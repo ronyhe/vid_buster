@@ -4,8 +4,7 @@
     "description": "HLS Video Downloader",
     "version": "0.0.0",
     "background": {
-        "service_worker": "src/background.js",
-        "type": "module"
+        "service_worker": "src/background.js"
     },
     "action": {
         "default_popup": "html/default_popup.html",
