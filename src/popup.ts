@@ -18,13 +18,11 @@ async function checkVideos() {
         throw new Error('No tab ID found for active tab?')
     }
     const message: VideoRequestMessage = { kind: 'requestVideos' }
-    let response
-    try {
-        response = await chrome.tabs.sendMessage(id, message)
-    } catch (e) {
-        console.error(e)
-        alert(e)
-        throw e
+    const response = await sendMessage(id, message)
+    if (!response) {
+        const err = document.createElement('p')
+        err.textContent =
+            'No response from content script. Right-click and inspect this popup to see the error'
     }
     const { videos }: VideoResponseMessage = asVideoResponseMessage(response)
     videos.forEach(({ title, src }) => {
@@ -32,6 +30,19 @@ async function checkVideos() {
         li.textContent = `${title} (${src})`
         document.body.appendChild(li)
     })
+}
+
+async function sendMessage(
+    tabId: number,
+    message: VideoRequestMessage,
+): Promise<VideoResponseMessage | null> {
+    try {
+        return await chrome.tabs.sendMessage(tabId, message)
+    } catch (e) {
+        const message = `Failed to send message to tab ${tabId}: ${e}`
+        console.error(message)
+        return null
+    }
 }
 
 checkVideos().catch((e) => {

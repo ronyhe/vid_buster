@@ -24,7 +24,7 @@ export function tryAsVideoRequestMessage(
     }
 }
 
-export function asVideoResponseMessage(message: Message): VideoResponseMessage {
+export function asVideoResponseMessage(message: any): VideoResponseMessage {
     if (message.kind === 'videosResponse') {
         return message
     }
