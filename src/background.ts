@@ -5,7 +5,3 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         return true
     }
 })
-
-chrome.action.onClicked.addListener((tab) => {
-    console.log(tab)
-})
