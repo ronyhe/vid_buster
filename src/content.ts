@@ -1,18 +1,14 @@
-const article = document.querySelector('article')
+import { Message } from './messages'
 
-if (article) {
-    const text = article.innerText
-    const words = text.split(' ')
-    const wordCount = words.length
+await main()
 
-    const badge = document.createElement('p')
-    badge.classList.add('color-secondary-text', 'type--caption')
-    badge.textContent = `${wordCount} words`
-
-    // Support for API reference docs
-    const heading = article.querySelector('h1')
-    // Support for article docs with date
-    const date = article.querySelector('time')?.parentNode // @ts-ignore
-
-    ;(date ?? heading)?.insertAdjacentElement('afterend', badge)
+async function main() {
+    const videoElements = document.querySelectorAll('video')
+    const videos = Array.from(videoElements).map((video) => ({
+        src: video.src,
+    }))
+    const message: Message = { kind: 'videos', videos }
+    await chrome.runtime.sendMessage(message)
 }
+
+export {}

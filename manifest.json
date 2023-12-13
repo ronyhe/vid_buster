@@ -11,11 +11,12 @@
         "default_popup": "html/default_popup.html",
         "default_icon": "resources/default_icon.png"
     },
-    "permissions": ["contextMenus"],
+    "permissions": ["activeTab"],
     "content_scripts": [
         {
             "js": ["src/content.js"],
-            "matches": ["http://*/", "https://*/", "file://*/"]
+            "matches": ["http://*/", "https://*/", "file://*/"],
+            "run_at": "document_end"
         }
     ]
 }
