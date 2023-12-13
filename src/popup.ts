@@ -1,3 +1,9 @@
+import {
+    asVideoResponseMessage,
+    VideoRequestMessage,
+    VideoResponseMessage,
+} from './messages'
+
 async function checkVideos() {
     const tabs = await chrome.tabs.query({ active: true, currentWindow: true })
     const tabCount = tabs.length
@@ -11,9 +17,21 @@ async function checkVideos() {
     if (!id) {
         throw new Error('No tab ID found for active tab?')
     }
-    const message = { kind: 'check-videos' }
-    const response = await chrome.tabs.sendMessage(id, message)
-    console.log('response', response)
+    const message: VideoRequestMessage = { kind: 'requestVideos' }
+    let response
+    try {
+        response = await chrome.tabs.sendMessage(id, message)
+    } catch (e) {
+        console.error(e)
+        alert(e)
+        throw e
+    }
+    const { videos }: VideoResponseMessage = asVideoResponseMessage(response)
+    videos.forEach(({ title, src }) => {
+        const li = document.createElement('li')
+        li.textContent = `${title} (${src})`
+        document.body.appendChild(li)
+    })
 }
 
 checkVideos().catch((e) => {

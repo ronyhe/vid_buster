@@ -4,9 +4,9 @@
     "description": "HLS video downloader",
     "main": "index.js",
     "scripts": {
-        "clean": "rm -rf dist",
+        "clean": "rm -rf dist && rm -rf .parcel-cache",
         "rebuild": "npm run clean && npm run build",
-        "build": "npx tsc --noEmit && npm run ensure-dirs && npx parcel build && npm run copy-files",
+        "build": "npx tsc --noEmit && npm run ensure-dirs && npx parcel build --no-optimize && npm run copy-files",
         "copy-files": "cp manifest.json dist/manifest.json && cp -R resources dist && cp -R html dist",
         "ensure-dirs": "mkdir -p dist/html && mkdir -p dist/resources",
         "test": "echo \"Error: no test specified\" && exit 1"
