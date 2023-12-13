@@ -10,7 +10,7 @@
         "default_popup": "html/default_popup.html",
         "default_icon": "resources/default_icon.png"
     },
-    "permissions": ["activeTab"],
+    "permissions": ["activeTab", "tabs"],
     "content_scripts": [
         {
             "js": ["src/content.js"],
