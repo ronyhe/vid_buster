@@ -6,7 +6,7 @@
     "scripts": {
         "clean": "rm -rf dist && rm -rf .parcel-cache",
         "rebuild": "npm run clean && npm run build",
-        "build": "npx tsc --noEmit && npm run ensure-dirs && npx parcel build && npm run copy-files",
+        "build": "npx tsc --noEmit && npx parcel build && npm run copy-files",
         "copy-files": "cp -R extension dist",
         "ensure-dirs": "mkdir -p dist/extension",
         "test": "echo \"Error: no test specified\" && exit 1"
