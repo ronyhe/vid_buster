@@ -1,17 +1,19 @@
-A yt-dlp wrapper extension
+# Initial goals/steps
+-   Download HLS videos from a website (other formats are secondary)
+-   Prefer right-clicking on the video to download, but other methods are acceptable at phase 1
+-   Display some sort of status to the user in the interface
+-   Allow the user to (at least) name the file
+-   Create License
+-   Create a STERN liability warning
 
-Use youtube-dl-exec as a JS wrapper around yt-dlp (a fork of youtube-dl)
+# Phase 2
 
-The extension communicates with a server that runs yt-dlp on the local machine.
+-   Other video formats
+-   Quality selection
+-   UI improvements
+-   Performance improvements (if necessary)
 
-features - choose quality, choose file destination
+# Resources
 
-Initial plan:
-Click on extension icon, popup sends a message to the server to get info from url.
-Server sends back info, popup displays info and lets user choose quality and file destination.
-Popup sends a message to server to download video.
-Step 2: Try to display progress
-
-
-Ideas for later:
-Show thumbnails
+-   [Deploying HLS on the Apple website](https://developer.apple.com/documentation/http-live-streaming/deploying-a-basic-http-live-streaming-hls-stream)
+-   [Chrome extension (official?) tutorial](https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world)
