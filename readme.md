@@ -1,6 +1,4 @@
 # Initial goals/steps
-
--   Use tutorial to create a simple extension, to understand the basics
 -   Download HLS videos from a website (other formats are secondary)
 -   Prefer right-clicking on the video to download, but other methods are acceptable at phase 1
 -   Display some sort of status to the user in the interface
