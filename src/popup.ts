@@ -28,10 +28,10 @@ async function checkVideos() {
         return
     }
     const { videos }: VideoResponseMessage = asVideoResponseMessage(response)
-    videos.forEach(({ title, src }) => {
+    videos.forEach((vid) => {
         const li = document.createElement('li')
         li.classList.add('vid-buster')
-        li.textContent = `${title} (${src})`
+        li.textContent = JSON.stringify(vid, null, 2)
         document.body.appendChild(li)
     })
 }

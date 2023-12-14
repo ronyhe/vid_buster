@@ -11,7 +11,13 @@ export interface VideoResponseMessage {
 
 export interface Video {
     title: string
+    sources: VideoSource[]
+}
+
+export interface VideoSource {
     src: string
+    type: string
+    media: string
 }
 
 export function tryAsVideoRequestMessage(
