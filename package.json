@@ -37,5 +37,8 @@
                 "node": ">= 20"
             }
         }
+    },
+    "dependencies": {
+        "youtube-dl-exec": "^2.5.0"
     }
 }

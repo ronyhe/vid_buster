@@ -1,4 +1,6 @@
 import * as http from 'node:http'
+import { getVideos } from './videos'
+import { MessageKinds } from './messages'
 
 const hostname = '127.0.0.1'
 const port = 3000
@@ -38,8 +40,14 @@ server.listen(port, hostname, () => {
 
 async function handleReq(req: http.IncomingMessage): Promise<any> {
     const text = await requestBody(req)
-    console.log(JSON.parse(text))
-    return { hello: 'world' }
+    const message = JSON.parse(text)
+    if (message.kind === MessageKinds.GetUrlInfo) {
+        return {
+            kind: MessageKinds.UrlInfo,
+            info: await getVideos(message.url),
+        }
+    }
+    throw new Error(`Unexpected message kind: ${message.kind}`)
 }
 
 async function requestBody(req: http.IncomingMessage): Promise<string> {

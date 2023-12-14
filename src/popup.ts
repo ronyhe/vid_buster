@@ -1,3 +1,5 @@
+import { MessageKinds } from './messages'
+
 async function checkVideos() {
     document.querySelector('#vid-buster')?.remove()
     const tabs = await chrome.tabs.query({ active: true, currentWindow: true })
@@ -20,7 +22,7 @@ async function checkVideos() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ url }),
+            body: JSON.stringify({ kind: MessageKinds.GetUrlInfo, url }),
         })
         const obj = await response.json()
         updateStatus(`Response received`)
