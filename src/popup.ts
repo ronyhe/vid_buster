@@ -25,7 +25,7 @@ async function checkVideos() {
             body: JSON.stringify({ kind: MessageKinds.GetUrlInfo, url }),
         })
         const obj = await response.json()
-        updateStatus(`Response received`)
+        updateStatus(`Response received: formats: ${obj.info.formats}`)
         console.log(obj)
     } catch (e) {
         updateStatus(`Error: ${e}`)
