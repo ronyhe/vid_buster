@@ -27,6 +27,14 @@
             "outputFormat": "global",
             "distDir": "dist/extension/",
             "source": "src/popup.ts"
+        },
+        "server": {
+            "outputFormat": "commonjs",
+            "distDir": "dist/",
+            "source": "src/server.ts",
+            "engines": {
+                "node": ">= 20"
+            }
         }
     }
 }
