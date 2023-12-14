@@ -4,12 +4,55 @@ const hostname = '127.0.0.1'
 const port = 3000
 
 const server = http.createServer((req, res) => {
-    console.log(req.url)
-    res.statusCode = 200
-    res.setHeader('Content-Type', 'text/plain')
-    res.end('Hello, World!')
+    const headers = {
+        // Taken from https://stackoverflow.com/a/54309023/3129333
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
+        'Access-Control-Max-Age': 2592000,
+        'Access-Control-Allow-Headers': 'content-type',
+    }
+    if (req.method === 'OPTIONS') {
+        res.writeHead(204, headers)
+        res.end()
+        return
+    }
+    if (req.method === 'POST') {
+        handleReq(req)
+            .catch((e) => {
+                res.writeHead(500, headers)
+                res.end(JSON.stringify({ error: e.message }))
+            })
+            .then((result) => {
+                res.writeHead(200, headers)
+                res.end(JSON.stringify(result))
+            })
+        return
+    }
+    res.writeHead(405, headers)
+    res.end(`${req.method} is not allowed for the request.`)
 })
 
 server.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`)
 })
+
+async function handleReq(req: http.IncomingMessage): Promise<any> {
+    const text = await requestBody(req)
+    console.log(JSON.parse(text))
+    return { hello: 'world' }
+}
+
+async function requestBody(req: http.IncomingMessage): Promise<string> {
+    return new Promise((resolve, reject) => {
+        let bodyParts: Uint8Array[] = []
+        req.on('error', (err) => {
+            reject(err)
+        })
+        req.on('data', (chunk) => {
+            bodyParts.push(chunk)
+        })
+        req.on('end', () => {
+            resolve(Buffer.concat(bodyParts).toString())
+        })
+    })
+}
