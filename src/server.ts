@@ -1,5 +1,5 @@
 import * as http from 'node:http'
-import { getVideos } from './videos'
+import { getFormats } from './videos'
 import { MessageKinds } from './messages'
 
 const hostname = '127.0.0.1'
@@ -44,7 +44,7 @@ async function handleReq(req: http.IncomingMessage): Promise<any> {
     if (message.kind === MessageKinds.GetUrlInfo) {
         return {
             kind: MessageKinds.UrlInfo,
-            info: await getVideos(message.url),
+            formats: await getFormats(message.url),
         }
     }
     throw new Error(`Unexpected message kind: ${message.kind}`)

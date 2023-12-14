@@ -1,4 +1,6 @@
 import { MessageKinds } from './messages'
+import { YtResponse } from 'youtube-dl-exec'
+import { Format } from './videos'
 
 async function checkVideos() {
     document.querySelector('#vid-buster')?.remove()
@@ -24,9 +26,16 @@ async function checkVideos() {
             },
             body: JSON.stringify({ kind: MessageKinds.GetUrlInfo, url }),
         })
-        const obj = await response.json()
-        updateStatus(`Response received: formats: ${obj.info.formats}`)
-        console.log(obj)
+        const res = await response.json()
+        if (res.error) {
+            updateStatus(`Error: ${res.error}`)
+            return
+        }
+        updateStatus(
+            res.formats
+                .map((f: Format) => `${f.note} ${f.resolution}`)
+                .join(', '),
+        )
     } catch (e) {
         updateStatus(`Error: ${e}`)
     }
