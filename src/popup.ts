@@ -1,5 +1,6 @@
 import { MessageKinds } from './messages'
 import * as ui from './ui'
+import { Format } from './videos'
 
 async function checkVideos() {
     const tabs = await chrome.tabs.query({ active: true, currentWindow: true })
@@ -29,9 +30,25 @@ async function checkVideos() {
             ui.error(res.error)
             return
         }
-        ui.showFormats(res.formats)
+        ui.showFormats(res.formats, chooseFormat)
     } catch (e) {
         ui.error(`Failed to fetch videos: ${e}`)
+    }
+}
+
+async function chooseFormat(f: Format) {
+    ui.status(`Downloading...`)
+    try {
+        await fetch(`http://localhost:3000/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ kind: MessageKinds.Download, id: f.id }),
+        })
+        ui.status(`Download request sent`)
+    } catch (e) {
+        ui.error(`Failed to download: ${e}`)
     }
 }
 

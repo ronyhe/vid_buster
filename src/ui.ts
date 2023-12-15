@@ -19,7 +19,10 @@ export function status(message: string) {
     document.body.appendChild(err)
 }
 
-export function showFormats(formats: Format[]) {
+export function showFormats(
+    formats: Format[],
+    chooseFormatHandler: (f: Format) => void,
+) {
     clear()
     let lastRes = null
     for (const f of formats) {
@@ -32,11 +35,14 @@ export function showFormats(formats: Format[]) {
         a.textContent = formatLinkText(f)
         a.title = f.url
         document.body.appendChild(a)
+        a.addEventListener('click', () => {
+            chooseFormatHandler(f)
+        })
         document.body.appendChild(document.createElement('br'))
     }
 }
 
-function formatLinkText(f: Format): string {
+export function formatLinkText(f: Format): string {
     return [f.size, f.extension, f.resolution, f.note]
         .filter((x) => x !== null)
         .join(' ')

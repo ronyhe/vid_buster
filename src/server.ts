@@ -47,6 +47,10 @@ async function handleReq(req: http.IncomingMessage): Promise<any> {
             formats: await getFormats(message.url),
         }
     }
+    if (message.kind === MessageKinds.Download) {
+        console.log(`Download requested for ${message.id}`)
+        return {}
+    }
     throw new Error(`Unexpected message kind: ${message.kind}`)
 }
 
