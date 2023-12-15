@@ -21,15 +21,12 @@ export function status(message: string) {
 
 export function showFormats(formats: Format[]) {
     clear()
-    const ul = document.createElement('ul')
     formats.forEach((f) => {
-        const li = document.createElement('li')
         const a = document.createElement('a')
         a.href = '#'
         a.textContent = `${f.note} ${f.resolution} ${f.extension} ${f.size}`
         a.title = f.url
-        li.appendChild(a)
-        ul.appendChild(li)
+        document.body.appendChild(a)
+        document.body.appendChild(document.createElement('br'))
     })
-    document.body.appendChild(ul)
 }
