@@ -20,11 +20,16 @@ export function status(message: string) {
 }
 
 export function showFormats(
+    title: string | null,
     formats: Format[],
     chooseFormatHandler: (f: Format) => void,
 ) {
     clear()
     let lastRes = null
+    const titleElem = document.createElement('p')
+    titleElem.textContent = title ?? 'No title'
+    document.body.appendChild(titleElem)
+    document.body.appendChild(document.createElement('hr'))
     for (const f of formats) {
         if (lastRes !== null && f.resolution !== lastRes) {
             document.body.appendChild(document.createElement('hr'))

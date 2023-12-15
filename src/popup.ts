@@ -30,7 +30,7 @@ async function checkVideos() {
             ui.error(res.error)
             return
         }
-        ui.showFormats(res.formats, downloadFormat)
+        ui.showFormats(res.title, res.formats, downloadFormat)
     } catch (e) {
         ui.error(`Failed to fetch videos: ${e}`)
     }

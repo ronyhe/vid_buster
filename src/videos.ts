@@ -1,5 +1,18 @@
 import downloader, { YtFormat } from 'youtube-dl-exec'
 
+export async function getInfo(
+    url: string,
+): Promise<{ title: string | null; formats: Format[] }> {
+    const result = await downloader(url, {
+        flatPlaylist: true,
+        dumpSingleJson: true,
+    })
+    return {
+        title: nullableString(result.title),
+        formats: result.formats.toReversed().map(convertFromYtFormat),
+    }
+}
+
 export async function getFormats(url: string): Promise<Format[]> {
     const result = await downloader(url, {
         flatPlaylist: true,

@@ -1,5 +1,5 @@
 import * as http from 'node:http'
-import { getFormats } from './videos'
+import { getInfo } from './videos'
 import { MessageKinds } from './messages'
 
 const hostname = '127.0.0.1'
@@ -44,7 +44,7 @@ async function handleReq(req: http.IncomingMessage): Promise<any> {
     if (message.kind === MessageKinds.GetUrlInfo) {
         return {
             kind: MessageKinds.UrlInfo,
-            formats: await getFormats(message.url),
+            ...(await getInfo(message.url)),
         }
     }
     if (message.kind === MessageKinds.Download) {
