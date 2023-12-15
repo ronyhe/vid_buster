@@ -35,13 +35,6 @@ async function checkVideos() {
     }
 }
 
-function updateStatus(text: string) {
-    const elem = document.querySelector('#status')
-    if (elem) {
-        elem.innerHTML = text
-    }
-}
-
 checkVideos().catch((e) => {
     throw e
 })
