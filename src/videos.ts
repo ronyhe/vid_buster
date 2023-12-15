@@ -5,7 +5,7 @@ export async function getFormats(url: string): Promise<Format[]> {
         flatPlaylist: true,
         dumpSingleJson: true,
     })
-    return result.formats.toSorted(compareYtFormats).map(convertFromYtFormat)
+    return result.formats.toReversed().map(convertFromYtFormat) //.toSorted(compareYtFormats).map(convertFromYtFormat)
 }
 
 export interface Format {
