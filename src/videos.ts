@@ -13,14 +13,6 @@ export async function getInfo(
     }
 }
 
-export async function getFormats(url: string): Promise<Format[]> {
-    const result = await downloader(url, {
-        flatPlaylist: true,
-        dumpSingleJson: true,
-    })
-    return result.formats.toReversed().map(convertFromYtFormat) //.toSorted(compareYtFormats).map(convertFromYtFormat)
-}
-
 export interface Format {
     extension: string | null
     note: string | null
