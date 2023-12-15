@@ -6,6 +6,7 @@
     "scripts": {
         "clean": "rm -rf dist && rm -rf .parcel-cache",
         "rebuild": "npm run clean && npm run build",
+        "start": "node dist/server.js",
         "build": "npx tsc --noEmit && npx parcel build && npm run copy-files",
         "copy-files": "cp -R extension dist",
         "ensure-dirs": "mkdir -p dist/extension",
