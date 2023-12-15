@@ -50,16 +50,16 @@ function nullableString(s: string): string | null {
 
 function fileSizeString(sizeInBytes: number): string {
     if (sizeInBytes === null || sizeInBytes === undefined) {
-        return `?? MB`
+        return `???Mb`
     }
     const sizeInKb = Math.round(sizeInBytes / 1024)
     if (sizeInKb < 1024) {
-        return `${sizeInKb} KB`
+        return `${sizeInKb}Kb`
     }
     const sizeInMb = Math.round(sizeInKb / 1024)
     if (sizeInMb < 1024) {
-        return `${sizeInMb} MB`
+        return `${sizeInMb}Mb`
     }
     const sizeInGb = Math.round(sizeInMb / 1024)
-    return `${sizeInGb} GB`
+    return `${sizeInGb}Gb`
 }

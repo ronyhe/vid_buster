@@ -21,14 +21,19 @@ export function status(message: string) {
 
 export function showFormats(formats: Format[]) {
     clear()
-    formats.forEach((f) => {
+    let lastRes = null
+    for (const f of formats) {
+        if (lastRes !== null && f.resolution !== lastRes) {
+            document.body.appendChild(document.createElement('hr'))
+        }
+        lastRes = f.resolution
         const a = document.createElement('a')
         a.href = '#'
         a.textContent = formatLinkText(f)
         a.title = f.url
         document.body.appendChild(a)
         document.body.appendChild(document.createElement('br'))
-    })
+    }
 }
 
 function formatLinkText(f: Format): string {
