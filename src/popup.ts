@@ -30,13 +30,13 @@ async function checkVideos() {
             ui.error(res.error)
             return
         }
-        ui.showFormats(res.formats, chooseFormat)
+        ui.showFormats(res.formats, downloadFormat)
     } catch (e) {
         ui.error(`Failed to fetch videos: ${e}`)
     }
 }
 
-async function chooseFormat(f: Format) {
+async function downloadFormat(f: Format) {
     ui.status(`Downloading...`)
     try {
         await fetch(`http://localhost:3000/`, {
