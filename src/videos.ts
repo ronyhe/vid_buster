@@ -18,7 +18,7 @@ export interface Format {
 }
 
 function compareYtFormats(a: YtFormat, b: YtFormat): number {
-    return a.quality - b.quality
+    return b.quality - a.quality
 }
 
 function convertFromYtFormat(f: YtFormat): Format {

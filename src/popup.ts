@@ -1,6 +1,5 @@
 import { MessageKinds } from './messages'
-import { YtResponse } from 'youtube-dl-exec'
-import { Format } from './videos'
+import * as ui from './ui'
 
 async function checkVideos() {
     document.querySelector('#vid-buster')?.remove()
@@ -14,10 +13,10 @@ async function checkVideos() {
     }
     const url = (tabs[0].url ?? '').trim()
     if (!url) {
-        updateStatus('No URL found')
+        ui.error('No URL found')
         return
     }
-    updateStatus(`Fetching videos`)
+    ui.status(`Fetching videos...`)
     try {
         const response = await fetch(`http://localhost:3000/`, {
             method: 'POST',
@@ -28,16 +27,12 @@ async function checkVideos() {
         })
         const res = await response.json()
         if (res.error) {
-            updateStatus(`Error: ${res.error}`)
+            ui.error(res.error)
             return
         }
-        updateStatus(
-            res.formats
-                .map((f: Format) => `${f.note} ${f.resolution}`)
-                .join(', '),
-        )
+        ui.showFormats(res.formats)
     } catch (e) {
-        updateStatus(`Error: ${e}`)
+        ui.error(`Failed to fetch videos: ${e}`)
     }
 }
 
