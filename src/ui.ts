@@ -1,10 +1,11 @@
 import { Format } from './videos'
 
-export function clear() {
+function clear() {
     document.body.innerHTML = ''
 }
 
 export function error(message: string) {
+    clear()
     const err = document.createElement('p')
     err.textContent = message
     err.style.color = 'red'
@@ -12,12 +13,14 @@ export function error(message: string) {
 }
 
 export function status(message: string) {
+    clear()
     const err = document.createElement('p')
     err.textContent = message
     document.body.appendChild(err)
 }
 
 export function showFormats(formats: Format[]) {
+    clear()
     const ul = document.createElement('ul')
     formats.forEach((f) => {
         const li = document.createElement('li')

@@ -2,7 +2,6 @@ import { MessageKinds } from './messages'
 import * as ui from './ui'
 
 async function checkVideos() {
-    ui.clear()
     const tabs = await chrome.tabs.query({ active: true, currentWindow: true })
     const tabCount = tabs.length
     if (tabCount === 0) {
