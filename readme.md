@@ -18,7 +18,7 @@ Steps:
 4. Run `npm run start` to start the server. Pass an argument to specify the download destination (defaults to yt-dlp default behavior).
 5. Open chrome extensions page (chrome://extensions)
 6. Enable developer mode
-7. Click "Load unpacked" and select the `dist` folder
+7. Click "Load unpacked" and select the `dist/extension` folder
 
 ## Disclaimer
 I am not a legal or security expert, the project is provided as-is, use at your own risk.
