@@ -7,6 +7,10 @@ import {
 } from './messages'
 import * as ui from './ui'
 
+checkVideos().catch((e) => {
+    throw e
+})
+
 async function checkVideos() {
     ui.status(`Fetching videos...`)
     const url = await currentTabUrl()
@@ -72,7 +76,3 @@ async function sendMessage<Result extends Message>(
     }
     return res as Result
 }
-
-checkVideos().catch((e) => {
-    throw e
-})
