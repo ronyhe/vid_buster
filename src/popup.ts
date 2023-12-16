@@ -1,23 +1,17 @@
-import { MessageKinds } from './messages'
+import {
+    downloadMessage,
+    Format,
+    getUrlInfoMessage,
+    Message,
+    UrlInfo,
+} from './messages'
 import * as ui from './ui'
-import { Format } from './videos'
 
 async function checkVideos() {
+    ui.status(`Fetching videos...`)
+    const url = await currentTabUrl()
     try {
-        ui.status(`Fetching videos...`)
-        const url = await currentTabUrl()
-        const response = await fetch(`http://localhost:3000/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ kind: MessageKinds.GetUrlInfo, url }),
-        })
-        const res = await response.json()
-        if (res.error) {
-            ui.error(res.error)
-            return
-        }
+        const res: UrlInfo = await sendMessage(getUrlInfoMessage(url))
         ui.showFormats(res.title, res.formats, (f) =>
             downloadFormat(url, res.title, f),
         )
@@ -26,22 +20,10 @@ async function checkVideos() {
     }
 }
 
-async function downloadFormat(url: string, title: string, f: Format) {
+async function downloadFormat(url: string, title: string | null, f: Format) {
     ui.status(`Downloading...`)
     try {
-        await fetch(`http://localhost:3000/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                kind: MessageKinds.Download,
-                id: f.id,
-                url,
-                title,
-                extension: f.extension,
-            }),
-        })
+        await sendMessage(downloadMessage(f.id, url, title, f.extension))
         ui.status(`Download request sent`)
     } catch (e) {
         ui.error(`Failed to download: ${e}`)
@@ -63,6 +45,32 @@ async function currentTabUrl(): Promise<string> {
         throw new Error('No URL found')
     }
     return url
+}
+
+async function sendMessage<Result extends Message>(
+    message: Message,
+): Promise<Result> {
+    const response = await fetch(`http://localhost:3000/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(message),
+    })
+    if (!response.ok) {
+        let err = `Request failed: ${response.statusText}; `
+        try {
+            err = `${err} ${await response.text()}`
+        } catch (e) {
+            // Ignore
+        }
+        throw new Error(err)
+    }
+    const res = await response.json()
+    if (res.error) {
+        throw new Error(res.error)
+    }
+    return res as Result
 }
 
 checkVideos().catch((e) => {

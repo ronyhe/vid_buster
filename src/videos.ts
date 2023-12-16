@@ -1,14 +1,6 @@
 import downloader, { YtFormat } from 'youtube-dl-exec'
 import { join } from 'node:path'
-
-export interface Format {
-    extension: string | null
-    note: string | null
-    size: string
-    resolution: string
-    id: string
-    url: string
-}
+import { Format } from './messages'
 
 export async function getInfo(
     url: string,

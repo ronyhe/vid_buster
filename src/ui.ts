@@ -1,4 +1,4 @@
-import { Format } from './videos'
+import { Format } from './messages'
 
 function clear() {
     document.body.innerHTML = ''
