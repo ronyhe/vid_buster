@@ -53,11 +53,19 @@ async function handleReq(req: http.IncomingMessage): Promise<any> {
     }
     if (message.kind === MessageKinds.Download) {
         console.log(`Download requested for ${message.id}`)
-        downloadVideo(message.url, message.id, downloadDestination)
+        downloadVideo(
+            message.url,
+            message.id,
+            downloadDestination,
+            message.title,
+            message.extension,
+        )
             .catch((e) => {
                 console.error(`Failed to download ${message.id}: ${e}`)
             })
-            .then(() => {})
+            .then(() => {
+                console.log(`Downloaded ${message.title}`)
+            })
         return {}
     }
     throw new Error(`Unexpected message kind: ${message.kind}`)

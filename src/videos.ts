@@ -1,4 +1,14 @@
 import downloader, { YtFormat } from 'youtube-dl-exec'
+import { join } from 'node:path'
+
+export interface Format {
+    extension: string | null
+    note: string | null
+    size: string
+    resolution: string
+    id: string
+    url: string
+}
 
 export async function getInfo(
     url: string,
@@ -17,20 +27,26 @@ export async function downloadVideo(
     url: string,
     formatId: string,
     downloadDestination: string,
-) {
-    await downloader(url, {
-        output: downloadDestination ?? undefined,
-        format: formatId,
+    title: string | null,
+    extension: string | null,
+): Promise<void> {
+    return new Promise((resolve, reject) => {
+        const subprocess = downloader.exec(url, {
+            output: outputParam(downloadDestination, title, extension),
+            format: formatId,
+        })
+        // @ts-ignore
+        subprocess.stdout.pipe(process.stdout)
+        // @ts-ignore
+        subprocess.stderr.pipe(process.stderr)
+        subprocess.on('exit', (code: number) => {
+            if (code === 0) {
+                resolve()
+            } else {
+                reject(new Error(`youtube-dl exited with code ${code}`))
+            }
+        })
     })
-}
-
-export interface Format {
-    extension: string | null
-    note: string | null
-    size: string
-    resolution: string
-    id: string
-    url: string
 }
 
 function convertFromYtFormat(f: YtFormat): Format {
@@ -44,10 +60,23 @@ function convertFromYtFormat(f: YtFormat): Format {
     }
 }
 
+function outputParam(
+    downloadDestination: string,
+    title: string | null,
+    extension: string | null,
+): string | undefined {
+    if (!title) {
+        return undefined // Punt to youtube-dl-exec's default
+    }
+    const extensionText = extension ? `.${extension}` : ''
+    const fileName = `${title}${extensionText}`
+    return join(downloadDestination, fileName)
+}
+
 function resolution(f: YtFormat): string {
     // @ts-ignore - resolution is not in the type definition, but I saw it in the actual response
     const res: string = f.resolution
-    return res ?? `${f.width}x${f.height}`
+    return nullableString(res) ?? `${f.width}x${f.height}`
 }
 
 function nullableString(s: string): string | null {

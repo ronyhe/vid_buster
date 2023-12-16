@@ -18,13 +18,15 @@ async function checkVideos() {
             ui.error(res.error)
             return
         }
-        ui.showFormats(res.title, res.formats, (f) => downloadFormat(url, f))
+        ui.showFormats(res.title, res.formats, (f) =>
+            downloadFormat(url, res.title, f),
+        )
     } catch (e) {
         ui.error(`Failed to fetch videos: ${e}`)
     }
 }
 
-async function downloadFormat(url: string, f: Format) {
+async function downloadFormat(url: string, title: string, f: Format) {
     ui.status(`Downloading...`)
     try {
         await fetch(`http://localhost:3000/`, {
@@ -36,6 +38,8 @@ async function downloadFormat(url: string, f: Format) {
                 kind: MessageKinds.Download,
                 id: f.id,
                 url,
+                title,
+                extension: f.extension,
             }),
         })
         ui.status(`Download request sent`)
