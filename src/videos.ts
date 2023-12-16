@@ -13,6 +13,17 @@ export async function getInfo(
     }
 }
 
+export async function downloadVideo(
+    url: string,
+    formatId: string,
+    downloadDestination: string,
+) {
+    await downloader(url, {
+        output: downloadDestination ?? undefined,
+        format: formatId,
+    })
+}
+
 export interface Format {
     extension: string | null
     note: string | null

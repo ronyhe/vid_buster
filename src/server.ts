@@ -1,9 +1,11 @@
 import * as http from 'node:http'
-import { getInfo } from './videos'
+import { downloadVideo, getInfo } from './videos'
 import { MessageKinds } from './messages'
+import * as process from 'process'
 
 const hostname = '127.0.0.1'
 const port = 3000
+const downloadDestination = process.argv[2] ?? null
 
 const server = http.createServer((req, res) => {
     const headers = {
@@ -35,7 +37,9 @@ const server = http.createServer((req, res) => {
 })
 
 server.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`)
+    console.log(
+        `Server running at http://${hostname}:${port}/ Download destination: ${downloadDestination}`,
+    )
 })
 
 async function handleReq(req: http.IncomingMessage): Promise<any> {
@@ -49,6 +53,11 @@ async function handleReq(req: http.IncomingMessage): Promise<any> {
     }
     if (message.kind === MessageKinds.Download) {
         console.log(`Download requested for ${message.id}`)
+        downloadVideo(message.url, message.id, downloadDestination)
+            .catch((e) => {
+                console.error(`Failed to download ${message.id}: ${e}`)
+            })
+            .then(() => {})
         return {}
     }
     throw new Error(`Unexpected message kind: ${message.kind}`)
