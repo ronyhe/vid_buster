@@ -1,17 +1,30 @@
-A yt-dlp wrapper extension
+# Vid Buster
+Vid Buster is a Chrome extension that lets you download videos from YouTube and other sites.
 
-Use youtube-dl-exec as a JS wrapper around yt-dlp (a fork of youtube-dl)
+## Implementation
+Currently, Vid Buster is simply a wrapper around youtube-dl-exec which is a JS wrapper around yt-dlp
+(a youtube-dl fork).
+It has extremely minimal ui and is not very user-friendly, but it's a start.
 
-The extension communicates with a server that runs yt-dlp on the local machine.
+## Installation
+Pre-requisites:
+- Node.js (hopefully via nvm)
+- ffmpeg (optional, but recommended)
 
-features - choose quality, choose file destination
+Steps:
+1. Clone this repo
+2. Run `npm install`
+3. Run `npm run build`
+4. Run `npm run start` to start the server. Pass an argument to specify the download destination (defaults to yt-dlp default behavior).
+5. Open chrome extensions page (chrome://extensions)
+6. Enable developer mode
+7. Click "Load unpacked" and select the `dist` folder
 
-Initial plan:
-Click on extension icon, popup sends a message to the server to get info from url.
-Server sends back info, popup displays info and lets user choose quality and file destination.
-Popup sends a message to server to download video.
-Step 2: Try to display progress
+## Disclaimer
+I am not a legal or security expert, the project is provided as-is, use at your own risk.
 
-
-Ideas for later:
-Show thumbnails
+## Possible future features
+- Better UI
+- Better progress reporting
+- Tests (Will probably be needed if the codebase grows even slightly)
+- Destination selection from ui (maybe file naming too)
