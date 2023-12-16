@@ -12,6 +12,8 @@ export const MessageKinds = {
     GetUrlInfo: 'getUrlInfo',
     UrlInfo: 'urlInfo',
     Download: 'download',
+    GetStatus: 'getStatus',
+    Status: 'status',
 }
 
 export interface GetUrlInfo {
@@ -42,6 +44,15 @@ export interface Format {
     url: string
 }
 
+export interface GetStatus {
+    kind: typeof MessageKinds.GetStatus
+}
+
+export interface Status {
+    kind: typeof MessageKinds.Status
+    reports: { title: string; status: string }[]
+}
+
 export function getUrlInfoMessage(url: string): GetUrlInfo {
     return { kind: MessageKinds.GetUrlInfo, url }
 }
@@ -60,4 +71,17 @@ export function downloadMessage(
     extension: string | null,
 ): Download {
     return { kind: MessageKinds.Download, id, url, title, extension }
+}
+
+export function statusMessage(
+    reports: {
+        title: string
+        status: string
+    }[],
+): Status {
+    return { kind: MessageKinds.Status, reports }
+}
+
+export function getStatusMessage(): GetStatus {
+    return { kind: MessageKinds.GetStatus }
 }
