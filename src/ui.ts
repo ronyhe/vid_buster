@@ -36,7 +36,7 @@ export function showReports(
     document.body.appendChild(document.createElement('hr'))
     if (reports.length === 0) {
         const p = document.createElement('p')
-        p.textContent = 'No videos found'
+        p.textContent = 'No on-going downloads'
         document.body.appendChild(p)
         return
     }
