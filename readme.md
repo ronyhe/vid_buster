@@ -8,9 +8,9 @@ It has extremely minimal ui and is not very user-friendly, but it's a start.
 
 ## Installation
 Pre-requisites:
-- python3
+- python3 (required by yt-dlp)
 - node.js (hopefully via nvm)
-- ffmpeg (optional, but recommended)
+- ffmpeg (optional, but recommended. It enables yt-dlp to give a better experience)
 
 Steps:
 1. Clone this repo
