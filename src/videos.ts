@@ -1,6 +1,7 @@
 import downloader, { YtFormat } from 'youtube-dl-exec'
 import { join } from 'node:path'
 import { Format } from './messages'
+import { Readable } from 'node:stream'
 
 export async function getInfo(
     url: string,
@@ -15,20 +16,22 @@ export async function getInfo(
     }
 }
 
-export async function downloadVideo(
+export function downloadVideo(
     url: string,
     formatId: string,
     downloadDestination: string,
     title: string | null,
     extension: string | null,
-): Promise<void> {
+): { promise: Promise<void>; stdout: Readable } {
     const subprocess = downloader.exec(url, {
         output: outputParam(downloadDestination, title, extension),
         format: formatId,
     })
-    subprocess.stdout?.pipe(process.stdout)
-    subprocess.stderr?.pipe(process.stderr)
-    await subprocess
+    return {
+        // @ts-ignore
+        promise: subprocess,
+        stdout: subprocess.stdout!,
+    }
 }
 
 function convertFromYtFormat(f: YtFormat): Format {

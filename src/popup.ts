@@ -1,15 +1,23 @@
 import {
     downloadMessage,
     Format,
+    getStatusMessage,
     getUrlInfoMessage,
     Message,
+    Status,
     UrlInfo,
 } from './messages'
 import * as ui from './ui'
 
-checkVideos().catch((e) => {
+showPopup().catch((e) => {
     throw e
 })
+
+async function showPopup() {
+    ui.showInitialPopup(checkVideos)
+    const { reports }: Status = await sendMessage(getStatusMessage())
+    ui.showReports(reports, checkVideos)
+}
 
 async function checkVideos() {
     ui.status(`Fetching videos...`)

@@ -6,7 +6,7 @@ interface StatusTracker {
     getReports(): { title: string; status: string }[]
 }
 
-function createTracker(): StatusTracker {
+export function createTracker(): StatusTracker {
     const map: Map<string, { status: string; removeListener: () => void }> =
         new Map()
     return {
@@ -30,10 +30,12 @@ function createTracker(): StatusTracker {
             map.delete(title)
         },
         getReports() {
-            return Array.from(map.entries()).map(([title, { status }]) => ({
-                title,
-                status,
-            }))
+            return Array.from(map.entries())
+                .map(([title, { status }]) => ({
+                    title,
+                    status,
+                }))
+                .toSorted((a, b) => a.title.localeCompare(b.title))
         },
     }
 }

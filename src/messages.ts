@@ -1,12 +1,16 @@
 /** Communication between the server and the popup
  *
- * The dialogue will generally go as follows:
+ * The download dialogue will generally go as follows:
  * Client -> Server: GetUrlInfo { url }
  * Server -> Client: UrlInfo { title, formats }
  * Client -> Server: Download { id, url, title, extension }
+ *
+ * A status update will go as follows:
+ * Client -> Server: GetStatus
+ * Server -> Client: Status { reports }
  */
 
-export type Message = GetUrlInfo | UrlInfo | Download
+export type Message = GetUrlInfo | UrlInfo | Download | GetStatus | Status
 
 export const MessageKinds = {
     GetUrlInfo: 'getUrlInfo',
@@ -50,7 +54,12 @@ export interface GetStatus {
 
 export interface Status {
     kind: typeof MessageKinds.Status
-    reports: { title: string; status: string }[]
+    reports: SingleStatusReport[]
+}
+
+export interface SingleStatusReport {
+    title: string
+    status: string
 }
 
 export function getUrlInfoMessage(url: string): GetUrlInfo {

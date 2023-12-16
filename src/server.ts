@@ -1,11 +1,19 @@
 import * as http from 'node:http'
 import { downloadVideo, getInfo } from './videos'
-import { Message, MessageKinds, urlInfoMessage } from './messages'
+import {
+    Message,
+    MessageKinds,
+    statusMessage,
+    urlInfoMessage,
+} from './messages'
 import * as process from 'process'
+import { createTracker } from './status'
 
 const hostname = '127.0.0.1'
 const port = 3000
 const downloadDestination = process.argv[2] ?? null
+
+const tracker = createTracker()
 
 const server = http.createServer((req, res) => {
     const headers = {
@@ -51,20 +59,28 @@ async function handleReq(req: http.IncomingMessage): Promise<Message | null> {
     }
     if (message.kind === MessageKinds.Download) {
         console.log(`Download requested for ${message.id}`)
-        downloadVideo(
+        const { promise, stdout } = downloadVideo(
             message.url,
             message.id,
             downloadDestination,
             message.title,
             message.extension,
         )
+        tracker.track(message.title, stdout)
+        promise
             .catch((e) => {
-                console.error(`Failed to download ${message.id}: ${e}`)
+                console.error(`Failed to download ${message.title}: ${e}`)
             })
             .then(() => {
                 console.log(`Downloaded ${message.title}`)
             })
+            .finally(() => {
+                tracker.unTrack(message.title)
+            })
         return null
+    }
+    if (message.kind === MessageKinds.GetStatus) {
+        return statusMessage(tracker.getReports())
     }
     throw new Error(`Unexpected message kind: ${message.kind}`)
 }
