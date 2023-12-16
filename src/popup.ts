@@ -11,10 +11,10 @@ async function checkVideos() {
     ui.status(`Fetching videos...`)
     const url = await currentTabUrl()
     try {
-        const res: UrlInfo = await sendMessage(getUrlInfoMessage(url))
-        ui.showFormats(res.title, res.formats, (f) =>
-            downloadFormat(url, res.title, f),
+        const { title, formats }: UrlInfo = await sendMessage(
+            getUrlInfoMessage(url),
         )
+        ui.showFormats(title, formats, (f) => downloadFormat(url, title, f))
     } catch (e) {
         ui.error(`Failed to fetch videos: ${e}`)
     }
