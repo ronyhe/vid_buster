@@ -8,7 +8,8 @@ It has extremely minimal ui and is not very user-friendly, but it's a start.
 
 ## Installation
 Pre-requisites:
-- Node.js (hopefully via nvm)
+- python3
+- node.js (hopefully via nvm)
 - ffmpeg (optional, but recommended)
 
 Steps:
