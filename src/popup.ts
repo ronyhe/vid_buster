@@ -13,13 +13,33 @@ showPopup().catch((e) => {
     throw e
 })
 
+let interval: number | null = null
+
 async function showPopup() {
     ui.showInitialPopup(checkVideos)
+    await fetchAndShowReports()
+    interval = window.setInterval(() => {
+        fetchAndShowReports().catch((e) => {
+            clearInterval()
+            ui.error(`Failed to fetch reports: ${e}`)
+        })
+    }, 500)
+}
+
+function clearInterval() {
+    if (interval !== null) {
+        window.clearInterval(interval)
+        interval = null
+    }
+}
+
+async function fetchAndShowReports() {
     const { reports }: Status = await sendMessage(getStatusMessage())
     ui.showReports(reports, checkVideos)
 }
 
 async function checkVideos() {
+    clearInterval()
     ui.status(`Fetching videos...`)
     const url = await currentTabUrl()
     try {
