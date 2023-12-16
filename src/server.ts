@@ -1,6 +1,6 @@
 import * as http from 'node:http'
 import { downloadVideo, getInfo } from './videos'
-import { MessageKinds } from './messages'
+import { Message, MessageKinds, urlInfoMessage } from './messages'
 import * as process from 'process'
 
 const hostname = '127.0.0.1'
@@ -42,14 +42,12 @@ server.listen(port, hostname, () => {
     )
 })
 
-async function handleReq(req: http.IncomingMessage): Promise<any> {
+async function handleReq(req: http.IncomingMessage): Promise<Message | null> {
     const text = await requestBody(req)
     const message = JSON.parse(text)
     if (message.kind === MessageKinds.GetUrlInfo) {
-        return {
-            kind: MessageKinds.UrlInfo,
-            ...(await getInfo(message.url)),
-        }
+        const { title, formats } = await getInfo(message.url)
+        return urlInfoMessage(title, formats)
     }
     if (message.kind === MessageKinds.Download) {
         console.log(`Download requested for ${message.id}`)
@@ -66,7 +64,7 @@ async function handleReq(req: http.IncomingMessage): Promise<any> {
             .then(() => {
                 console.log(`Downloaded ${message.title}`)
             })
-        return {}
+        return null
     }
     throw new Error(`Unexpected message kind: ${message.kind}`)
 }
