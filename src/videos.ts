@@ -22,23 +22,13 @@ export async function downloadVideo(
     title: string | null,
     extension: string | null,
 ): Promise<void> {
-    return new Promise((resolve, reject) => {
-        const subprocess = downloader.exec(url, {
-            output: outputParam(downloadDestination, title, extension),
-            format: formatId,
-        })
-        // @ts-ignore
-        subprocess.stdout.pipe(process.stdout)
-        // @ts-ignore
-        subprocess.stderr.pipe(process.stderr)
-        subprocess.on('exit', (code: number) => {
-            if (code === 0) {
-                resolve()
-            } else {
-                reject(new Error(`youtube-dl exited with code ${code}`))
-            }
-        })
+    const subprocess = downloader.exec(url, {
+        output: outputParam(downloadDestination, title, extension),
+        format: formatId,
     })
+    subprocess.stdout?.pipe(process.stdout)
+    subprocess.stderr?.pipe(process.stderr)
+    await subprocess
 }
 
 function convertFromYtFormat(f: YtFormat): Format {

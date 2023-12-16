@@ -28,7 +28,7 @@ const server = http.createServer((req, res) => {
             })
             .then((result) => {
                 res.writeHead(200, headers)
-                res.end(JSON.stringify(result))
+                res.end(JSON.stringify(result ?? {}))
             })
         return
     }
