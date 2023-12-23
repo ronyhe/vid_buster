@@ -23,25 +23,26 @@ const server = http.createServer((req, res) => {
         'Access-Control-Max-Age': 2592000,
         'Access-Control-Allow-Headers': 'content-type',
     }
-    if (req.method === 'OPTIONS') {
+    const method = req.method
+    if (method === 'OPTIONS') {
         res.writeHead(204, headers)
         res.end()
         return
     }
-    if (req.method === 'POST') {
+    if (method === 'POST') {
         handleReq(req)
-            .catch((e) => {
-                res.writeHead(500, headers)
-                res.end(JSON.stringify({ error: e.message }))
-            })
             .then((result) => {
                 res.writeHead(200, headers)
                 res.end(JSON.stringify(result ?? {}))
             })
+            .catch((e) => {
+                res.writeHead(500, headers)
+                res.end(JSON.stringify({ error: e.message }))
+            })
         return
     }
     res.writeHead(405, headers)
-    res.end(`${req.method} is not allowed for the request.`)
+    res.end(`${method} is not allowed for the request.`)
 })
 
 server.listen(port, hostname, () => {
@@ -68,11 +69,11 @@ async function handleReq(req: http.IncomingMessage): Promise<Message | null> {
         )
         tracker.track(message.title, stdout)
         promise
-            .catch((e) => {
-                console.error(`Failed to download ${message.title}: ${e}`)
-            })
             .then(() => {
                 console.log(`Downloaded ${message.title}`)
+            })
+            .catch((e) => {
+                console.error(`Failed to download ${message.title}: ${e}`)
             })
             .finally(() => {
                 tracker.unTrack(message.title)
