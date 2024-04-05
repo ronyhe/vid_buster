@@ -10,10 +10,11 @@ export async function getInfo(
         flatPlaylist: true,
         dumpSingleJson: true,
     })
-    return {
-        title: nullableString(result.title),
-        formats: result.formats.toReversed().map(convertFromYtFormat),
-    }
+    return result as any
+    // return {
+    //     title: nullableString(result.title),
+    //     formats: result.formats.toReversed().map(convertFromYtFormat),
+    // }
 }
 
 export function downloadVideo(
