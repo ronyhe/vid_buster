@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { UrlInfo } from './messages'
 import { getUrlInfo } from './client'
+import { Box, Divider, List, ListItem, Typography } from '@mui/material'
 
 export default function Formats() {
     const [info, setInfo] = React.useState<UrlInfo | null>(null)
@@ -10,18 +11,24 @@ export default function Formats() {
         })
     }, [])
     if (info === null) {
-        return <div>Loading...</div>
+        return <Typography variant="subtitle1">Loading...</Typography>
     }
     return (
-        <div>
-            <h1>{info.title}</h1>
-            <ul>
+        <Box>
+            <Typography variant="h6">{info.title}</Typography>
+            <List>
                 {info.formats.map((f) => (
-                    <li key={f.id}>
-                        {f.resolution} {f.size} {f.extension}
-                    </li>
+                    <Box>
+                        <ListItem key={f.id}>
+                            <Typography variant="body2">
+                                {f.resolution} - {f.size} .{f.extension}{' '}
+                                {f.note && `(${f.note})`}
+                            </Typography>
+                        </ListItem>
+                        <Divider />
+                    </Box>
                 ))}
-            </ul>
-        </div>
+            </List>
+        </Box>
     )
 }

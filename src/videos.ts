@@ -20,7 +20,7 @@ export async function getInfo(
                 return {
                     extension: fmt.ext,
                     note: fmt.format_note,
-                    size: fmt.filesize,
+                    size: fileSizeString(fmt.filesize ?? fmt.filesize_approx),
                     resolution: fmt.resolution,
                     id: fmt.format_id,
                     url: fmt.url,
@@ -64,7 +64,7 @@ function outputParam(
 
 function fileSizeString(sizeInBytes: number): string {
     if (sizeInBytes === null || sizeInBytes === undefined) {
-        return `???Mb`
+        return `?Mb`
     }
     const sizeInKb = Math.round(sizeInBytes / 1024)
     if (sizeInKb < 1024) {

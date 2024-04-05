@@ -14,11 +14,7 @@ export default function App() {
     )
 
     return (
-        <Box
-            sx={{
-                background: 'red',
-            }}
-        >
+        <Box>
             <Box sx={{ width: '100%', height: '100%' }}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs
