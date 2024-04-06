@@ -88,3 +88,23 @@ export function statusMessage(
 export function getStatusMessage(): GetStatus {
     return { kind: MessageKinds.GetStatus }
 }
+
+export function isDownloadMessage(m: Message): m is Download {
+    return m.kind === MessageKinds.Download
+}
+
+export function isUrlInfoMessage(m: Message): m is UrlInfo {
+    return m.kind === MessageKinds.UrlInfo
+}
+
+export function isStatusMessage(m: Message): m is Status {
+    return m.kind === MessageKinds.Status
+}
+
+export function isGetStatusMessage(m: Message): m is GetStatus {
+    return m.kind === MessageKinds.GetStatus
+}
+
+export function isGetUrlInfoMessage(m: Message): m is GetUrlInfo {
+    return m.kind === MessageKinds.GetUrlInfo
+}

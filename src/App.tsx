@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import { Box, Tab, Tabs } from '@mui/material'
 import Formats from './Formats'
-import Downloads from './Downloads'
+import Reports from './Reports'
 
 export default function App() {
     const [tabValue, setTabValue] = React.useState(0)
@@ -29,7 +29,7 @@ export default function App() {
                 {tabValue === 0 ? (
                     <Formats onChoose={() => setTabValue(1)} />
                 ) : (
-                    <Downloads />
+                    <Reports />
                 )}
             </Box>
         </Box>

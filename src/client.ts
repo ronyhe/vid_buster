@@ -1,7 +1,10 @@
 import {
     downloadMessage,
+    getStatusMessage,
     getUrlInfoMessage,
     Message,
+    SingleStatusReport,
+    Status,
     UrlInfo,
 } from './messages'
 
@@ -14,6 +17,11 @@ export async function downloadFormat(
     format_id: string,
 ): Promise<void> {
     await sendMessage(downloadMessage(url, format_id))
+}
+
+export async function getReports(): Promise<SingleStatusReport[]> {
+    const res: Status = await sendMessage(getStatusMessage())
+    return res.reports
 }
 
 async function sendMessage<Result extends Message>(

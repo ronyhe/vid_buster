@@ -1,19 +1,22 @@
 import * as http from 'node:http'
 import { downloadVideo, getInfo } from './videos'
 import {
+    isDownloadMessage,
+    isGetStatusMessage,
+    isGetUrlInfoMessage,
     Message,
     MessageKinds,
     statusMessage,
     urlInfoMessage,
 } from './messages'
 import * as process from 'process'
-import { createTracker } from './status'
+import { Tracker } from './status'
 
 const hostname = '127.0.0.1'
 const port = 3000
 const downloadDestination = process.argv[2] ?? null
 
-const tracker = createTracker()
+const tracker = new Tracker()
 
 const server = http.createServer((req, res) => {
     const headers = {
@@ -54,27 +57,17 @@ server.listen(port, hostname, () => {
 async function handleReq(req: http.IncomingMessage): Promise<Message | null> {
     const text = await requestBody(req)
     const message = JSON.parse(text)
-    if (message.kind === MessageKinds.GetUrlInfo) {
+    if (isGetUrlInfoMessage(message)) {
         const { title, formats } = await getInfo(message.url)
         return urlInfoMessage(title, formats)
     }
-    if (message.kind === MessageKinds.Download) {
+    if (isDownloadMessage(message)) {
         console.log(`Download requested for ${message.url}`)
-        downloadVideo(message.url, message.format_id)
-        // tracker.track(message.title, stdout)
-        // promise
-        //     .then(() => {
-        //         console.log(`Downloaded ${message.title}`)
-        //     })
-        //     .catch((e) => {
-        //         console.error(`Failed to download ${message.title}: ${e}`)
-        //     })
-        //     .finally(() => {
-        //         tracker.unTrack(message.title)
-        //     })
-        // return null
+        const readline = downloadVideo(message.url, message.format_id)
+        tracker.track(message.url, readline)
+        return null
     }
-    if (message.kind === MessageKinds.GetStatus) {
+    if (isGetStatusMessage(message)) {
         return statusMessage(tracker.getReports())
     }
     throw new Error(`Unexpected message kind: ${message.kind}`)

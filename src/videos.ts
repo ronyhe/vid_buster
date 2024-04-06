@@ -1,10 +1,10 @@
-import downloader, { YtFormat } from 'youtube-dl-exec'
 import { join } from 'node:path'
 import { Format } from './messages'
-import { Readable } from 'node:stream'
 import util from 'node:util'
 import child_process from 'node:child_process'
 const exec = util.promisify(require('node:child_process').exec)
+import { createInterface } from 'node:readline'
+import { TerminalStreams } from './status'
 
 export async function getInfo(
     url: string,
@@ -32,17 +32,20 @@ export async function getInfo(
     }
 }
 
-export async function downloadVideo(
-    url: string,
-    formatId: string,
-): Promise<void> {
+export function downloadVideo(url: string, formatId: string): TerminalStreams {
     const downloadDestination = '~/Downloads/'
     const command = `yt-dlp --no-warnings --newline -f ${formatId} -P ${downloadDestination} ${url}`
     console.log(command)
-    const { stdout, stderr } = await exec(command)
-    console.log(stdout.toString())
-    if (stderr) {
-        console.error(stderr)
+    const { stdout, stderr } = child_process.exec(command)
+    if (!stdout) {
+        throw new Error('No stdout')
+    }
+    if (!stderr) {
+        throw new Error('No stderr')
+    }
+    return {
+        stdout: createInterface(stdout),
+        stderr: createInterface(stderr),
     }
 }
 
