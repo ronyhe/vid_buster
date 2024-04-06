@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { SingleStatusReport } from './messages'
 import { getReports } from './client'
-import { Typography } from '@mui/material'
+import { Box, Divider, List, Typography } from '@mui/material'
 
 export default function Reports() {
     const [reports, setReports] = React.useState<SingleStatusReport[] | null>(
@@ -13,14 +13,18 @@ export default function Reports() {
         }, 500)
         return () => clearInterval(interval)
     }, [])
+
     return (
-        <Typography variant="body1">
+        <List>
             {reports?.map((r) => (
-                <div key={r.title}>
-                    {shortTitle(r.title)} - {r.status}
-                </div>
+                <Box>
+                    <Typography key={r.title} variant="body1">
+                        {shortTitle(r.title)} - {r.status}
+                    </Typography>
+                    <Divider />
+                </Box>
             ))}
-        </Typography>
+        </List>
     )
 }
 
