@@ -1,10 +1,9 @@
-import { join } from 'node:path'
 import { Format } from './messages'
 import util from 'node:util'
 import child_process from 'node:child_process'
-const exec = util.promisify(require('node:child_process').exec)
 import { createInterface } from 'node:readline'
 import { TerminalStreams } from './status'
+const exec = util.promisify(require('node:child_process').exec)
 
 export async function getInfo(
     url: string,
@@ -20,8 +19,11 @@ export async function getInfo(
     }
 }
 
-export function downloadVideo(url: string, formatId: string): TerminalStreams {
-    const downloadDestination = '~/Downloads/'
+export function downloadVideo(
+    url: string,
+    formatId: string,
+    downloadDestination: string,
+): TerminalStreams {
     const command = `yt-dlp --no-warnings --newline -f ${formatId} -P ${downloadDestination} ${url}`
     console.log(command)
     const { stdout, stderr } = child_process.exec(command)
@@ -35,19 +37,6 @@ export function downloadVideo(url: string, formatId: string): TerminalStreams {
         stdout: createInterface(stdout),
         stderr: createInterface(stderr),
     }
-}
-
-function outputParam(
-    downloadDestination: string,
-    title: string | null,
-    extension: string | null,
-): string | undefined {
-    if (!title) {
-        return undefined // Punt to youtube-dl-exec's default
-    }
-    const extensionText = extension ? `.${extension}` : ''
-    const fileName = `${title}${extensionText}`
-    return join(downloadDestination, fileName)
 }
 
 function fileSizeString(sizeInBytes: number): string {

@@ -5,7 +5,6 @@ import {
     isGetStatusMessage,
     isGetUrlInfoMessage,
     Message,
-    MessageKinds,
     statusMessage,
     urlInfoMessage,
 } from './messages'
@@ -63,7 +62,11 @@ async function handleReq(req: http.IncomingMessage): Promise<Message | null> {
     }
     if (isDownloadMessage(message)) {
         console.log(`Download requested for ${message.url}`)
-        const readline = downloadVideo(message.url, message.format_id)
+        const readline = downloadVideo(
+            message.url,
+            message.format_id,
+            downloadDestination,
+        )
         tracker.track(message.url, readline)
         return null
     }
