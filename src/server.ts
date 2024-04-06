@@ -59,26 +59,20 @@ async function handleReq(req: http.IncomingMessage): Promise<Message | null> {
         return urlInfoMessage(title, formats)
     }
     if (message.kind === MessageKinds.Download) {
-        console.log(`Download requested for ${message.id}`)
-        const { promise, stdout } = downloadVideo(
-            message.url,
-            message.id,
-            downloadDestination,
-            message.title,
-            message.extension,
-        )
-        tracker.track(message.title, stdout)
-        promise
-            .then(() => {
-                console.log(`Downloaded ${message.title}`)
-            })
-            .catch((e) => {
-                console.error(`Failed to download ${message.title}: ${e}`)
-            })
-            .finally(() => {
-                tracker.unTrack(message.title)
-            })
-        return null
+        console.log(`Download requested for ${message.url}`)
+        downloadVideo(message.url, message.format_id)
+        // tracker.track(message.title, stdout)
+        // promise
+        //     .then(() => {
+        //         console.log(`Downloaded ${message.title}`)
+        //     })
+        //     .catch((e) => {
+        //         console.error(`Failed to download ${message.title}: ${e}`)
+        //     })
+        //     .finally(() => {
+        //         tracker.unTrack(message.title)
+        //     })
+        // return null
     }
     if (message.kind === MessageKinds.GetStatus) {
         return statusMessage(tracker.getReports())

@@ -1,8 +1,19 @@
-import { getUrlInfoMessage, Message, UrlInfo } from './messages'
+import {
+    downloadMessage,
+    getUrlInfoMessage,
+    Message,
+    UrlInfo,
+} from './messages'
 
-export async function getUrlInfo(): Promise<UrlInfo> {
-    const url = await inspectedPageUrl()
+export async function getUrlInfo(url: string): Promise<UrlInfo> {
     return await sendMessage(getUrlInfoMessage(url))
+}
+
+export async function downloadFormat(
+    url: string,
+    format_id: string,
+): Promise<void> {
+    await sendMessage(downloadMessage(url, format_id))
 }
 
 async function sendMessage<Result extends Message>(
@@ -31,7 +42,7 @@ async function sendMessage<Result extends Message>(
     return res as Result
 }
 
-async function inspectedPageUrl(): Promise<string> {
+export async function inspectedPageUrl(): Promise<string> {
     const tabs = await chrome.tabs.query({ active: true, currentWindow: true })
     const tabCount = tabs.length
     if (tabCount === 0) {

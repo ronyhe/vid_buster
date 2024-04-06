@@ -33,10 +33,8 @@ export interface UrlInfo {
 
 export interface Download {
     kind: typeof MessageKinds.Download
-    id: string
+    format_id: string
     url: string
-    title: string | null
-    extension: string | null
 }
 
 export interface Format {
@@ -74,13 +72,8 @@ export function urlInfoMessage(
     return { kind: MessageKinds.UrlInfo, title, formats }
 }
 
-export function downloadMessage(
-    id: string,
-    url: string,
-    title: string | null,
-    extension: string | null,
-): Download {
-    return { kind: MessageKinds.Download, id, url, title, extension }
+export function downloadMessage(url: string, format_id: string): Download {
+    return { kind: MessageKinds.Download, url, format_id }
 }
 
 export function statusMessage(

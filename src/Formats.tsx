@@ -1,14 +1,26 @@
 import React, { useEffect } from 'react'
 import { UrlInfo } from './messages'
-import { getUrlInfo } from './client'
+import { downloadFormat, getUrlInfo, inspectedPageUrl } from './client'
 import { Box, Button, Divider, List, ListItem, Typography } from '@mui/material'
 
-export default function Formats() {
-    const [info, setInfo] = React.useState<UrlInfo | null>(null)
+interface FormatsProps {
+    onChoose(): void
+}
+
+interface FormatsState extends UrlInfo {
+    url: string
+}
+
+async function init(): Promise<FormatsState> {
+    const url = await inspectedPageUrl()
+    const info = await getUrlInfo(url)
+    return { ...info, url }
+}
+
+export default function Formats({ onChoose }: FormatsProps) {
+    const [info, setInfo] = React.useState<FormatsState | null>(null)
     useEffect(() => {
-        getUrlInfo().then((info) => {
-            setInfo(info)
-        })
+        init().then(setInfo)
     }, [])
     if (info === null) {
         return <Typography variant="subtitle1">Loading...</Typography>
@@ -20,7 +32,12 @@ export default function Formats() {
                 {info.formats.map((f) => (
                     <Box>
                         <ListItem key={f.id}>
-                            <Button>
+                            <Button
+                                onClick={() => {
+                                    downloadFormat(info.url, f.id)
+                                    onChoose()
+                                }}
+                            >
                                 {f.resolution} - {f.size} .{f.extension}{' '}
                                 {f.note && `(${f.note})`}
                             </Button>

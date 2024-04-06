@@ -26,7 +26,11 @@ export default function App() {
                         <Tab label="Downloads" />
                     </Tabs>
                 </Box>
-                {tabValue === 0 ? <Formats /> : <Downloads />}
+                {tabValue === 0 ? (
+                    <Formats onChoose={() => setTabValue(1)} />
+                ) : (
+                    <Downloads />
+                )}
             </Box>
         </Box>
     )
