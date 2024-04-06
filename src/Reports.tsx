@@ -17,13 +17,13 @@ export default function Reports() {
         <Typography variant="body1">
             {reports?.map((r) => (
                 <div key={r.title}>
-                    {r.title} - {r.status}
+                    {shortTitle(r.title)} - {r.status}
                 </div>
             ))}
         </Typography>
     )
 }
 
-// /s ETA Unknown (frag 5/254)
-// [download]   2.5% of ~  69.02MiB at    2.60MiB/s ETA Unknown (frag 5/254)
-// [download] 100% of   94.15MiB in 00:00:12 at 7.38MiB/s
+function shortTitle(title: string): string {
+    return title.length > 20 ? title.slice(0, 20) + '...' : title
+}
