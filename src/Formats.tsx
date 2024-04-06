@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { UrlInfo } from './messages'
 import { getUrlInfo } from './client'
-import { Box, Divider, List, ListItem, Typography } from '@mui/material'
+import { Box, Button, Divider, List, ListItem, Typography } from '@mui/material'
 
 export default function Formats() {
     const [info, setInfo] = React.useState<UrlInfo | null>(null)
@@ -20,10 +20,10 @@ export default function Formats() {
                 {info.formats.map((f) => (
                     <Box>
                         <ListItem key={f.id}>
-                            <Typography variant="body2">
+                            <Button>
                                 {f.resolution} - {f.size} .{f.extension}{' '}
                                 {f.note && `(${f.note})`}
-                            </Typography>
+                            </Button>
                         </ListItem>
                         <Divider />
                     </Box>
