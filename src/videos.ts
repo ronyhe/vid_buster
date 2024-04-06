@@ -16,19 +16,7 @@ export async function getInfo(
     const result = JSON.parse(stdout)
     return {
         title: result.title,
-        formats: result.formats
-            .map((fmt: any) => {
-                return {
-                    extension: fmt.ext,
-                    note: fmt.format_note,
-                    size: fileSizeString(fmt.filesize ?? fmt.filesize_approx),
-                    resolution: fmt.resolution,
-                    id: fmt.format_id,
-                    url: fmt.url,
-                    quality: fmt.quality,
-                }
-            })
-            .reverse(),
+        formats: result.formats.map(jsonToFormat).reverse(),
     }
 }
 
@@ -76,4 +64,16 @@ function fileSizeString(sizeInBytes: number): string {
     }
     const sizeInGb = Math.round(sizeInMb / 1024)
     return `${sizeInGb}Gb`
+}
+
+function jsonToFormat(json: any): Format {
+    return {
+        extension: json.ext,
+        note: json.format_note,
+        size: fileSizeString(json.filesize ?? json.filesize_approx),
+        resolution: json.resolution,
+        id: json.format_id,
+        url: json.url,
+        quality: json.quality,
+    }
 }
