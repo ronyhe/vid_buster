@@ -1,31 +1,68 @@
 import React, { useEffect } from 'react'
 import { UrlInfo } from './messages'
 import { downloadFormat, getUrlInfo, inspectedPageUrl } from './client'
-import { Box, Button, Divider, List, ListItem, Typography } from '@mui/material'
+import {
+    Box,
+    Button,
+    Divider,
+    List,
+    ListItem,
+    Snackbar,
+    Typography,
+} from '@mui/material'
 import Loader from './Loader'
 
 interface FormatsProps {
     onChoose(): void
 }
 
-interface FormatsState extends UrlInfo {
+interface FullUrlInfo extends UrlInfo {
     url: string
 }
 
-async function init(): Promise<FormatsState> {
+interface Success {
+    state: 'success'
+    info: FullUrlInfo
+}
+
+interface Error {
+    state: 'error'
+    message: string
+}
+
+interface Loading {
+    state: 'loading'
+}
+
+type State = Success | Error | Loading
+
+async function init(): Promise<FullUrlInfo> {
     const url = await inspectedPageUrl()
     const info = await getUrlInfo(url)
     return { ...info, url }
 }
 
 export default function Formats({ onChoose }: FormatsProps) {
-    const [info, setInfo] = React.useState<FormatsState | null>(null)
+    const [state, setState] = React.useState<State>({ state: 'loading' })
     useEffect(() => {
-        init().then(setInfo)
+        init()
+            .then((info) => setState({ state: 'success', info }))
+            .catch((e) => setState({ state: 'error', message: e.message }))
     }, [])
-    if (info === null) {
+
+    if (state.state === 'loading') {
         return <Loader />
     }
+    if (state.state === 'error') {
+        return (
+            <Snackbar
+                open={true}
+                autoHideDuration={6000}
+                message={state.message}
+            />
+        )
+    }
+    const { info } = state
     return (
         <Box>
             <Typography variant="h6">{info.title}</Typography>
