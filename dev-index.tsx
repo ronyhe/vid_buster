@@ -11,9 +11,11 @@ import App from './src/App'
 
 function main() {
     const root = createRoot(document.querySelector('body')!)
+    const url =
+        'https://www.youtube.com/watch?v=Dwxv9ydfhBY&ab_channel=HeatCheck'
     root.render(
         <CssBaseline>
-            <App></App>
+            <App url={url}></App>
         </CssBaseline>,
     )
 }

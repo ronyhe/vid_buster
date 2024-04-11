@@ -3,7 +3,11 @@ import { Box, Tab, Tabs } from '@mui/material'
 import Formats from './Formats'
 import Reports from './Reports'
 
-export default function App() {
+interface AppProps {
+    url: string
+}
+
+export default function App({ url }: AppProps) {
     const [tabValue, setTabValue] = React.useState(0)
 
     const handleChange = useCallback(
@@ -23,7 +27,7 @@ export default function App() {
                     </Tabs>
                 </Box>
                 {tabValue === 0 ? (
-                    <Formats onChoose={() => setTabValue(1)} />
+                    <Formats onChoose={() => setTabValue(1)} url={url} />
                 ) : (
                     <Reports />
                 )}

@@ -14,15 +14,12 @@ import Loader from './Loader'
 
 interface FormatsProps {
     onChoose(): void
-}
-
-interface FullUrlInfo extends UrlInfo {
     url: string
 }
 
 interface Success {
     state: 'success'
-    info: FullUrlInfo
+    info: UrlInfo
 }
 
 interface Error {
@@ -36,16 +33,10 @@ interface Loading {
 
 type State = Success | Error | Loading
 
-async function init(): Promise<FullUrlInfo> {
-    const url = await inspectedPageUrl()
-    const info = await getUrlInfo(url)
-    return { ...info, url }
-}
-
-export default function Formats({ onChoose }: FormatsProps) {
+export default function Formats({ onChoose, url }: FormatsProps) {
     const [state, setState] = React.useState<State>({ state: 'loading' })
     useEffect(() => {
-        init()
+        getUrlInfo(url)
             .then((info) => setState({ state: 'success', info }))
             .catch((e) => setState({ state: 'error', message: e.message }))
     }, [])
@@ -72,7 +63,7 @@ export default function Formats({ onChoose }: FormatsProps) {
                         <ListItem key={f.id}>
                             <Button
                                 onClick={() => {
-                                    downloadFormat(info.url, f.id)
+                                    downloadFormat(url, f.id)
                                     onChoose()
                                 }}
                             >
