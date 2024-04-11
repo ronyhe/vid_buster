@@ -1,16 +1,8 @@
 import React, { useEffect } from 'react'
 import { UrlInfo } from './messages'
 import { downloadFormat, getUrlInfo, inspectedPageUrl } from './client'
-import {
-    Box,
-    Button,
-    CircularProgress,
-    Divider,
-    Grid,
-    List,
-    ListItem,
-    Typography,
-} from '@mui/material'
+import { Box, Button, Divider, List, ListItem, Typography } from '@mui/material'
+import Loader from './Loader'
 
 interface FormatsProps {
     onChoose(): void
@@ -32,21 +24,7 @@ export default function Formats({ onChoose }: FormatsProps) {
         init().then(setInfo)
     }, [])
     if (info === null) {
-        return (
-            <Box
-                display="flex"
-                flexDirection="column"
-                alignItems="center"
-                height="inherit"
-            >
-                <CircularProgress
-                    sx={{
-                        position: 'relative',
-                        top: '40%',
-                    }}
-                />
-            </Box>
-        )
+        return <Loader />
     }
     return (
         <Box>
