@@ -6,12 +6,11 @@
     "scripts": {
         "build": "npx tsc --noEmit && npx parcel build && npm run copy-files",
         "start": "node dist/server.js",
-
+        "start-dev": "npx parcel serve dev-index.html --dist-dir dist/dev",
         "rebuild": "npm run clean && npm run build",
         "clean": "rm -rf dist && rm -rf .parcel-cache",
         "copy-files": "cp -R extension dist",
         "test": "echo \"Error: no test specified\" && exit 1",
-
         "clean-windows": "if exist dist rmdir /s /q dist && if exist .parcel-cache rmdir /s /q .parcel-cache",
         "rebuild-windows": "npm run clean-windows && npm run build",
         "build-windows": "npx tsc --noEmit && npx parcel build && npm run copy-files-windows",
@@ -52,7 +51,6 @@
         "@mui/icons-material": "^5.15.15",
         "@mui/material": "^5.15.15",
         "react": "^18.2.0",
-        "react-dom": "^18.2.0",
-        "youtube-dl-exec": "^2.5.0"
+        "react-dom": "^18.2.0"
     }
 }
