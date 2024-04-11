@@ -12,7 +12,7 @@
         "copy-files": "cp -R extension dist",
         "test": "echo \"Error: no test specified\" && exit 1",
         "clean-windows": "if exist dist rmdir /s /q dist && if exist .parcel-cache rmdir /s /q .parcel-cache",
-        "rebuild-windows": "npm run clean-windows && npm run build",
+        "rebuild-windows": "npm run clean-windows && npm run build-windows",
         "build-windows": "npx tsc --noEmit && npx parcel build && npm run copy-files-windows",
         "copy-files-windows": "xcopy /E /I extension dist\\extension"
     },
