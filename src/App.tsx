@@ -17,11 +17,7 @@ export default function App() {
         <Box>
             <Box sx={{ width: '100%', height: '100%' }}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                    <Tabs
-                        value={tabValue}
-                        onChange={handleChange}
-                        aria-label="basic tabs example"
-                    >
+                    <Tabs value={tabValue} onChange={handleChange}>
                         <Tab label="Here" />
                         <Tab label="Downloads" />
                     </Tabs>
