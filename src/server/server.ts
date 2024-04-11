@@ -7,7 +7,7 @@ import {
     Message,
     statusMessage,
     urlInfoMessage,
-} from './messages'
+} from '../messages'
 import * as process from 'process'
 import { Tracker } from './status'
 

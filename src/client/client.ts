@@ -6,7 +6,7 @@ import {
     SingleStatusReport,
     Status,
     UrlInfo,
-} from './messages'
+} from '../messages'
 
 export async function getUrlInfo(url: string): Promise<UrlInfo> {
     return await sendMessage(getUrlInfoMessage(url))

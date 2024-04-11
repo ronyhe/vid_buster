@@ -1,4 +1,4 @@
-import { Format } from './messages'
+import { Format } from '../messages'
 import util from 'node:util'
 import child_process from 'node:child_process'
 import { createInterface } from 'node:readline'

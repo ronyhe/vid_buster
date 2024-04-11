@@ -34,12 +34,12 @@
         "popup": {
             "outputFormat": "global",
             "distDir": "dist/extension/",
-            "source": "src/popup.tsx"
+            "source": "src/client/popup.tsx"
         },
         "server": {
             "outputFormat": "commonjs",
             "distDir": "dist/",
-            "source": "src/server.ts",
+            "source": "src/server/server.ts",
             "engines": {
                 "node": ">= 20"
             }
