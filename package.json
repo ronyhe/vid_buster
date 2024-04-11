@@ -6,7 +6,7 @@
     "scripts": {
         "build": "npx tsc --noEmit && npx parcel build && npm run copy-files",
         "start": "node dist/server.js",
-        "start-dev": "npx parcel serve dev-index.html --dist-dir dist/dev",
+        "start-dev": "npx parcel serve dev-index.html --dist-dir dist/dev --no-autoinstall",
         "rebuild": "npm run clean && npm run build",
         "clean": "rm -rf dist && rm -rf .parcel-cache",
         "copy-files": "cp -R extension dist",
@@ -27,6 +27,7 @@
         "chrome-types": "^0.1.246",
         "parcel": "^2.10.3",
         "prettier": "^3.1.1",
+        "process": "^0.11.10",
         "typescript": "^5.3.3"
     },
     "targets": {
