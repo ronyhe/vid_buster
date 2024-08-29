@@ -38,7 +38,7 @@ async function sendMessage<Result extends Message>(
         let err = `Request failed: ${response.statusText}; `
         try {
             err = `${err} ${await response.text()}`
-        } catch (e) {
+        } catch (_) {
             // Ignore
         }
         throw new Error(err)

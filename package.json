@@ -4,6 +4,8 @@
     "description": "HLS video downloader",
     "main": "index.js",
     "scripts": {
+        "lint": "eslint",
+        "lint:fix": "eslint --fix",
         "build": "tsc --noEmit && parcel build",
         "start": "node dist/server.js",
         "dev": "parcel serve dev-index.html --dist-dir dist/dev --no-autoinstall",
@@ -17,14 +19,21 @@
     "author": "ronyhe",
     "license": "MIT",
     "devDependencies": {
+        "@eslint/js": "^9.9.1",
         "@types/node": "^20.10.4",
         "@types/react-dom": "^18.2.24",
         "chrome-types": "^0.1.246",
+        "eslint": "^9.9.1",
+        "eslint-config-prettier": "^9.1.0",
+        "eslint-plugin-prettier": "^5.2.1",
+        "eslint-plugin-react": "^7.35.0",
+        "globals": "^15.9.0",
         "parcel": "^2.10.3",
         "parcel-reporter-static-files-copy": "^1.5.3",
         "prettier": "^3.1.1",
         "process": "^0.11.10",
-        "typescript": "^5.3.3"
+        "typescript": "^5.3.3",
+        "typescript-eslint": "^8.3.0"
     },
     "targets": {
         "popup": {

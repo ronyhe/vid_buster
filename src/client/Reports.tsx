@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { SingleStatusReport } from './messages'
+import { SingleStatusReport } from '../messages'
 import { getReports } from './client'
 import { Box, Divider, List, Typography } from '@mui/material'
 
@@ -17,8 +17,8 @@ export default function Reports() {
     return (
         <List>
             {reports?.map((r) => (
-                <Box>
-                    <Typography key={r.title} variant="body1">
+                <Box key={r.title}>
+                    <Typography variant="body1">
                         {shortTitle(r.title)} - {r.status}
                     </Typography>
                     <Divider />

@@ -3,7 +3,8 @@ import util from 'node:util'
 import child_process from 'node:child_process'
 import { createInterface } from 'node:readline'
 import { TerminalStreams } from './status'
-const exec = util.promisify(require('node:child_process').exec)
+import { exec as _exec } from 'node:child_process'
+const exec = util.promisify(_exec)
 
 export async function getInfo(
     url: string,
@@ -55,7 +56,7 @@ function fileSizeString(sizeInBytes: number): string {
     return `${sizeInGb}Gb`
 }
 
-function jsonToFormat(json: any): Format {
+function jsonToFormat(json: Record<string, never>): Format {
     return {
         extension: json.ext,
         note: json.format_note,

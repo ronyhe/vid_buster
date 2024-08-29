@@ -78,7 +78,7 @@ async function handleReq(req: http.IncomingMessage): Promise<Message | null> {
 
 async function requestBody(req: http.IncomingMessage): Promise<string> {
     return new Promise((resolve, reject) => {
-        let bodyParts: Uint8Array[] = []
+        const bodyParts: Uint8Array[] = []
         req.on('error', (err) => {
             reject(err)
         })

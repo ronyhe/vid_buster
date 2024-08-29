@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { UrlInfo } from './messages'
-import { downloadFormat, getUrlInfo, inspectedPageUrl } from './client'
+import { downloadFormat, getUrlInfo } from './client'
 import {
     Box,
     Button,
@@ -59,8 +59,8 @@ export default function Formats({ onChoose, url }: FormatsProps) {
             <Typography variant="h6">{info.title}</Typography>
             <List>
                 {info.formats.map((f) => (
-                    <Box>
-                        <ListItem key={f.id}>
+                    <Box key={f.id}>
+                        <ListItem>
                             <Button
                                 onClick={() => {
                                     downloadFormat(url, f.id)
