@@ -4,7 +4,7 @@
   ],
   "compilerOptions": {
     "moduleResolution": "node",
-    "types": ["./node_modules/chrome-types/index.d.ts", "./node_modules/@types/node/index.d.ts"],
+    "types": ["node", "./node_modules/chrome-types/index.d.ts", "./node_modules/@types/node/index.d.ts"],
     "outDir": "./dist/src",
     "target": "esnext",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
     "strict": true,                                    /* Enable all strict type-checking options. */
