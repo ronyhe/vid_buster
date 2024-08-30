@@ -33,7 +33,7 @@ interface Loading {
 
 type State = Success | Error | Loading
 
-export default function Formats({ onChoose, url }: FormatsProps) {
+export default function Here({ onChoose, url }: FormatsProps) {
     const [state, setState] = React.useState<State>({ state: 'loading' })
     useEffect(() => {
         getUrlInfo(url)
