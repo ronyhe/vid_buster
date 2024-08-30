@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { UrlInfo } from './messages'
+import { UrlInfo } from '../messages'
 import { downloadFormat, getUrlInfo } from './client'
 import {
     Box,
