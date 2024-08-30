@@ -1,15 +1,7 @@
 import React, { useEffect } from 'react'
 import { UrlInfo } from '../messages'
 import { downloadFormat, getUrlInfo } from './client'
-import {
-    Box,
-    Button,
-    Divider,
-    List,
-    ListItem,
-    Snackbar,
-    Typography,
-} from '@mui/material'
+import { Snackbar } from '@mui/material'
 import Loader from './Loader'
 import FormatList from './FormatList'
 

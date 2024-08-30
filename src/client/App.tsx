@@ -36,5 +36,3 @@ export default function App({ url }: AppProps) {
         </Box>
     )
 }
-
-function Content(tabValue) {}
