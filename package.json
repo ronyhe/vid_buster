@@ -8,7 +8,7 @@
         "lint:fix": "eslint --fix",
         "build": "tsc --noEmit && parcel build",
         "start": "node dist/server.js",
-        "dev": "parcel serve dev-index.html --dist-dir dist/dev --no-autoinstall",
+        "dev": "parcel serve --target dev",
         "clean": "rm -rf dist .parcel-cache",
         "rebuild": "npm run clean && npm run build",
         "test": "node --import tsx --test **/*.test.tsx"
@@ -55,6 +55,11 @@
             "engines": {
                 "node": ">= 20"
             }
+        },
+        "dev": {
+            "outputFormat": "global",
+            "distDir": "dist/dev/",
+            "source": "dev/dev-index.html"
         }
     },
     "dependencies": {

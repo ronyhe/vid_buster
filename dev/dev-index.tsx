@@ -7,7 +7,7 @@ import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 
 import { CssBaseline } from '@mui/material'
-import App from './src/client/App'
+import App from '../src/client/App'
 
 function main() {
     const root = createRoot(document.querySelector('body')!)
