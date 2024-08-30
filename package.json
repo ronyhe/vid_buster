@@ -6,7 +6,8 @@
     "scripts": {
         "lint": "eslint",
         "lint:fix": "eslint --fix",
-        "build": "tsc && parcel build",
+        "check": "npm run lint && tsc && npm test",
+        "build": "parcel build",
         "start": "node dist/server.js",
         "dev": "parcel serve --target dev",
         "clean": "rm -rf dist .parcel-cache",
