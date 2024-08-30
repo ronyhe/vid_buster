@@ -44,7 +44,14 @@ export default function App({ url }: AppProps) {
         if (tabValue === 1) {
             return <Reports />
         }
-        return <CustomUrl />
+        return (
+            <CustomUrl
+                onChoose={(f) => {
+                    setTabValue(1)
+                    downloadFormat(f.url, f.id)
+                }}
+            />
+        )
     })()
 
     return (
