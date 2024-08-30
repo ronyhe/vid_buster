@@ -11,7 +11,7 @@
         "dev": "parcel serve dev-index.html --dist-dir dist/dev --no-autoinstall",
         "clean": "rm -rf dist .parcel-cache",
         "rebuild": "npm run clean && npm run build",
-        "test": "node --import tsx --test test/**/*.test.tsx"
+        "test": "node --import tsx --test test/**/*.test.ts test/**/*.test.tsx"
     },
     "keywords": [
         "HLS"
