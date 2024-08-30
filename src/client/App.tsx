@@ -2,7 +2,8 @@ import React, { useCallback } from 'react'
 import { Box, Tab, Tabs } from '@mui/material'
 import Reports from './Reports'
 import UrlDisplay from './UrlDisplay'
-import { getUrlInfo } from './client'
+import { downloadFormat, getUrlInfo } from './client'
+import { CustomUrl } from './CustomUrl'
 
 interface AppProps {
     url: string
@@ -33,14 +34,17 @@ export default function App({ url }: AppProps) {
             return (
                 <UrlDisplay
                     load={() => getUrlInfo(url)}
-                    onChoose={() => setTabValue(1)}
+                    onChoose={(f) => {
+                        setTabValue(1)
+                        downloadFormat(url, f.id)
+                    }}
                 />
             )
         }
         if (tabValue === 1) {
             return <Reports />
         }
-        return null
+        return <CustomUrl />
     })()
 
     return (
