@@ -44,7 +44,6 @@ test('UrlDisplay', async (t) => {
     })
 
     await t.test('Calls onChoose when URL is clicked', async (t) => {
-        const url = 'https://example.com'
         const onChoose = t.mock.fn()
         const info: UrlInfo = {
             kind: 'url',
@@ -52,7 +51,7 @@ test('UrlDisplay', async (t) => {
             formats: [
                 {
                     id: '1',
-                    url,
+                    url: 'https://example.com',
                     extension: 'mp4',
                     note: 'Note',
                     quality: 'Quality',
