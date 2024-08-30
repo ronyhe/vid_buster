@@ -9,6 +9,7 @@
         "check": "npm run lint && tsc && npm test",
         "build": "parcel build",
         "start": "node dist/server.js",
+        "start:open": "npm run dev -- --open",
         "dev": "parcel serve --target dev",
         "clean": "rm -rf dist .parcel-cache",
         "rebuild": "npm run clean && npm run build",

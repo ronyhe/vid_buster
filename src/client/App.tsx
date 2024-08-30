@@ -24,6 +24,7 @@ export default function App({ url }: AppProps) {
                     <Tabs value={tabValue} onChange={handleChange}>
                         <Tab label="Here" />
                         <Tab label="Downloads" />
+                        <Tab label="Url" />
                     </Tabs>
                 </Box>
                 {tabValue === 0 ? (
@@ -35,3 +36,5 @@ export default function App({ url }: AppProps) {
         </Box>
     )
 }
+
+function Content(tabValue) {}

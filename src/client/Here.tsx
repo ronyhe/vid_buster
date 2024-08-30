@@ -11,6 +11,7 @@ import {
     Typography,
 } from '@mui/material'
 import Loader from './Loader'
+import FormatList from './FormatList'
 
 interface FormatsProps {
     onChoose(): void
@@ -55,26 +56,12 @@ export default function Here({ onChoose, url }: FormatsProps) {
     }
     const { info } = state
     return (
-        <Box>
-            <Typography variant="h6">{info.title}</Typography>
-            <List>
-                {info.formats.map((f) => (
-                    <Box key={f.id}>
-                        <ListItem>
-                            <Button
-                                onClick={() => {
-                                    downloadFormat(url, f.id)
-                                    onChoose()
-                                }}
-                            >
-                                {f.resolution} - {f.size} .{f.extension}{' '}
-                                {f.note && `(${f.note})`}
-                            </Button>
-                        </ListItem>
-                        <Divider />
-                    </Box>
-                ))}
-            </List>
-        </Box>
+        <FormatList
+            onChoose={(f) => {
+                downloadFormat(url, f.id)
+                onChoose()
+            }}
+            info={info}
+        />
     )
 }
