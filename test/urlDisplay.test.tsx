@@ -3,7 +3,6 @@ import { test, ok, equal } from './asserts'
 import { render } from './render'
 import UrlDisplay from '../src/client/UrlDisplay'
 import { UrlInfo } from '../src/messages'
-import { waitFor } from '@testing-library/dom'
 
 test('UrlDisplay', async (t) => {
     await t.test('Shows Loader while loading', async () => {
@@ -38,7 +37,8 @@ test('UrlDisplay', async (t) => {
                 onChoose={() => {}}
             />,
         )
-        await waitFor(() => screen.queryByRole('progressbar') === null)
+        // Should we await for something here?
+        // await waitFor(() => screen.queryByRole('progressbar') === null)
         const element = await screen.findByText(e.message)
         ok(element)
     })
