@@ -1,4 +1,5 @@
 import _assert from 'node:assert/strict'
+import _test from 'node:test'
 
 export {
     deepEqual,
@@ -31,3 +32,5 @@ type AssertFn = (...args: Parameters<Assert>) => ReturnType<Assert>
 // No eta reduction here, because we don't want to accidentally export the entire `assert` module
 // We avoid names like `assert` and `true` to prevent shadowing and avoid confusion
 export const correct: AssertFn = (...args) => _assert(...args)
+
+export const test = _test

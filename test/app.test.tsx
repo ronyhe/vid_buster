@@ -4,7 +4,7 @@ import { equal } from './asserts'
 import { render } from './render'
 import App from '../src/client/App'
 
-test('App has 2 tabs', async () => {
+test('App has 3 tabs', async () => {
     const { screen } = render(
         <App url="https://www.youtube.com/watch?v=Dwxv9ydfhBY&ab_channel=HeatCheck" />,
     )
