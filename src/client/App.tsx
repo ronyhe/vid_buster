@@ -1,7 +1,8 @@
 import React, { useCallback } from 'react'
 import { Box, Tab, Tabs } from '@mui/material'
-import Here from './Here'
 import Reports from './Reports'
+import UrlDisplay from './UrlDisplay'
+import { getUrlInfo } from './client'
 
 interface AppProps {
     url: string
@@ -17,21 +18,36 @@ export default function App({ url }: AppProps) {
         [],
     )
 
+    const tabs = (
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Tabs value={tabValue} onChange={handleChange}>
+                <Tab label="Here" />
+                <Tab label="Downloads" />
+                <Tab label="Url" />
+            </Tabs>
+        </Box>
+    )
+
+    const content = (() => {
+        if (tabValue === 0) {
+            return (
+                <UrlDisplay
+                    load={() => getUrlInfo(url)}
+                    onChoose={() => setTabValue(1)}
+                />
+            )
+        }
+        if (tabValue === 1) {
+            return <Reports />
+        }
+        return null
+    })()
+
     return (
         <Box>
             <Box sx={{ width: '100%', height: '100%' }}>
-                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                    <Tabs value={tabValue} onChange={handleChange}>
-                        <Tab label="Here" />
-                        <Tab label="Downloads" />
-                        <Tab label="Url" />
-                    </Tabs>
-                </Box>
-                {tabValue === 0 ? (
-                    <Here onChoose={() => setTabValue(1)} url={url} />
-                ) : (
-                    <Reports />
-                )}
+                {tabs}
+                {content}
             </Box>
         </Box>
     )
