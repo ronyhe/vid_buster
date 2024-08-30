@@ -1,7 +1,7 @@
 import React from 'react'
 import { test, ok, equal } from './asserts'
 import { render } from './render'
-import UrlDisplay, { UrlDisplayProps } from '../src/client/UrlDisplay'
+import UrlDisplay from '../src/client/UrlDisplay'
 import { UrlInfo } from '../src/messages'
 
 test('UrlDisplay', async (t) => {
