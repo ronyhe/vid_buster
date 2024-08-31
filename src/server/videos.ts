@@ -9,7 +9,9 @@ const exec = util.promisify(_exec)
 export async function getInfo(
     url: string,
 ): Promise<{ title: string | null; formats: Format[] }> {
-    const { stdout, stderr } = await exec(`yt-dlp -j --no-warnings ${url}`)
+    const command = `yt-dlp --dump-single-json --no-warnings ${url}`
+    console.log('command:', command)
+    const { stdout, stderr } = await exec(command)
     if (stderr) {
         throw new Error(stderr)
     }
@@ -26,7 +28,7 @@ export function downloadVideo(
     downloadDestination: string,
 ): TerminalStreams {
     const command = `yt-dlp --no-warnings --newline -f ${formatId} -P ${downloadDestination} ${url}`
-    console.log(command)
+    console.log('command:', command)
     const { stdout, stderr } = child_process.exec(command)
     if (!stdout) {
         throw new Error('No stdout')
