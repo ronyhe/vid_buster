@@ -1,9 +1,10 @@
 import React from 'react'
 import { correct, ok, test } from './asserts'
-import { render } from './render'
+import { render, cleanup } from './render'
 import DestinationDialog from '../src/client/DestinationDialog'
 
 test('DestinationDialog', async (t) => {
+    t.afterEach(cleanup)
     await t.test('Does not render when not open', async () => {
         const { screen } = render(
             <DestinationDialog
@@ -16,7 +17,7 @@ test('DestinationDialog', async (t) => {
         correct(dialog === null)
     })
 
-    await t.test('Renders', { skip: true }, () => {
+    await t.test('Renders', () => {
         const { screen } = render(
             <DestinationDialog
                 open={true}

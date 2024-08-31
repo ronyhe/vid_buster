@@ -1,6 +1,10 @@
 import 'global-jsdom/register'
 import { ReactNode } from 'react'
-import { render as baseRender, screen } from '@testing-library/react'
+import {
+    render as baseRender,
+    screen,
+    cleanup as _cleanup,
+} from '@testing-library/react'
 import userEvent, { UserEvent } from '@testing-library/user-event'
 
 export type Screen = typeof screen
@@ -17,3 +21,5 @@ export function render(ui: ReactNode): TestSetup {
         user: userEvent.setup(),
     }
 }
+
+export const cleanup = _cleanup
