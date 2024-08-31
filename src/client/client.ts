@@ -15,8 +15,9 @@ export async function getUrlInfo(url: string): Promise<UrlInfo> {
 export async function downloadFormat(
     url: string,
     format_id: string,
+    filename: string,
 ): Promise<void> {
-    await sendMessage(downloadMessage(url, format_id))
+    await sendMessage(downloadMessage(url, format_id, filename))
 }
 
 export async function getReports(): Promise<SingleStatusReport[]> {

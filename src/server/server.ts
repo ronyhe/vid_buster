@@ -66,6 +66,7 @@ async function handleReq(req: http.IncomingMessage): Promise<Message | null> {
             message.url,
             message.format_id,
             downloadDestination,
+            message.filename,
         )
         tracker.track(message.url, readline)
         return null

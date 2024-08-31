@@ -34,9 +34,9 @@ export default function App({ url }: AppProps) {
             return (
                 <UrlDisplay
                     load={() => getUrlInfo(url)}
-                    onChoose={(f) => {
+                    onChoose={(f, filename) => {
                         setTabValue(1)
-                        downloadFormat(url, f.id)
+                        downloadFormat(url, f.id, filename)
                     }}
                 />
             )
@@ -46,9 +46,9 @@ export default function App({ url }: AppProps) {
         }
         return (
             <CustomUrl
-                onChoose={(f) => {
+                onChoose={(f, filename) => {
                     setTabValue(1)
-                    downloadFormat(f.url, f.id)
+                    downloadFormat(f.url, f.id, filename)
                 }}
             />
         )

@@ -8,7 +8,7 @@ import DestinationDialog from './DestinationDialog'
 
 export interface UrlDisplayProps {
     load(): Promise<UrlInfo>
-    onChoose(format: Format): void
+    onChoose(format: Format, filename: string): void
 }
 
 type State =
@@ -51,7 +51,12 @@ export default function UrlDisplay({ load, onChoose }: UrlDisplayProps) {
             />
             <DestinationDialog
                 open={format !== null}
-                onClose={() => setFormat(null)}
+                onClose={(filename) => {
+                    if (filename !== null) {
+                        onChoose(format!, filename)
+                    }
+                    setFormat(null)
+                }}
                 title={info.title ?? undefined}
                 extension={format?.extension ?? undefined}
             />

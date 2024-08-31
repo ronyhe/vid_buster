@@ -67,6 +67,7 @@ test('UrlDisplay', async (t) => {
         await screen.findByText(info.title!)
         const item = screen.getByRole('button')
         await user.click(item)
+        await user.click(screen.getByRole('button', { name: 'Ok' }))
         equal(onChoose.mock.calls.at(0)!.arguments[0]!.id, info.formats[0].id)
     })
 })

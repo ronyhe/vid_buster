@@ -5,7 +5,7 @@ import { getUrlInfo } from './client'
 import { Format } from '../messages'
 
 export interface CustomUrlProps {
-    onChoose(format: Format): void
+    onChoose(format: Format, filename: string): void
 }
 
 export function CustomUrl({ onChoose }: CustomUrlProps) {
