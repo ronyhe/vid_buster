@@ -11,7 +11,7 @@
         "build:server": "parcel build --target server",
         "start:server": "node dist/server.js",
         "start:dev:server": "npx tsx --watch src/server/server.ts",
-        "start:dev:open": "npm run dev -- --open",
+        "start:dev:open": "npm run start:dev -- --open",
         "start:dev": "parcel serve --target dev",
         "clean": "rm -rf dist .parcel-cache",
         "rebuild": "npm run clean && npm run build",
