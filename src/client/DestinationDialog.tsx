@@ -1,10 +1,16 @@
 import React from 'react'
-import { Dialog, DialogTitle, TextField } from '@mui/material'
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogTitle,
+    TextField,
+} from '@mui/material'
 
 interface DestinationDialogProps {
     open: boolean
-    onClose(): void
-    onChoose(name: string): void
+    // null means the user cancelled the dialog
+    onClose(name: null | string): void
     title?: string
     extension?: string
 }
@@ -12,16 +18,25 @@ interface DestinationDialogProps {
 export default function DestinationDialog({
     open,
     onClose,
-    onChoose,
     title,
     extension,
 }: DestinationDialogProps) {
     const ext = extension ? `.${extension}` : ''
     const suggestedName = `${title ?? 'no-title'}${ext}`
+    const [value, setValue] = React.useState(suggestedName)
     return (
-        <Dialog open={open} onClose={onClose}>
-            <DialogTitle>Destination</DialogTitle>
-            <TextField value={suggestedName}></TextField>
+        <Dialog open={open}>
+            <DialogTitle>Download Destination</DialogTitle>
+            <TextField
+                value={value}
+                onChange={(e) => {
+                    setValue(e.target.value)
+                }}
+            ></TextField>
+            <DialogActions>
+                <Button onClick={() => onClose(null)}>Cancel</Button>
+                <Button onClick={() => onClose(value)}>Ok</Button>
+            </DialogActions>
         </Dialog>
     )
 }
