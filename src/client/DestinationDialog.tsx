@@ -32,6 +32,13 @@ export default function DestinationDialog({
                 <TextField
                     defaultValue={suggestedName}
                     autoFocus={true}
+                    onFocus={(event) => {
+                        event.preventDefault()
+                        const { target } = event
+                        const extensionStarts = target.value.lastIndexOf('.')
+                        target.focus()
+                        target.setSelectionRange(0, extensionStarts)
+                    }}
                     onChange={(e) => {
                         setValue(e.target.value)
                     }}
