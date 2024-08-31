@@ -48,21 +48,14 @@ test('DestinationDialog', async (t) => {
         correct(onClose.mock.calls[0].arguments[0] === 'no-title')
     })
 
-    await t.test(
-        'Calls onClose with user inputted file name',
-        // I'm unable to implement this test at the moment.
-        // Perhaps I don't understand the tools involved well enough?
-        // I'll come back to it
-        { skip: true },
-        async () => {
-            const onClose = t.mock.fn()
-            const userFileName = 'user-file-name.mp4'
-            const { screen, user } = render(
-                <DestinationDialog open={true} onClose={onClose} />,
-            )
-            await user.keyboard(userFileName)
-            await user.click(screen.getByRole('button', { name: 'Ok' }))
-            correct(onClose.mock.calls[0].arguments[1] === userFileName)
-        },
-    )
+    await t.test('Calls onClose with user inputted file name', async () => {
+        const onClose = t.mock.fn()
+        const userFileName = 'user-file-name.mp4'
+        const { screen, user } = render(
+            <DestinationDialog open={true} onClose={onClose} />,
+        )
+        await user.keyboard(userFileName)
+        await user.click(screen.getByRole('button', { name: 'Ok' }))
+        correct(onClose.mock.calls[0].arguments[0] === userFileName)
+    })
 })
