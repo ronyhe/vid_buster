@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Loader from './Loader'
 import FormatList from './FormatList'
 import { Box, Typography } from '@mui/material'
+import DestinationDialog from './DestinationDialog'
 
 export interface UrlDisplayProps {
     load(): Promise<UrlInfo>
@@ -17,6 +18,7 @@ type State =
 
 export default function UrlDisplay({ load, onChoose }: UrlDisplayProps) {
     const [state, setState] = useState<State>({ state: 'loading' })
+    const [format, setFormat] = useState<Format | null>(null)
     useEffect(() => {
         ;(async () => {
             try {
@@ -39,5 +41,20 @@ export default function UrlDisplay({ load, onChoose }: UrlDisplayProps) {
         )
     }
     const info = state.info
-    return <FormatList onChoose={onChoose} info={info} />
+    return (
+        <>
+            <FormatList
+                onChoose={(f) => {
+                    setFormat(f)
+                }}
+                info={info}
+            />
+            <DestinationDialog
+                open={format !== null}
+                onClose={() => setFormat(null)}
+                title={info.title ?? undefined}
+                extension={format?.extension ?? undefined}
+            />
+        </>
+    )
 }

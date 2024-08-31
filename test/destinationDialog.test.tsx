@@ -29,4 +29,22 @@ test('DestinationDialog', async (t) => {
         await user.click(screen.getByRole('button', { name: 'Cancel' }))
         correct(onClose.mock.callCount() === 1)
     })
+
+    await t.test('Calls onClose with null', async () => {
+        const onClose = t.mock.fn()
+        const { screen, user } = render(
+            <DestinationDialog open={true} onClose={onClose} />,
+        )
+        await user.click(screen.getByRole('button', { name: 'Cancel' }))
+        correct(onClose.mock.calls[0].arguments[0] === null)
+    })
+
+    await t.test('Calls onClose with value', async () => {
+        const onClose = t.mock.fn()
+        const { screen, user } = render(
+            <DestinationDialog open={true} onClose={onClose} />,
+        )
+        await user.click(screen.getByRole('button', { name: 'Ok' }))
+        correct(onClose.mock.calls[0].arguments[0] === 'no-title')
+    })
 })
