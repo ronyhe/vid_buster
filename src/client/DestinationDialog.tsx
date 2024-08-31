@@ -26,7 +26,18 @@ export default function DestinationDialog({
     const suggestedName = `${escapeFilename(title ?? 'no-title')}${ext}`
     const [value, setValue] = React.useState<string | null>(null)
     return (
-        <Dialog open={open}>
+        <Dialog
+            open={open}
+            onKeyUp={(e) => {
+                if (e.key === 'Enter') {
+                    onClose(value ?? suggestedName)
+                }
+            }}
+            onClose={() => {
+                // According to the types, the reasons are only 'escapeKeyDown' and 'backdropClick'
+                onClose(null)
+            }}
+        >
             <DialogTitle>Download Destination</DialogTitle>
             <DialogContent>
                 <TextField

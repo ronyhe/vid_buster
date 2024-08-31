@@ -58,4 +58,27 @@ test('DestinationDialog', async (t) => {
         await user.click(screen.getByRole('button', { name: 'Ok' }))
         correct(onClose.mock.calls[0].arguments[0] === userFileName)
     })
+
+    await t.test('Respects the Escape key', async () => {
+        const onClose = t.mock.fn()
+        const { user } = render(
+            <DestinationDialog open={true} onClose={onClose} />,
+        )
+        await user.keyboard('{Escape}')
+        correct(onClose.mock.calls[0].arguments[0] === null)
+    })
+
+    await t.test('Respects the Enter key', async () => {
+        const onClose = t.mock.fn()
+        const { user } = render(
+            <DestinationDialog
+                open={true}
+                onClose={onClose}
+                extension={'mp4'}
+            />,
+        )
+        await user.keyboard('a')
+        await user.keyboard('{Enter}')
+        correct(onClose.mock.calls[0].arguments[0] === 'a.mp4')
+    })
 })
