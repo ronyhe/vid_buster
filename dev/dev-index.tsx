@@ -10,7 +10,7 @@ import { CssBaseline } from '@mui/material'
 import App from '../src/client/App'
 
 function main() {
-    const root = createRoot(document.querySelector('body')!)
+    const root = createRoot(document.querySelector('#root')!)
     const url =
         'https://www.youtube.com/watch?v=Dwxv9ydfhBY&ab_channel=HeatCheck'
     root.render(
