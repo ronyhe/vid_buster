@@ -12,7 +12,7 @@ import App from './App'
 
 async function main() {
     const url = await inspectedPageUrl()
-    const root = createRoot(document.querySelector('root')!)
+    const root = createRoot(document.querySelector('#root')!)
     root.render(
         <CssBaseline>
             <App url={url}></App>
