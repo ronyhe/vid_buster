@@ -77,8 +77,7 @@ test('DestinationDialog', async (t) => {
                 extension={'mp4'}
             />,
         )
-        await user.keyboard('a')
-        await user.keyboard('{Enter}')
+        await user.keyboard('a{Enter}')
         correct(onClose.mock.calls[0].arguments[0] === 'a.mp4')
     })
 })
