@@ -48,7 +48,7 @@ test('DestinationDialog', async (t) => {
         correct(onClose.mock.calls[0].arguments[0] === 'no-title')
     })
 
-    await t.test('Calls onClose with user inputted file name', async () => {
+    await t.test('Calls onClose with user-provided file name', async () => {
         const onClose = t.mock.fn()
         const userFileName = 'user-file-name.mp4'
         const { screen, user } = render(
