@@ -1,5 +1,5 @@
 import React from 'react'
-import { test, ok, equal } from './asserts'
+import { test, ok, expect } from './asserts'
 import { cleanup, render } from './render'
 import UrlDisplay from '../src/client/UrlDisplay'
 import { UrlInfo } from '../src/messages'
@@ -68,6 +68,12 @@ test('UrlDisplay', async (t) => {
         const item = screen.getByRole('button')
         await user.click(item)
         await user.click(screen.getByRole('button', { name: 'Ok' }))
-        equal(onChoose.mock.calls.at(0)!.arguments[0]!.id, info.formats[0].id)
+
+        const format = info.formats[0]
+        expect(onChoose).toHaveBeenCalledTimes(1)
+        expect(onChoose).toHaveBeenCalledWith(
+            format,
+            `${info.title}.${format.extension}`,
+        )
     })
 })

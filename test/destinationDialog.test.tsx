@@ -1,5 +1,5 @@
 import React from 'react'
-import { correct, ok, test } from './asserts'
+import { correct, ok, test, expect } from './asserts'
 import { render, cleanup } from './render'
 import DestinationDialog from '../src/client/DestinationDialog'
 
@@ -27,7 +27,7 @@ test('DestinationDialog', async (t) => {
             <DestinationDialog open={true} onClose={onClose} />,
         )
         await user.click(screen.getByRole('button', { name: 'Cancel' }))
-        correct(onClose.mock.callCount() === 1)
+        expect(onClose).toHaveBeenCalledTimes(1)
     })
 
     await t.test('Calls onClose with null', async () => {
@@ -36,7 +36,8 @@ test('DestinationDialog', async (t) => {
             <DestinationDialog open={true} onClose={onClose} />,
         )
         await user.click(screen.getByRole('button', { name: 'Cancel' }))
-        correct(onClose.mock.calls[0].arguments[0] === null)
+        expect(onClose).toHaveBeenCalledTimes(1)
+        expect(onClose).toHaveBeenCalledWith(null)
     })
 
     await t.test('Calls onClose with value', async () => {
@@ -45,7 +46,8 @@ test('DestinationDialog', async (t) => {
             <DestinationDialog open={true} onClose={onClose} />,
         )
         await user.click(screen.getByRole('button', { name: 'Ok' }))
-        correct(onClose.mock.calls[0].arguments[0] === 'no-title')
+        expect(onClose).toHaveBeenCalledTimes(1)
+        expect(onClose).toHaveBeenCalledWith('no-title')
     })
 
     await t.test('Calls onClose with user-provided file name', async () => {
@@ -56,7 +58,8 @@ test('DestinationDialog', async (t) => {
         )
         await user.keyboard(userFileName)
         await user.click(screen.getByRole('button', { name: 'Ok' }))
-        correct(onClose.mock.calls[0].arguments[0] === userFileName)
+        expect(onClose).toHaveBeenCalledTimes(1)
+        expect(onClose).toHaveBeenCalledWith(userFileName)
     })
 
     await t.test('Respects the Escape key', async () => {
@@ -65,7 +68,8 @@ test('DestinationDialog', async (t) => {
             <DestinationDialog open={true} onClose={onClose} />,
         )
         await user.keyboard('{Escape}')
-        correct(onClose.mock.calls[0].arguments[0] === null)
+        expect(onClose).toHaveBeenCalledTimes(1)
+        expect(onClose).toHaveBeenCalledWith(null)
     })
 
     await t.test('Respects the Enter key', async () => {
@@ -78,6 +82,7 @@ test('DestinationDialog', async (t) => {
             />,
         )
         await user.keyboard('a{Enter}')
-        correct(onClose.mock.calls[0].arguments[0] === 'a.mp4')
+        expect(onClose).toHaveBeenCalledTimes(1)
+        expect(onClose).toHaveBeenCalledWith('a.mp4')
     })
 })
