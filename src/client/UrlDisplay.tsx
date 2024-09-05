@@ -1,48 +1,44 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Format, UrlInfo } from '../messages'
 import { useState } from 'react'
-import { Spinner } from './Spinner'
 import { FormatList } from './FormatList'
 import { Box, Typography } from '@mui/material'
 import { DestinationDialog } from './DestinationDialog'
+import { Loader } from './Loader'
+
+type OnChoose = (format: Format, filename: string) => void
 
 export interface UrlDisplayProps {
     load(): Promise<UrlInfo>
-    onChoose(format: Format, filename: string): void
+    onChoose: OnChoose
 }
 
-type State =
-    | { state: 'loading' }
-    | { state: 'error'; err: unknown }
-    | { state: 'success'; info: UrlInfo }
+interface InternalProps {
+    info: UrlInfo
+    onChoose: OnChoose
+}
 
 export function UrlDisplay({ load, onChoose }: UrlDisplayProps) {
-    const [state, setState] = useState<State>({ state: 'loading' })
-    const [format, setFormat] = useState<Format | null>(null)
-    useEffect(() => {
-        ;(async () => {
-            try {
-                const info = await load()
-                setState({ state: 'success', info })
-            } catch (e) {
-                setState({ state: 'error', err: e })
-            }
-        })()
-    }, [])
-    if (state.state === 'loading') {
-        return <Spinner />
-    }
-    if (state.state === 'error') {
-        return (
-            <Box>
-                <Typography variant="h6">Error loading URL</Typography>
-                <Typography>{(state.err as Error).message}</Typography>
-            </Box>
-        )
-    }
-    const info = state.info
     return (
-        <>
+        <Loader
+            getData={load}
+            createContent={(info) => (
+                <Internal info={info} onChoose={onChoose} />
+            )}
+            createError={(e) => (
+                <Box>
+                    <Typography variant="h6">Error loading URL</Typography>
+                    <Typography>{e.message}</Typography>
+                </Box>
+            )}
+        />
+    )
+}
+
+function Internal({ info, onChoose }: InternalProps) {
+    const [format, setFormat] = useState<Format | null>(null)
+    return (
+        <Box padding={2}>
             <FormatList
                 onChoose={(f) => {
                     setFormat(f)
@@ -60,6 +56,6 @@ export function UrlDisplay({ load, onChoose }: UrlDisplayProps) {
                 title={info.title ?? undefined}
                 extension={format?.extension ?? undefined}
             />
-        </>
+        </Box>
     )
 }
