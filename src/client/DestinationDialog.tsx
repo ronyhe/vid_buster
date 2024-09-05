@@ -16,7 +16,7 @@ interface DestinationDialogProps {
     extension?: string
 }
 
-export default function DestinationDialog({
+export function DestinationDialog({
     open,
     onClose,
     title,

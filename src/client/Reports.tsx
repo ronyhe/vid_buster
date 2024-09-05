@@ -3,7 +3,7 @@ import { SingleStatusReport } from '../messages'
 import { getReports } from './client'
 import { Box, Divider, List, Typography } from '@mui/material'
 
-export default function Reports() {
+export function Reports() {
     const [reports, setReports] = React.useState<SingleStatusReport[] | null>(
         null,
     )

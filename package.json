@@ -6,7 +6,8 @@
     "scripts": {
         "lint": "eslint",
         "lint:fix": "eslint --fix",
-        "check": "npm run lint && tsc && npm test",
+        "typecheck": "tsc",
+        "check": "npm run lint && npm run typecheck && npm test",
         "build": "parcel build",
         "build:server": "parcel build --target server",
         "prod:start": "node dist/server.js",

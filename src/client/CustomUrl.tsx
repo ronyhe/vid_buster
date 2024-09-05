@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react'
 import { TextField } from '@mui/material'
-import UrlDisplay from './UrlDisplay'
+import { UrlDisplay } from './UrlDisplay'
 import { getUrlInfo } from './client'
 import { Format } from '../messages'
 

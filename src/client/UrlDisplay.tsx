@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import { Format, UrlInfo } from '../messages'
 import { useState } from 'react'
-import Loader from './Loader'
-import FormatList from './FormatList'
+import { Loader } from './Loader'
+import { FormatList } from './FormatList'
 import { Box, Typography } from '@mui/material'
-import DestinationDialog from './DestinationDialog'
+import { DestinationDialog } from './DestinationDialog'
 
 export interface UrlDisplayProps {
     load(): Promise<UrlInfo>
@@ -16,7 +16,7 @@ type State =
     | { state: 'error'; err: unknown }
     | { state: 'success'; info: UrlInfo }
 
-export default function UrlDisplay({ load, onChoose }: UrlDisplayProps) {
+export function UrlDisplay({ load, onChoose }: UrlDisplayProps) {
     const [state, setState] = useState<State>({ state: 'loading' })
     const [format, setFormat] = useState<Format | null>(null)
     useEffect(() => {

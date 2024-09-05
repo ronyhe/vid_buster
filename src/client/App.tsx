@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import { Box, Tab, Tabs } from '@mui/material'
-import Reports from './Reports'
-import UrlDisplay from './UrlDisplay'
+import { Reports } from './Reports'
+import { UrlDisplay } from './UrlDisplay'
 import { downloadFormat, getUrlInfo } from './client'
 import { CustomUrl } from './CustomUrl'
 
@@ -9,7 +9,7 @@ interface AppProps {
     url: string
 }
 
-export default function App({ url }: AppProps) {
+export function App({ url }: AppProps) {
     const [tabValue, setTabValue] = React.useState(0)
 
     const handleChange = useCallback(

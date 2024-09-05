@@ -8,7 +8,7 @@ import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 
 import { CssBaseline } from '@mui/material'
-import App from './App'
+import { App } from './App'
 
 async function main() {
     const url = await inspectedPageUrl()
