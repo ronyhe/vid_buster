@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Format, UrlInfo } from '../messages'
 import { useState } from 'react'
-import { Loader } from './Loader'
+import { Spinner } from './Spinner'
 import { FormatList } from './FormatList'
 import { Box, Typography } from '@mui/material'
 import { DestinationDialog } from './DestinationDialog'
@@ -30,7 +30,7 @@ export function UrlDisplay({ load, onChoose }: UrlDisplayProps) {
         })()
     }, [])
     if (state.state === 'loading') {
-        return <Loader />
+        return <Spinner />
     }
     if (state.state === 'error') {
         return (
