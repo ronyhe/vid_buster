@@ -22,6 +22,11 @@ export function App({ url, getSettings, updateSettings }: AppProps) {
         [],
     )
 
+    const getDownloadDestination = async () => {
+        const settings = await getSettings()
+        return settings.defaultDownloadPath
+    }
+
     const tabs = (
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={tabValue} onChange={handleChange}>
@@ -38,9 +43,14 @@ export function App({ url, getSettings, updateSettings }: AppProps) {
             return (
                 <UrlDisplay
                     load={() => getUrlInfo(url)}
-                    onChoose={(f, filename) => {
+                    onChoose={async (f, filename) => {
                         setTabValue(1)
-                        downloadFormat(url, f.id, filename)
+                        await downloadFormat(
+                            url,
+                            f.id,
+                            filename,
+                            await getDownloadDestination(),
+                        )
                     }}
                 />
             )
@@ -51,9 +61,14 @@ export function App({ url, getSettings, updateSettings }: AppProps) {
         if (tabValue === 2) {
             return (
                 <CustomUrl
-                    onChoose={(f, filename) => {
+                    onChoose={async (f, filename) => {
                         setTabValue(1)
-                        downloadFormat(f.url, f.id, filename)
+                        await downloadFormat(
+                            f.url,
+                            f.id,
+                            filename,
+                            await getDownloadDestination(),
+                        )
                     }}
                 />
             )

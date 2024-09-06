@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box, Button, TextField } from '@mui/material'
+import { Box, Button, setRef, Snackbar, TextField } from '@mui/material'
 import { Loader } from './Loader'
 
 export interface Settings {
@@ -34,11 +34,13 @@ function Internal({
 }: InternalProps) {
     const [path, setPath] = useState(defaultDownloadPath)
     const [error, setError] = useState<string | null>(null)
+    const [saved, setSaved] = useState(false)
     const save = async () => {
         try {
             await updateSettings({
                 defaultDownloadPath: path,
             })
+            setSaved(true)
         } catch (e) {
             setError((e as Error).message)
         }
@@ -48,6 +50,22 @@ function Internal({
     }
     return (
         <Box sx={{ padding: '5px' }}>
+            <Snackbar
+                open={error !== null}
+                autoHideDuration={4000}
+                onClose={() => {
+                    setError(null)
+                }}
+                message={'Cannot save settings'}
+            />
+            <Snackbar
+                open={saved}
+                autoHideDuration={4000}
+                onClose={() => {
+                    setSaved(false)
+                }}
+                message="Settings saved"
+            />
             <TextField
                 onKeyUp={async (e) => {
                     if (e.key === 'Enter') {
