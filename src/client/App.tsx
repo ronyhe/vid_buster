@@ -24,7 +24,7 @@ export function App({ url, getSettings, updateSettings }: AppProps) {
 
     const getDownloadDestination = async () => {
         const settings = await getSettings()
-        return settings.defaultDownloadPath
+        return settings.downloadDirectory
     }
 
     const tabs = (

@@ -3,7 +3,7 @@ import { Box, Button, Snackbar, TextField } from '@mui/material'
 import { Loader } from './Loader'
 
 export interface Settings {
-    defaultDownloadPath: string
+    downloadDirectory: string
 }
 
 export interface SettingsProps {
@@ -29,16 +29,16 @@ export function Settings({ getSettings, updateSettings }: SettingsProps) {
 }
 
 function Internal({
-    settings: { defaultDownloadPath },
+    settings: { downloadDirectory },
     updateSettings,
 }: InternalProps) {
-    const [path, setPath] = useState(defaultDownloadPath)
+    const [path, setPath] = useState(downloadDirectory)
     const [error, setError] = useState<string | null>(null)
     const [saved, setSaved] = useState(false)
     const save = async () => {
         try {
             await updateSettings({
-                defaultDownloadPath: path,
+                downloadDirectory: path,
             })
             setSaved(true)
         } catch (e) {
@@ -73,8 +73,8 @@ function Internal({
                     }
                 }}
                 variant="standard"
-                label="Default download path"
-                defaultValue={defaultDownloadPath ?? '~/Downloads'}
+                label="Download directory"
+                defaultValue={downloadDirectory ?? '~/Downloads'}
                 onChange={(e) => {
                     setPath(e.target.value)
                 }}

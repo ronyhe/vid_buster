@@ -11,7 +11,7 @@ import { App } from '../src/client/App'
 import { Settings } from '../src/client/Settings'
 
 let settings: Settings = {
-    defaultDownloadPath: '~/Downloads',
+    downloadDirectory: '~/Downloads',
 }
 function main() {
     const root = createRoot(document.querySelector('#root')!)
