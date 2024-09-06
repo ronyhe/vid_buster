@@ -69,7 +69,7 @@ function Internal({
                 }}
                 autoFocus={true}
                 sx={{
-                    width: '40%',
+                    width: '90%',
                 }}
             />
         </Box>

@@ -9,6 +9,23 @@ import '@fontsource/roboto/700.css'
 
 import { CssBaseline } from '@mui/material'
 import { App } from './App'
+import { Settings } from './Settings'
+
+const SETTINGS_KEY = 'VID_BUSTER_SETTINGS'
+
+async function getSettings(): Promise<Settings> {
+    return new Promise((resolve) => {
+        chrome.storage.sync.get([SETTINGS_KEY], (result) => {
+            resolve(result[SETTINGS_KEY] || {})
+        })
+    })
+}
+
+async function updateSettings(settings: Settings): Promise<void> {
+    return new Promise((resolve) => {
+        chrome.storage.sync.set({ [SETTINGS_KEY]: settings }, resolve)
+    })
+}
 
 async function main() {
     const url = await inspectedPageUrl()
@@ -17,12 +34,8 @@ async function main() {
         <CssBaseline>
             <App
                 url={url}
-                getSettings={async () => {
-                    throw new Error('Not implemented')
-                }}
-                updateSettings={async (_s) => {
-                    throw new Error('Not implemented')
-                }}
+                getSettings={getSettings}
+                updateSettings={updateSettings}
             ></App>
         </CssBaseline>,
     )
