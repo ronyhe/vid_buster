@@ -1,5 +1,5 @@
 import React from 'react'
-import { correct, ok, test, expect } from './asserts'
+import { ok, test, expect } from './asserts'
 import { render, cleanup } from './render'
 import { Loader } from '../src/client/Loader'
 

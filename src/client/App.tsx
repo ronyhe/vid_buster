@@ -4,6 +4,7 @@ import { Reports } from './Reports'
 import { UrlDisplay } from './UrlDisplay'
 import { downloadFormat, getUrlInfo } from './client'
 import { CustomUrl } from './CustomUrl'
+import { Settings } from './Settings'
 
 interface AppProps {
     url: string
@@ -25,6 +26,7 @@ export function App({ url }: AppProps) {
                 <Tab label="Here" />
                 <Tab label="Downloads" />
                 <Tab label="Url" />
+                <Tab label={'Settings'} />
             </Tabs>
         </Box>
     )
@@ -44,14 +46,29 @@ export function App({ url }: AppProps) {
         if (tabValue === 1) {
             return <Reports />
         }
-        return (
-            <CustomUrl
-                onChoose={(f, filename) => {
-                    setTabValue(1)
-                    downloadFormat(f.url, f.id, filename)
-                }}
-            />
-        )
+        if (tabValue === 2) {
+            return (
+                <CustomUrl
+                    onChoose={(f, filename) => {
+                        setTabValue(1)
+                        downloadFormat(f.url, f.id, filename)
+                    }}
+                />
+            )
+        }
+        if (tabValue === 3) {
+            return (
+                <Settings
+                    updateSettings={async (s) => {
+                        console.log(s)
+                    }}
+                    getSettings={async () => ({
+                        defaultDownloadPath: '/tmp',
+                    })}
+                />
+            )
+        }
+        throw new Error('Invalid tab value')
     })()
 
     return (
