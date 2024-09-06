@@ -28,7 +28,7 @@ export function downloadVideo(
     downloadDestination: string,
     filename: string,
 ): TerminalStreams {
-    const command = `yt-dlp --no-warnings --newline -f ${formatId} -P ${downloadDestination} -o "${filename}" ${url}`
+    const command = `yt-dlp --no-warnings --newline -f ${formatId} -P "${downloadDestination}" -o "${filename}" "${url}"`
     console.log('command:', command)
     const { stdout, stderr } = child_process.exec(command)
     if (!stdout) {
