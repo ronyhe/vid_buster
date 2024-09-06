@@ -47,25 +47,21 @@ test('Settings', async (t) => {
         },
     )
 
-    await t.test(
-        'Displays an error if updateSettings fails',
-        { skip: true },
-        async () => {
-            const { screen, user } = render(
-                <Settings
-                    getSettings={() =>
-                        Promise.resolve({ defaultDownloadPath: '' })
-                    }
-                    updateSettings={() =>
-                        Promise.reject(new Error('Error saving settings'))
-                    }
-                />,
-            )
-            const saveButton = screen.getByText('Save')
-            await user.click(saveButton)
-            await screen.findByText('Error saving settings')
-        },
-    )
+    await t.test('Displays an error if updateSettings fails', async () => {
+        const { screen, user } = render(
+            <Settings
+                getSettings={() =>
+                    Promise.resolve({ defaultDownloadPath: '/tmp' })
+                }
+                updateSettings={() =>
+                    Promise.reject(new Error('Error saving settings'))
+                }
+            />,
+        )
+        const saveButton = await screen.findByText('Save')
+        await user.click(saveButton)
+        await screen.findByText('Error saving settings')
+    })
 
     await t.test(
         'Trigger the update on Enter key',

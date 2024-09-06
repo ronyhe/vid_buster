@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Box, Button, TextField } from '@mui/material'
 import { Loader } from './Loader'
 
@@ -32,7 +32,11 @@ function Internal({
     settings: { defaultDownloadPath },
     updateSettings,
 }: InternalProps) {
-    const [path, setPath] = React.useState(defaultDownloadPath)
+    const [path, setPath] = useState(defaultDownloadPath)
+    const [error, setError] = useState<string | null>(null)
+    if (error) {
+        return <div>{error}</div>
+    }
     return (
         <Box sx={{ padding: '5px' }}>
             <TextField
@@ -46,8 +50,14 @@ function Internal({
                     endAdornment: (
                         <Button
                             variant="text"
-                            onClick={() => {
-                                updateSettings({ defaultDownloadPath: path })
+                            onClick={async () => {
+                                try {
+                                    await updateSettings({
+                                        defaultDownloadPath: path,
+                                    })
+                                } catch (e) {
+                                    setError(e.message)
+                                }
                             }}
                         >
                             Save
