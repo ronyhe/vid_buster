@@ -31,7 +31,6 @@ test('Settings', async (t) => {
 
     await t.test(
         'Calls updateSettings when save button is clicked',
-        { skip: true },
         async (t) => {
             const updateSettings = t.mock.fn(() => Promise.resolve())
             const settings = { defaultDownloadPath: '/path/to/download' }
