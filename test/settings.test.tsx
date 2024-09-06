@@ -63,21 +63,17 @@ test('Settings', async (t) => {
         await screen.findByText('Error saving settings')
     })
 
-    await t.test(
-        'Trigger the update on Enter key',
-        { skip: true },
-        async (t) => {
-            const updateSettings = t.mock.fn(() => Promise.resolve())
-            const settings = { defaultDownloadPath: '/path/to/download' }
-            const { screen, user } = render(
-                <Settings
-                    getSettings={() => Promise.resolve(settings)}
-                    updateSettings={updateSettings}
-                />,
-            )
-            await screen.findByDisplayValue(settings.defaultDownloadPath)
-            await user.keyboard('{Enter}')
-            expect(updateSettings).toHaveBeenCalledTimes(1)
-        },
-    )
+    await t.test('Triggers the update on Enter key', async (t) => {
+        const updateSettings = t.mock.fn(() => Promise.resolve())
+        const settings = { defaultDownloadPath: '/path/to/download' }
+        const { screen, user } = render(
+            <Settings
+                getSettings={() => Promise.resolve(settings)}
+                updateSettings={updateSettings}
+            />,
+        )
+        await screen.findByDisplayValue(settings.defaultDownloadPath)
+        await user.keyboard('{Enter}')
+        expect(updateSettings).toHaveBeenCalledTimes(1)
+    })
 })

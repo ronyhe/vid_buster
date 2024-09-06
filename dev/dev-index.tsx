@@ -8,14 +8,24 @@ import '@fontsource/roboto/700.css'
 
 import { CssBaseline } from '@mui/material'
 import { App } from '../src/client/App'
+import { Settings } from '../src/client/Settings'
 
+let settings: Settings = {
+    defaultDownloadPath: '~/Downloads',
+}
 function main() {
     const root = createRoot(document.querySelector('#root')!)
     const url =
         'https://www.youtube.com/watch?v=Dwxv9ydfhBY&ab_channel=HeatCheck'
     root.render(
         <CssBaseline>
-            <App url={url}></App>
+            <App
+                url={url}
+                getSettings={async () => settings}
+                updateSettings={async (s) => {
+                    settings = s
+                }}
+            ></App>
         </CssBaseline>,
     )
 }

@@ -34,12 +34,26 @@ function Internal({
 }: InternalProps) {
     const [path, setPath] = useState(defaultDownloadPath)
     const [error, setError] = useState<string | null>(null)
+    const save = async () => {
+        try {
+            await updateSettings({
+                defaultDownloadPath: path,
+            })
+        } catch (e) {
+            setError((e as Error).message)
+        }
+    }
     if (error) {
         return <div>{error}</div>
     }
     return (
         <Box sx={{ padding: '5px' }}>
             <TextField
+                onKeyUp={async (e) => {
+                    if (e.key === 'Enter') {
+                        await save()
+                    }
+                }}
                 variant="standard"
                 label="Default download path"
                 defaultValue={defaultDownloadPath ?? '~/Downloads'}
@@ -48,22 +62,12 @@ function Internal({
                 }}
                 InputProps={{
                     endAdornment: (
-                        <Button
-                            variant="text"
-                            onClick={async () => {
-                                try {
-                                    await updateSettings({
-                                        defaultDownloadPath: path,
-                                    })
-                                } catch (e) {
-                                    setError(e.message)
-                                }
-                            }}
-                        >
+                        <Button variant="text" onClick={save}>
                             Save
                         </Button>
                     ),
                 }}
+                autoFocus={true}
                 sx={{
                     width: '40%',
                 }}

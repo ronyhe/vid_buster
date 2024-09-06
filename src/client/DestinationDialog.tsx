@@ -41,6 +41,7 @@ export function DestinationDialog({
             <DialogTitle>Download Destination</DialogTitle>
             <DialogContent>
                 <TextField
+                    variant="standard"
                     defaultValue={suggestedName}
                     autoFocus={true}
                     onFocus={(event) => {

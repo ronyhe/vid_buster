@@ -8,9 +8,11 @@ import { Settings } from './Settings'
 
 interface AppProps {
     url: string
+    getSettings(): Promise<Settings>
+    updateSettings(settings: Settings): Promise<void>
 }
 
-export function App({ url }: AppProps) {
+export function App({ url, getSettings, updateSettings }: AppProps) {
     const [tabValue, setTabValue] = React.useState(0)
 
     const handleChange = useCallback(
@@ -59,12 +61,8 @@ export function App({ url }: AppProps) {
         if (tabValue === 3) {
             return (
                 <Settings
-                    updateSettings={async (s) => {
-                        console.log(s)
-                    }}
-                    getSettings={async () => ({
-                        defaultDownloadPath: '/tmp',
-                    })}
+                    updateSettings={updateSettings}
+                    getSettings={getSettings}
                 />
             )
         }

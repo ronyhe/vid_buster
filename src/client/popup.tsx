@@ -15,7 +15,15 @@ async function main() {
     const root = createRoot(document.querySelector('#root')!)
     root.render(
         <CssBaseline>
-            <App url={url}></App>
+            <App
+                url={url}
+                getSettings={async () => {
+                    throw new Error('Not implemented')
+                }}
+                updateSettings={async (_s) => {
+                    throw new Error('Not implemented')
+                }}
+            ></App>
         </CssBaseline>,
     )
 }
