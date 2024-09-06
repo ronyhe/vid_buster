@@ -8,7 +8,7 @@ export interface Settings {
 
 export interface SettingsProps {
     updateSettings(settings: Settings): Promise<void>
-    getSettings(): Promise<Partial<Settings>>
+    getSettings(): Promise<Settings>
 }
 
 interface InternalProps {
