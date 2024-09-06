@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from 'react'
-import { TextField } from '@mui/material'
+import React, { useState } from 'react'
+import { Box, TextField } from '@mui/material'
 import { UrlDisplay } from './UrlDisplay'
 import { getUrlInfo } from './client'
 import { Format } from '../messages'
@@ -27,9 +27,9 @@ export function CustomUrl({ onChoose }: CustomUrlProps) {
         <UrlDisplay load={() => getUrlInfo(url)} onChoose={onChoose} />
     )
     return (
-        <Fragment>
+        <Box padding={2}>
             {form}
             {content}
-        </Fragment>
+        </Box>
     )
 }
