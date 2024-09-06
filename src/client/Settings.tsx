@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box, Button, setRef, Snackbar, TextField } from '@mui/material'
+import { Box, Button, Snackbar, TextField } from '@mui/material'
 import { Loader } from './Loader'
 
 export interface Settings {
