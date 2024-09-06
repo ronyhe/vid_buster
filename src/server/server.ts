@@ -8,13 +8,10 @@ import {
     statusMessage,
     urlInfoMessage,
 } from '../messages'
-import * as process from 'process'
 import { Tracker } from './status'
 
 const hostname = '127.0.0.1'
 const port = 3000
-const downloadDestination = process.argv[2] ?? null
-
 const tracker = new Tracker()
 
 const server = http.createServer((req, res) => {
@@ -48,9 +45,7 @@ const server = http.createServer((req, res) => {
 })
 
 server.listen(port, hostname, () => {
-    console.log(
-        `Server running at http://${hostname}:${port}/ Download destination: ${downloadDestination}`,
-    )
+    console.log(`Server running at http://${hostname}:${port}/`)
 })
 
 async function handleReq(req: http.IncomingMessage): Promise<Message | null> {
@@ -65,7 +60,7 @@ async function handleReq(req: http.IncomingMessage): Promise<Message | null> {
         const readline = downloadVideo(
             message.url,
             message.format_id,
-            downloadDestination,
+            message.destination,
             message.filename,
         )
         tracker.track(message.url, readline)
