@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import { Spinner } from './Spinner'
 
 export interface LoaderProps<T> {
@@ -20,7 +20,7 @@ export function Loader<T>({
     const [data, setData] = useState<T | null>(null)
     const [error, setError] = useState<Error | null>(null)
 
-    React.useEffect(() => {
+    useEffect(() => {
         ;(async () => {
             try {
                 const d = await getData()
