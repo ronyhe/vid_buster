@@ -7,7 +7,7 @@ import { urlInfoMessage } from '../src/messages'
 test('<CustomUrl />', async (t) => {
     t.afterEach(cleanup)
 
-    await t.test('Basic', async () => {
+    await t.test('Calls onChoose', async () => {
         const onChoose = t.mock.fn()
         const getUrlInfo = createGetInfo()
         const { screen, user } = render(

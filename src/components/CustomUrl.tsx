@@ -12,28 +12,22 @@ export function CustomUrl({ onChoose, getUrlInfo }: CustomUrlProps) {
     const [value, setValue] = useState('')
     const [url, setUrl] = useState<string | null>(null)
     const form = (
-        <form
-            onSubmit={(e) => {
-                e.preventDefault()
-                setUrl(value)
+        <TextField
+            autoFocus={true}
+            variant={'standard'}
+            label={'Video URL'}
+            fullWidth={true}
+            InputProps={{
+                endAdornment: (
+                    <Button variant="text" onClick={() => setUrl(value)}>
+                        GO
+                    </Button>
+                ),
             }}
-        >
-            <TextField
-                variant={'standard'}
-                label={'Video URL'}
-                fullWidth={true}
-                InputProps={{
-                    endAdornment: (
-                        <Button variant="text" onClick={() => setUrl(value)}>
-                            GO
-                        </Button>
-                    ),
-                }}
-                onChange={(e) => {
-                    setValue(e.target.value)
-                }}
-            />
-        </form>
+            onChange={(e) => {
+                setValue(e.target.value)
+            }}
+        />
     )
     const content = url !== null && (
         <UrlDisplay load={() => getUrlInfo(url)} onChoose={onChoose} />
