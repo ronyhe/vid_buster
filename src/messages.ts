@@ -3,7 +3,7 @@
  * The download dialogue will generally go as follows:
  * Client -> Server: GetUrlInfo { url }
  * Server -> Client: UrlInfo { title, formats }
- * Client -> Server: Download { id, url, title, extension }
+ * Client -> Server: Download { id, url, filename, destination }
  *
  * A status update will go as follows:
  * Client -> Server: GetStatus
