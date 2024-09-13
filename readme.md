@@ -1,10 +1,11 @@
 # Vid Buster
 Vid Buster is a Chrome extension that lets you download videos from YouTube and other sites.
+Essentially, it's a front-end for [yt-dlp](https://github.com/yt-dlp/yt-dlp).
 
-## Implementation
-Currently, Vid Buster is simply a wrapper around youtube-dl-exec which is a JS wrapper around yt-dlp
-(a youtube-dl fork).
-It has extremely minimal ui and is not very user-friendly, but it's a start.
+## Warning
+Currently, this extension relies on running a local server and on using the Chrome developer mode.
+If you're not aware of the implications, don't use it.
+If you'd like to help male it more user-friendly, please feel free to contribute.
 
 ## Installation
 Pre-requisites:
