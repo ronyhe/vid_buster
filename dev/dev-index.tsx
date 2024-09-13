@@ -10,19 +10,37 @@ import { CssBaseline } from '@mui/material'
 import { App } from '../src/components/App'
 import { Settings } from '../src/components/Settings'
 import { getUrlInfo } from '../src/client'
+import { urlInfoMessage } from '../src/messages'
 
 let settings: Settings = {
     downloadDirectory: '~/Downloads',
 }
+
+const EXAMPLE_URL = 'https://www.example.com'
+async function getInfo(url: string) {
+    if (url === EXAMPLE_URL) {
+        return urlInfoMessage('Example', [
+            {
+                extension: 'mp4',
+                note: '720p',
+                size: '80Mb',
+                resolution: '1280x720',
+                id: '398',
+                url: EXAMPLE_URL,
+                quality: 8,
+            },
+        ])
+    }
+    return getUrlInfo(url)
+}
+
 function main() {
     const root = createRoot(document.querySelector('#root')!)
-    const url =
-        'https://www.youtube.com/watch?v=Dwxv9ydfhBY&ab_channel=HeatCheck'
     root.render(
         <CssBaseline>
             <App
-                url={url}
-                getUrlInfo={getUrlInfo}
+                url={EXAMPLE_URL}
+                getUrlInfo={getInfo}
                 getSettings={async () => settings}
                 updateSettings={async (s) => {
                     settings = s

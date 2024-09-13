@@ -46,7 +46,7 @@ export interface Format {
     resolution: string
     id: string
     url: string
-    quality: string
+    quality: number
 }
 
 export interface GetStatus {
