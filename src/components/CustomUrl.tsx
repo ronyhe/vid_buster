@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Box, TextField } from '@mui/material'
 import { UrlDisplay } from './UrlDisplay'
-import { getUrlInfo } from './client'
+import { getUrlInfo } from '../client'
 import { Format } from '../messages'
 
 export interface CustomUrlProps {

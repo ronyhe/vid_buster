@@ -8,8 +8,8 @@ import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 
 import { CssBaseline } from '@mui/material'
-import { App } from './App'
-import { Settings } from './Settings'
+import { App } from './components/App'
+import { Settings } from './components/Settings'
 
 const SETTINGS_KEY = 'VID_BUSTER_SETTINGS'
 

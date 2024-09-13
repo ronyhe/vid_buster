@@ -9,7 +9,7 @@ import '@fontsource/roboto/700.css'
 import { CssBaseline } from '@mui/material'
 import { App } from '../src/components/App'
 import { Settings } from '../src/components/Settings'
-import { getUrlInfo } from '../src/components/client'
+import { getUrlInfo } from '../src/client'
 
 let settings: Settings = {
     downloadDirectory: '~/Downloads',

@@ -53,7 +53,7 @@
         "popup": {
             "outputFormat": "global",
             "distDir": "dist/extension/",
-            "source": "src/client/popup.tsx"
+            "source": "src/popup.tsx"
         },
         "server": {
             "outputFormat": "commonjs",
