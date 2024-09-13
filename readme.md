@@ -9,7 +9,7 @@ It has extremely minimal ui and is not very user-friendly, but it's a start.
 ## Installation
 Pre-requisites:
 - python3 (required by yt-dlp)
-- node.js (hopefully via nvm)
+- node.js (version specified in .nvmrc)
 - ffmpeg (optional, but recommended. It enables yt-dlp to give a better experience)
 
 Steps:
@@ -25,7 +25,5 @@ Steps:
 I am not a legal or security expert, the project is provided as-is, use at your own risk.
 
 ## Possible future features
-- Better UI
 - Better progress reporting
-- Tests (Will probably be needed if the codebase grows even slightly)
-- Destination selection from ui (maybe file naming too)
+
