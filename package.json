@@ -2,7 +2,9 @@
     "name": "vid_buster",
     "version": "0.0.0",
     "description": "HLS video downloader",
-    "main": "index.js",
+    "main": "dist/server.js",
+    "repository": "https://github.com/ronyhe/vid_buster",
+    "homepage": "https://github.com/ronyhe/vid_buster",
     "scripts": {
         "lint": "eslint",
         "lint:fix": "eslint --fix",
