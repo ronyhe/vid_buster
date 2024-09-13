@@ -1,5 +1,5 @@
 import React from 'react'
-import { test, expectConnected } from './asserts'
+import { test, expect } from './asserts'
 import { cleanup, render } from './render'
 import { CustomUrl } from '../src/components/CustomUrl'
 import { urlInfoMessage } from '../src/messages'
@@ -9,7 +9,19 @@ test('<CustomUrl />', async (t) => {
 
     await t.test('Basic', async () => {
         const onChoose = t.mock.fn()
-        const getUrlInfo = t.mock.fn(() =>
+        const getUrlInfo = createGetInfo()
+        const { screen, user } = render(
+            <CustomUrl getUrlInfo={getUrlInfo} onChoose={onChoose} />,
+        )
+        const url = 'https://example.com'
+        const textbox = screen.getByRole('textbox')
+        await user.type(textbox, url)
+        await user.click(screen.getByRole('button', { name: 'GO' }))
+        expect(getUrlInfo).toHaveBeenCalledWith(url)
+    })
+
+    function createGetInfo() {
+        return t.mock.fn(() =>
             Promise.resolve(
                 urlInfoMessage('title', [
                     {
@@ -23,9 +35,5 @@ test('<CustomUrl />', async (t) => {
                 ]),
             ),
         )
-        const { screen } = render(
-            <CustomUrl getUrlInfo={getUrlInfo} onChoose={onChoose} />,
-        )
-        expectConnected(screen.getByRole('textbox'))
-    })
+    }
 })

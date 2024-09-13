@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box, TextField } from '@mui/material'
+import { Box, Button, TextField } from '@mui/material'
 import { UrlDisplay } from './UrlDisplay'
 import { Format, UrlInfo } from '../messages'
 
@@ -9,19 +9,28 @@ export interface CustomUrlProps {
 }
 
 export function CustomUrl({ onChoose, getUrlInfo }: CustomUrlProps) {
+    const [value, setValue] = useState('')
     const [url, setUrl] = useState<string | null>(null)
     const form = (
         <form
             onSubmit={(e) => {
                 e.preventDefault()
+                setUrl(value)
             }}
         >
             <TextField
                 variant={'standard'}
                 label={'Video URL'}
                 fullWidth={true}
+                InputProps={{
+                    endAdornment: (
+                        <Button variant="text" onClick={() => setUrl(value)}>
+                            GO
+                        </Button>
+                    ),
+                }}
                 onChange={(e) => {
-                    setUrl(e.target.value)
+                    setValue(e.target.value)
                 }}
             />
         </form>
