@@ -66,7 +66,7 @@
         "dev": {
             "outputFormat": "global",
             "distDir": "dist/dev/",
-            "source": "dev/dev-index.html"
+            "source": "dev/index.html"
         }
     },
     "dependencies": {
