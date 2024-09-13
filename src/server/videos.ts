@@ -67,6 +67,5 @@ function jsonToFormat(json: Record<string, never>): Format {
         resolution: json.resolution,
         id: json.format_id,
         url: json.url,
-        quality: json.quality,
     }
 }

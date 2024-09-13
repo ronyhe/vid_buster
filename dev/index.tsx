@@ -27,7 +27,6 @@ async function getInfo(url: string) {
                 resolution: '1280x720',
                 id: '398',
                 url: EXAMPLE_URL,
-                quality: 8,
             },
         ])
     }
