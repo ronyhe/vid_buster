@@ -1,5 +1,5 @@
 import React from 'react'
-import { correct, ok, test, expect } from './asserts'
+import { test, expect, expectConnected } from './asserts'
 import { render, cleanup } from './render'
 import { DestinationDialog } from '../src/components/DestinationDialog'
 
@@ -10,7 +10,7 @@ test('DestinationDialog', async (t) => {
             <DestinationDialog open={false} onClose={() => {}} />,
         )
         const dialog = screen.queryByRole('dialog')
-        correct(dialog === null)
+        expect(dialog).toBeNull()
     })
 
     await t.test('Renders', () => {
@@ -18,7 +18,7 @@ test('DestinationDialog', async (t) => {
             <DestinationDialog open={true} onClose={() => {}} />,
         )
         const dialog = screen.queryByRole('dialog')
-        ok(dialog)
+        expectConnected(dialog)
     })
 
     await t.test('Calls onClose', async () => {

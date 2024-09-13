@@ -1,5 +1,5 @@
 import React from 'react'
-import { ok, test, expect } from './asserts'
+import { test, expect, expectConnected } from './asserts'
 import { render, cleanup } from './render'
 import { Loader } from '../src/components/Loader'
 
@@ -15,7 +15,7 @@ test('Loader', async (t) => {
                 loader={<div>Loader</div>}
             />,
         )
-        ok(screen.getByText('Loader'))
+        expectConnected(screen.getByText('Loader'))
     })
 
     await t.test('Hides loader after loading', async () => {
