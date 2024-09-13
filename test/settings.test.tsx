@@ -3,7 +3,7 @@ import { test, expect } from './asserts'
 import { cleanup, render } from './render'
 import { Settings } from '../src/components/Settings'
 
-test('Settings', async (t) => {
+test('<Settings />', async (t) => {
     t.afterEach(cleanup)
 
     await t.test('Displays settings after loading', async () => {

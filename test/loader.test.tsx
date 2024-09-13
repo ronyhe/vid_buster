@@ -3,7 +3,7 @@ import { test, expect, expectConnected } from './asserts'
 import { render, cleanup } from './render'
 import { Loader } from '../src/components/Loader'
 
-test('Loader', async (t) => {
+test('<Loader />', async (t) => {
     t.afterEach(cleanup)
 
     await t.test('Shows loader while loading', async () => {

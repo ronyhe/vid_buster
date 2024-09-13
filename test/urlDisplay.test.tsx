@@ -4,7 +4,7 @@ import { cleanup, render } from './render'
 import { UrlDisplay } from '../src/components/UrlDisplay'
 import { UrlInfo } from '../src/messages'
 
-test('UrlDisplay', async (t) => {
+test('<UrlDisplay />', async (t) => {
     t.afterEach(cleanup)
     await t.test('Shows Loader while loading', async () => {
         const { screen } = render(
