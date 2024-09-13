@@ -55,7 +55,7 @@ test('UrlDisplay', async (t) => {
                     url: 'https://example.com',
                     extension: 'mp4',
                     note: 'Note',
-                    quality: 'Quality',
+                    quality: 8,
                     size: 'Size',
                     resolution: 'Resolution',
                 },

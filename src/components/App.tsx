@@ -68,6 +68,7 @@ export function App({
         if (tabValue === 2) {
             return (
                 <CustomUrl
+                    getUrlInfo={getUrlInfo}
                     onChoose={async (f, filename) => {
                         setTabValue(1)
                         await downloadFormat(

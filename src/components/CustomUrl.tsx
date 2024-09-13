@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { Box, TextField } from '@mui/material'
 import { UrlDisplay } from './UrlDisplay'
-import { getUrlInfo } from '../client'
-import { Format } from '../messages'
+import { Format, UrlInfo } from '../messages'
 
 export interface CustomUrlProps {
     onChoose(format: Format, filename: string): void
+    getUrlInfo(url: string): Promise<UrlInfo>
 }
 
-export function CustomUrl({ onChoose }: CustomUrlProps) {
+export function CustomUrl({ onChoose, getUrlInfo }: CustomUrlProps) {
     const [url, setUrl] = useState<string | null>(null)
     const form = (
         <form
