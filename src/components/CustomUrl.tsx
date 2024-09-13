@@ -17,6 +17,9 @@ export function CustomUrl({ onChoose, getUrlInfo }: CustomUrlProps) {
             }}
         >
             <TextField
+                variant={'standard'}
+                label={'Video URL'}
+                fullWidth={true}
                 onChange={(e) => {
                     setUrl(e.target.value)
                 }}
