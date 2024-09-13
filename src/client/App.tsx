@@ -2,17 +2,24 @@ import React, { useCallback } from 'react'
 import { Box, Tab, Tabs } from '@mui/material'
 import { Reports } from './Reports'
 import { UrlDisplay } from './UrlDisplay'
-import { downloadFormat, getUrlInfo } from './client'
+import { downloadFormat } from './client'
 import { CustomUrl } from './CustomUrl'
 import { Settings } from './Settings'
+import { UrlInfo } from '../messages'
 
 interface AppProps {
     url: string
     getSettings(): Promise<Settings>
     updateSettings(settings: Settings): Promise<void>
+    getUrlInfo(url: string): Promise<UrlInfo>
 }
 
-export function App({ url, getSettings, updateSettings }: AppProps) {
+export function App({
+    url,
+    getSettings,
+    updateSettings,
+    getUrlInfo,
+}: AppProps) {
     const [tabValue, setTabValue] = React.useState(0)
 
     const handleChange = useCallback(

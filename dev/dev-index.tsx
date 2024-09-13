@@ -9,6 +9,7 @@ import '@fontsource/roboto/700.css'
 import { CssBaseline } from '@mui/material'
 import { App } from '../src/client/App'
 import { Settings } from '../src/client/Settings'
+import { getUrlInfo } from '../src/client/client'
 
 let settings: Settings = {
     downloadDirectory: '~/Downloads',
@@ -21,6 +22,7 @@ function main() {
         <CssBaseline>
             <App
                 url={url}
+                getUrlInfo={getUrlInfo}
                 getSettings={async () => settings}
                 updateSettings={async (s) => {
                     settings = s

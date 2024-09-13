@@ -1,6 +1,6 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import { inspectedPageUrl } from './client'
+import { getUrlInfo, inspectedPageUrl } from './client'
 
 import '@fontsource/roboto/300.css'
 import '@fontsource/roboto/400.css'
@@ -34,6 +34,7 @@ async function main() {
         <CssBaseline>
             <App
                 url={url}
+                getUrlInfo={getUrlInfo}
                 getSettings={getSettings}
                 updateSettings={updateSettings}
             ></App>
