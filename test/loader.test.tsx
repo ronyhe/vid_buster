@@ -1,7 +1,7 @@
 import React from 'react'
 import { ok, test, expect } from './asserts'
 import { render, cleanup } from './render'
-import { Loader } from '../src/client/Loader'
+import { Loader } from '../src/components/Loader'
 
 test('Loader', async (t) => {
     t.afterEach(cleanup)

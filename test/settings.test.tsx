@@ -1,7 +1,7 @@
 import React from 'react'
 import { test, expect } from './asserts'
 import { cleanup, render } from './render'
-import { Settings } from '../src/client/Settings'
+import { Settings } from '../src/components/Settings'
 
 test('Settings', async (t) => {
     t.afterEach(cleanup)

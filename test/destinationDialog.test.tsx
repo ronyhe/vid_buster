@@ -1,7 +1,7 @@
 import React from 'react'
 import { correct, ok, test, expect } from './asserts'
 import { render, cleanup } from './render'
-import { DestinationDialog } from '../src/client/DestinationDialog'
+import { DestinationDialog } from '../src/components/DestinationDialog'
 
 test('DestinationDialog', async (t) => {
     t.afterEach(cleanup)
