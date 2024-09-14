@@ -13,6 +13,12 @@ export function CustomUrl({ onChoose, getUrlInfo }: CustomUrlProps) {
     const [url, setUrl] = useState<string | null>(null)
     const form = (
         <TextField
+            onKeyUp={(e) => {
+                if (e.key === 'Enter') {
+                    console.log('Enter key pressed')
+                    setUrl(value)
+                }
+            }}
             autoFocus={true}
             variant={'standard'}
             label={'Video URL'}

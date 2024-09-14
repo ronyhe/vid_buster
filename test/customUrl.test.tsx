@@ -20,6 +20,18 @@ test('<CustomUrl />', async (t) => {
         expect(getUrlInfo).toHaveBeenCalledWith(url)
     })
 
+    await t.test('Respect the Enter key', async () => {
+        const onChoose = t.mock.fn()
+        const getUrlInfo = createGetInfo()
+        const { screen, user } = render(
+            <CustomUrl getUrlInfo={getUrlInfo} onChoose={onChoose} />,
+        )
+        const url = 'https://example.com'
+        const textbox = screen.getByRole('textbox')
+        await user.type(textbox, `${url}{Enter}`)
+        expect(getUrlInfo).toHaveBeenCalledWith(url)
+    })
+
     function createGetInfo() {
         return t.mock.fn(() =>
             Promise.resolve(
