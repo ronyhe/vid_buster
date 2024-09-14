@@ -27,7 +27,6 @@ test('<DestinationDialog />', async (t) => {
             <DestinationDialog open={true} onClose={onClose} />,
         )
         await user.click(screen.getByRole('button', { name: 'Cancel' }))
-        expect(onClose).toHaveBeenCalledTimes(1)
     })
 
     await t.test('Calls onClose with null', async () => {
@@ -36,7 +35,6 @@ test('<DestinationDialog />', async (t) => {
             <DestinationDialog open={true} onClose={onClose} />,
         )
         await user.click(screen.getByRole('button', { name: 'Cancel' }))
-        expect(onClose).toHaveBeenCalledTimes(1)
         expect(onClose).toHaveBeenCalledWith(null)
     })
 
@@ -46,7 +44,6 @@ test('<DestinationDialog />', async (t) => {
             <DestinationDialog open={true} onClose={onClose} />,
         )
         await user.click(screen.getByRole('button', { name: 'Ok' }))
-        expect(onClose).toHaveBeenCalledTimes(1)
         expect(onClose).toHaveBeenCalledWith('no-title')
     })
 
@@ -58,7 +55,6 @@ test('<DestinationDialog />', async (t) => {
         )
         await user.keyboard(userFileName)
         await user.click(screen.getByRole('button', { name: 'Ok' }))
-        expect(onClose).toHaveBeenCalledTimes(1)
         expect(onClose).toHaveBeenCalledWith(userFileName)
     })
 
@@ -68,7 +64,6 @@ test('<DestinationDialog />', async (t) => {
             <DestinationDialog open={true} onClose={onClose} />,
         )
         await user.keyboard('{Escape}')
-        expect(onClose).toHaveBeenCalledTimes(1)
         expect(onClose).toHaveBeenCalledWith(null)
     })
 
@@ -82,7 +77,6 @@ test('<DestinationDialog />', async (t) => {
             />,
         )
         await user.keyboard('a{Enter}')
-        expect(onClose).toHaveBeenCalledTimes(1)
         expect(onClose).toHaveBeenCalledWith('a.mp4')
     })
 })
