@@ -16,7 +16,7 @@ export function Reports() {
 
     return (
         <List>
-            {reports?.map((r) => (
+            {reports?.map(r => (
                 <Box key={r.title}>
                     <Typography variant="body1">
                         {shortTitle(r.title)} - {r.status}

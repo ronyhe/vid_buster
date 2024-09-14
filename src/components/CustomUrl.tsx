@@ -13,7 +13,7 @@ export function CustomUrl({ onChoose, getUrlInfo }: CustomUrlProps) {
     const [url, setUrl] = useState<string | null>(null)
     const form = (
         <TextField
-            onKeyUp={(e) => {
+            onKeyUp={e => {
                 if (e.key === 'Enter') {
                     console.log('Enter key pressed')
                     setUrl(value)
@@ -30,7 +30,7 @@ export function CustomUrl({ onChoose, getUrlInfo }: CustomUrlProps) {
                     </Button>
                 ),
             }}
-            onChange={(e) => {
+            onChange={e => {
                 setValue(e.target.value)
             }}
         />

@@ -3,7 +3,7 @@ import { test, expect } from './asserts'
 import { cleanup, render } from './render'
 import { Settings } from '../src/components/Settings'
 
-test('<Settings />', async (t) => {
+test('<Settings />', async t => {
     t.afterEach(cleanup)
 
     await t.test('Displays settings after loading', async () => {
@@ -31,7 +31,7 @@ test('<Settings />', async (t) => {
 
     await t.test(
         'Calls updateSettings when save button is clicked',
-        async (t) => {
+        async t => {
             const updateSettings = t.mock.fn(() => Promise.resolve())
             const settings = { downloadDirectory: '/path/to/download' }
             const { screen, user } = render(
@@ -63,7 +63,7 @@ test('<Settings />', async (t) => {
         await screen.findByText('Error saving settings')
     })
 
-    await t.test('Triggers the update on Enter key', async (t) => {
+    await t.test('Triggers the update on Enter key', async t => {
         const updateSettings = t.mock.fn(() => Promise.resolve())
         const settings = { downloadDirectory: '/path/to/download' }
         const { screen, user } = render(

@@ -20,7 +20,7 @@ export function Settings({ getSettings, updateSettings }: SettingsProps) {
     return (
         <Loader
             getData={getSettings}
-            createContent={(settings) => (
+            createContent={settings => (
                 <Internal settings={settings} updateSettings={updateSettings} />
             )}
             createError={() => <div>Error loading settings</div>}
@@ -67,7 +67,7 @@ function Internal({
                 message="Settings saved"
             />
             <TextField
-                onKeyUp={async (e) => {
+                onKeyUp={async e => {
                     if (e.key === 'Enter') {
                         await save()
                     }
@@ -75,7 +75,7 @@ function Internal({
                 variant="standard"
                 label="Download directory"
                 defaultValue={downloadDirectory ?? '~/Downloads'}
-                onChange={(e) => {
+                onChange={e => {
                     setPath(e.target.value)
                 }}
                 InputProps={{

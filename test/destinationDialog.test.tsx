@@ -3,7 +3,7 @@ import { test, expect, expectConnected } from './asserts'
 import { render, cleanup } from './render'
 import { DestinationDialog } from '../src/components/DestinationDialog'
 
-test('<DestinationDialog />', async (t) => {
+test('<DestinationDialog />', async t => {
     t.afterEach(cleanup)
     await t.test('Does not render when not open', async () => {
         const { screen } = render(

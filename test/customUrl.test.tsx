@@ -4,7 +4,7 @@ import { cleanup, render } from './render'
 import { CustomUrl } from '../src/components/CustomUrl'
 import { urlInfoMessage } from '../src/messages'
 
-test('<CustomUrl />', async (t) => {
+test('<CustomUrl />', async t => {
     t.afterEach(cleanup)
 
     await t.test('Calls onChoose', async () => {

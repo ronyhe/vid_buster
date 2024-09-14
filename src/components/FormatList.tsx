@@ -12,7 +12,7 @@ export function FormatList({ onChoose, info }: FormatListProps) {
         <Box>
             <Typography variant="h6">{info.title}</Typography>
             <List>
-                {info.formats.map((f) => (
+                {info.formats.map(f => (
                     <Box key={f.id}>
                         <ListItem>
                             <Button

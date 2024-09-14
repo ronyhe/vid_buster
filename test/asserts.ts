@@ -8,7 +8,7 @@ import spyMatchers from 'expect/build/spyMatchers'
 import { mapValues } from '../src/utils'
 
 _expect.extend(
-    mapValues(spyMatchers, (matcher) => {
+    mapValues(spyMatchers, matcher => {
         return function (received, ...args) {
             received.calls = {
                 all() {

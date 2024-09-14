@@ -41,7 +41,7 @@ function main() {
                 url={EXAMPLE_URL}
                 getUrlInfo={getInfo}
                 getSettings={async () => settings}
-                updateSettings={async (s) => {
+                updateSettings={async s => {
                     settings = s
                 }}
             ></App>

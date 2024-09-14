@@ -22,10 +22,8 @@ export function UrlDisplay({ load, onChoose }: UrlDisplayProps) {
     return (
         <Loader
             getData={load}
-            createContent={(info) => (
-                <Internal info={info} onChoose={onChoose} />
-            )}
-            createError={(e) => (
+            createContent={info => <Internal info={info} onChoose={onChoose} />}
+            createError={e => (
                 <Box>
                     <Typography variant="h6">Error loading URL</Typography>
                     <Typography>{e.message}</Typography>
@@ -40,14 +38,14 @@ function Internal({ info, onChoose }: InternalProps) {
     return (
         <Box padding={2}>
             <FormatList
-                onChoose={(f) => {
+                onChoose={f => {
                     setFormat(f)
                 }}
                 info={info}
             />
             <DestinationDialog
                 open={format !== null}
-                onClose={(filename) => {
+                onClose={filename => {
                     if (filename !== null) {
                         onChoose(format!, filename)
                     }

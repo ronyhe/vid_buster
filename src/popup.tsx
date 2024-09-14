@@ -14,15 +14,15 @@ import { Settings } from './components/Settings'
 const SETTINGS_KEY = 'VID_BUSTER_SETTINGS'
 
 async function getSettings(): Promise<Settings> {
-    return new Promise((resolve) => {
-        chrome.storage.sync.get([SETTINGS_KEY], (result) => {
+    return new Promise(resolve => {
+        chrome.storage.sync.get([SETTINGS_KEY], result => {
             resolve(result[SETTINGS_KEY] || {})
         })
     })
 }
 
 async function updateSettings(settings: Settings): Promise<void> {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
         chrome.storage.sync.set({ [SETTINGS_KEY]: settings }, resolve)
     })
 }

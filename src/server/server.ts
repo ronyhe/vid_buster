@@ -30,11 +30,11 @@ const server = http.createServer((req, res) => {
     }
     if (method === 'POST') {
         handleReq(req)
-            .then((result) => {
+            .then(result => {
                 res.writeHead(200, headers)
                 res.end(JSON.stringify(result ?? {}))
             })
-            .catch((e) => {
+            .catch(e => {
                 res.writeHead(500, headers)
                 res.end(JSON.stringify({ error: e.message }))
             })
@@ -75,10 +75,10 @@ async function handleReq(req: http.IncomingMessage): Promise<Message | null> {
 async function requestBody(req: http.IncomingMessage): Promise<string> {
     return new Promise((resolve, reject) => {
         const bodyParts: Uint8Array[] = []
-        req.on('error', (err) => {
+        req.on('error', err => {
             reject(err)
         })
-        req.on('data', (chunk) => {
+        req.on('data', chunk => {
             bodyParts.push(chunk)
         })
         req.on('end', () => {

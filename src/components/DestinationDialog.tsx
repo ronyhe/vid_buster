@@ -28,7 +28,7 @@ export function DestinationDialog({
     return (
         <Dialog
             open={open}
-            onKeyUp={(e) => {
+            onKeyUp={e => {
                 if (e.key === 'Enter') {
                     onClose(value ?? suggestedName)
                 }
@@ -44,14 +44,14 @@ export function DestinationDialog({
                     variant="standard"
                     defaultValue={suggestedName}
                     autoFocus={true}
-                    onFocus={(event) => {
+                    onFocus={event => {
                         event.preventDefault()
                         const { target } = event
                         const extensionStarts = target.value.lastIndexOf('.')
                         target.focus()
                         target.setSelectionRange(0, extensionStarts)
                     }}
-                    onChange={(e) => {
+                    onChange={e => {
                         setValue(e.target.value)
                     }}
                     sx={{ width: '400px' }}

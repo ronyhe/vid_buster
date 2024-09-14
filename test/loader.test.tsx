@@ -3,7 +3,7 @@ import { test, expect, expectConnected } from './asserts'
 import { render, cleanup } from './render'
 import { Loader } from '../src/components/Loader'
 
-test('<Loader />', async (t) => {
+test('<Loader />', async t => {
     t.afterEach(cleanup)
 
     await t.test('Shows loader while loading', async () => {
@@ -22,7 +22,7 @@ test('<Loader />', async (t) => {
         const { screen } = render(
             <Loader
                 getData={() => Promise.resolve('data')}
-                createContent={(data) => <div>{data}</div>}
+                createContent={data => <div>{data}</div>}
                 createError={() => <div />}
                 loader={<div>Loader</div>}
             />,
@@ -36,19 +36,19 @@ test('<Loader />', async (t) => {
             <Loader
                 getData={() => Promise.reject(new Error('error'))}
                 createContent={() => <div />}
-                createError={(error) => <div>{error.message}</div>}
+                createError={error => <div>{error.message}</div>}
                 loader={<div>Loader</div>}
             />,
         )
         await screen.findByText('error')
     })
 
-    await t.test('Content is displayed after loading', async (t) => {
+    await t.test('Content is displayed after loading', async t => {
         const getData = t.mock.fn(() => Promise.resolve('data'))
         const { screen } = render(
             <Loader
                 getData={getData}
-                createContent={(data) => <div>{data}</div>}
+                createContent={data => <div>{data}</div>}
                 createError={() => <div />}
                 loader={<div>Loader</div>}
             />,
