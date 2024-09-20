@@ -13,9 +13,9 @@ export class Tracker {
         if (!this.map.has(key)) {
             this.map.set(key, 'No status yet')
         }
-        streams.stderr.on('data', chunk => {
+        streams.stderr.on('line', line => {
             console.error(`Error for ${key}:`)
-            console.error(chunk.toString())
+            console.error(line)
         })
         streams.stdout.on('line', line => {
             this.map.set(key, line)
@@ -29,10 +29,10 @@ export class Tracker {
         return Array.from(this.map.entries())
             .map(([key, status]) => ({
                 title: key,
-                status,
+                status
             }))
             .sort((a, b) =>
-                a.title.localeCompare(b.title, undefined, { numeric: true }),
+                a.title.localeCompare(b.title, undefined, { numeric: true })
             )
     }
 }
