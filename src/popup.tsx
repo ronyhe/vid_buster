@@ -13,6 +13,23 @@ import { Settings } from './components/Settings'
 
 const SETTINGS_KEY = 'VID_BUSTER_SETTINGS'
 
+document.addEventListener('DOMContentLoaded', main)
+
+async function main() {
+    const url = await inspectedPageUrl()
+    const root = createRoot(document.querySelector('#root')!)
+    root.render(
+        <CssBaseline>
+            <App
+                url={url}
+                getUrlInfo={getUrlInfo}
+                getSettings={getSettings}
+                updateSettings={updateSettings}
+            ></App>
+        </CssBaseline>
+    )
+}
+
 async function getSettings(): Promise<Settings> {
     return new Promise(resolve => {
         chrome.storage.sync.get([SETTINGS_KEY], result => {
@@ -42,20 +59,3 @@ export async function inspectedPageUrl(): Promise<string> {
     }
     return url
 }
-
-async function main() {
-    const url = await inspectedPageUrl()
-    const root = createRoot(document.querySelector('#root')!)
-    root.render(
-        <CssBaseline>
-            <App
-                url={url}
-                getUrlInfo={getUrlInfo}
-                getSettings={getSettings}
-                updateSettings={updateSettings}
-            ></App>
-        </CssBaseline>
-    )
-}
-
-document.addEventListener('DOMContentLoaded', main)
