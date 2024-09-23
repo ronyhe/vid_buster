@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { SingleStatusReport } from '../messages'
-import { getReports } from '../client/serverFacade'
+import { getReports } from '../serverFacade'
 import { Box, Divider, List, Typography } from '@mui/material'
 
 export function Reports() {

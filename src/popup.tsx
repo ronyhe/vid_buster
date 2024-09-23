@@ -1,6 +1,6 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import { getUrlInfo } from './client/serverFacade'
+import { getUrlInfo } from './serverFacade'
 
 import '@fontsource/roboto/300.css'
 import '@fontsource/roboto/400.css'
