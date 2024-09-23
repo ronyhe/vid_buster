@@ -9,11 +9,11 @@ import '@fontsource/roboto/700.css'
 import { CssBaseline } from '@mui/material'
 import { App } from '../src/components/App'
 import { Settings } from '../src/components/Settings'
-import { getUrlInfo } from '../src/client'
+import { getUrlInfo } from '../src/client/serverFacade'
 import { urlInfoMessage } from '../src/messages'
 
 let settings: Settings = {
-    downloadDirectory: '~/Downloads',
+    downloadDirectory: '~/Downloads'
 }
 
 const EXAMPLE_URL = 'https://www.example.com'
@@ -26,8 +26,8 @@ async function getInfo(url: string) {
                 size: '80Mb',
                 resolution: '1280x720',
                 id: '398',
-                url: EXAMPLE_URL,
-            },
+                url: EXAMPLE_URL
+            }
         ])
     }
     return getUrlInfo(url)
@@ -45,7 +45,7 @@ function main() {
                     settings = s
                 }}
             ></App>
-        </CssBaseline>,
+        </CssBaseline>
     )
 }
 

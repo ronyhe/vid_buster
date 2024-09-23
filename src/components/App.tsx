@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import { Box, Tab, Tabs } from '@mui/material'
 import { Reports } from './Reports'
 import { UrlDisplay } from './UrlDisplay'
-import { downloadFormat } from '../client'
+import { downloadFormat } from '../client/serverFacade'
 import { CustomUrl } from './CustomUrl'
 import { Settings } from './Settings'
 import { UrlInfo } from '../messages'
@@ -18,7 +18,7 @@ export function App({
     url,
     getSettings,
     updateSettings,
-    getUrlInfo,
+    getUrlInfo
 }: AppProps) {
     const [tabValue, setTabValue] = React.useState(0)
 
@@ -26,7 +26,7 @@ export function App({
         (_: React.SyntheticEvent, newValue: number) => {
             setTabValue(newValue)
         },
-        [],
+        []
     )
 
     const getDownloadDestination = async () => {
@@ -37,9 +37,9 @@ export function App({
     const tabs = (
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={tabValue} onChange={handleChange}>
-                <Tab label="Here" />
-                <Tab label="Downloads" />
-                <Tab label="Url" />
+                <Tab label='Here' />
+                <Tab label='Downloads' />
+                <Tab label='Url' />
                 <Tab label={'Settings'} />
             </Tabs>
         </Box>
@@ -56,7 +56,7 @@ export function App({
                             url,
                             f.id,
                             filename,
-                            await getDownloadDestination(),
+                            await getDownloadDestination()
                         )
                     }}
                 />
@@ -75,7 +75,7 @@ export function App({
                             f.url,
                             f.id,
                             filename,
-                            await getDownloadDestination(),
+                            await getDownloadDestination()
                         )
                     }}
                 />
