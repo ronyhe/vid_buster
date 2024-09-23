@@ -1,6 +1,6 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import { getUrlInfo, inspectedPageUrl } from './client'
+import { getUrlInfo } from './client'
 
 import '@fontsource/roboto/300.css'
 import '@fontsource/roboto/400.css'
@@ -27,6 +27,22 @@ async function updateSettings(settings: Settings): Promise<void> {
     })
 }
 
+export async function inspectedPageUrl(): Promise<string> {
+    const tabs = await chrome.tabs.query({ active: true, currentWindow: true })
+    const tabCount = tabs.length
+    if (tabCount === 0) {
+        throw new Error('No active tab found in current window?')
+    }
+    if (tabCount > 1) {
+        throw new Error('More than one active tab found in current window?')
+    }
+    const url = (tabs[0].url ?? '').trim()
+    if (!url) {
+        throw new Error('No URL found')
+    }
+    return url
+}
+
 async function main() {
     const url = await inspectedPageUrl()
     const root = createRoot(document.querySelector('#root')!)
@@ -38,7 +54,7 @@ async function main() {
                 getSettings={getSettings}
                 updateSettings={updateSettings}
             ></App>
-        </CssBaseline>,
+        </CssBaseline>
     )
 }
 

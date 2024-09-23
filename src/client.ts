@@ -5,7 +5,7 @@ import {
     Message,
     SingleStatusReport,
     Status,
-    UrlInfo,
+    UrlInfo
 } from './messages'
 
 export async function getUrlInfo(url: string): Promise<UrlInfo> {
@@ -16,7 +16,7 @@ export async function downloadFormat(
     url: string,
     format_id: string,
     filename: string,
-    destination: string,
+    destination: string
 ): Promise<void> {
     await sendMessage(downloadMessage(url, format_id, filename, destination))
 }
@@ -27,14 +27,14 @@ export async function getReports(): Promise<SingleStatusReport[]> {
 }
 
 async function sendMessage<Result extends Message>(
-    message: Message,
+    message: Message
 ): Promise<Result> {
     const response = await fetch(`http://localhost:3000/`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
         },
-        body: JSON.stringify(message),
+        body: JSON.stringify(message)
     })
     if (!response.ok) {
         let err = `Request failed: ${response.statusText}; `
@@ -50,20 +50,4 @@ async function sendMessage<Result extends Message>(
         throw new Error(res.error)
     }
     return res as Result
-}
-
-export async function inspectedPageUrl(): Promise<string> {
-    const tabs = await chrome.tabs.query({ active: true, currentWindow: true })
-    const tabCount = tabs.length
-    if (tabCount === 0) {
-        throw new Error('No active tab found in current window?')
-    }
-    if (tabCount > 1) {
-        throw new Error('More than one active tab found in current window?')
-    }
-    const url = (tabs[0].url ?? '').trim()
-    if (!url) {
-        throw new Error('No URL found')
-    }
-    return url
 }
