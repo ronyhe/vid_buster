@@ -15,7 +15,7 @@ function setupTracker() {
             expect.objectContaining({ ...status, ...details })
         ])
     }
-    return { stdout, expectStatus }
+    return { stdout, expectStatus, stderr }
 }
 
 test('Tracker', async t => {
@@ -35,5 +35,18 @@ test('Tracker', async t => {
         const { stdout, expectStatus } = setupTracker()
         stdout.emit('close')
         expectStatus({ closed: true })
+    })
+
+    await t.test('tracks closing', () => {
+        const { stdout, expectStatus } = setupTracker()
+        stdout.emit('close')
+        expectStatus({ closed: true })
+    })
+
+    await t.test('tracks errors and considers them a `close` event', () => {
+        const { stderr, expectStatus } = setupTracker()
+        const error = 'stderr error'
+        stderr.emit('line', error)
+        expectStatus({ error, closed: true })
     })
 })
