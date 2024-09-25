@@ -1,8 +1,12 @@
-import { Interface as ReadLine } from 'readline'
 import { TrackingReport } from '../messages'
+
+export interface ReadlineFacade {
+    on(event: 'line' | 'close', listener: (line: string) => void): void
+}
+
 export interface TerminalStreams {
-    stdout: ReadLine
-    stderr: ReadLine
+    stdout: ReadlineFacade
+    stderr: ReadlineFacade
 }
 
 type Key = number
@@ -11,7 +15,7 @@ export class Tracker {
     private map: Map<Key, TrackingReport> = new Map()
     private lastId = 0
 
-    track(title: string, streams: TerminalStreams) {
+    track(title: string, streams: TerminalStreams): number {
         const key = this.lastId++
         this.map.set(key, {
             id: key,
@@ -36,6 +40,7 @@ export class Tracker {
                 closed: true
             })
         })
+        return key
     }
 
     update(key: Key, partialStatus: Partial<TrackingReport>) {

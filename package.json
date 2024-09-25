@@ -18,7 +18,7 @@
         "dev:open": "npm run dev:client -- --open",
         "clean": "rm -rf dist .parcel-cache",
         "rebuild": "npm run clean && npm run build",
-        "test": "node --import tsx --test **/*.test.tsx",
+        "test": "node --import tsx --test **/*.test.tsx **/*.test.ts",
         "postinstall": "jq '.exports.\"./build/spyMatchers\"=\"./build/spyMatchers.js\"' node_modules/expect/package.json | sponge node_modules/expect/package.json"
     },
     "keywords": [
