@@ -4,7 +4,7 @@ import { UrlDisplay } from './UrlDisplay'
 import { Format, UrlInfo } from '../messages'
 
 export interface CustomUrlProps {
-    onChoose(format: Format, filename: string): void
+    onChoose(url: string, format: Format, filename: string): void
     getUrlInfo(url: string): Promise<UrlInfo>
 }
 
@@ -35,7 +35,12 @@ export function CustomUrl({ onChoose, getUrlInfo }: CustomUrlProps) {
         />
     )
     const content = url !== null && (
-        <UrlDisplay load={() => getUrlInfo(url)} onChoose={onChoose} />
+        <UrlDisplay
+            load={() => getUrlInfo(url)}
+            onChoose={(format, filename) => {
+                onChoose(url, format, filename)
+            }}
+        />
     )
     return (
         <Box padding={2}>

@@ -69,10 +69,10 @@ export function App({
             return (
                 <CustomUrl
                     getUrlInfo={getUrlInfo}
-                    onChoose={async (f, filename) => {
+                    onChoose={async (url, f, filename) => {
                         setTabValue(1)
                         await downloadFormat(
-                            f.url,
+                            url,
                             f.id,
                             filename,
                             await getDownloadDestination()
