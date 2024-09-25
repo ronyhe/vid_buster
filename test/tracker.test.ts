@@ -1,6 +1,7 @@
 import { Tracker } from '../src/server/tracking'
 import { test, expect } from './asserts'
 import EventEmitter from 'node:events'
+import { TrackingReport } from '../src/messages'
 
 function setupTracker() {
     const tracker = new Tracker()
@@ -9,29 +10,30 @@ function setupTracker() {
     const streams = { stdout, stderr }
     const id = tracker.track('title', streams)
     const details = { title: 'title', id }
-    return { tracker, stdout, details }
+    const expectStatus = (status: Partial<TrackingReport>) => {
+        expect(tracker.getStatus()).toEqual([
+            expect.objectContaining({ ...status, ...details })
+        ])
+    }
+    return { stdout, expectStatus }
 }
 
 test('Tracker', async t => {
     await t.test('tracks the latest status', () => {
-        const { tracker, stdout, details } = setupTracker()
+        const { stdout, expectStatus } = setupTracker()
         const line1 = 'stdout line 1'
-        stdout.emit('line', line1)
-        expect(tracker.getStatus()).toEqual([
-            expect.objectContaining({ lastStatus: line1, ...details })
-        ])
         const line2 = 'stdout line 2'
+
+        stdout.emit('line', line1)
+        expectStatus({ lastStatus: line1 })
+
         stdout.emit('line', line2)
-        expect(tracker.getStatus()).toEqual([
-            expect.objectContaining({ lastStatus: line2, ...details })
-        ])
+        expectStatus({ lastStatus: line2 })
     })
 
     await t.test('tracks closing', () => {
-        const { tracker, stdout, details } = setupTracker()
+        const { stdout, expectStatus } = setupTracker()
         stdout.emit('close')
-        expect(tracker.getStatus()).toEqual([
-            expect.objectContaining({ closed: true, ...details })
-        ])
+        expectStatus({ closed: true })
     })
 })
