@@ -15,7 +15,6 @@ export function CustomUrl({ onChoose, getUrlInfo }: CustomUrlProps) {
         <TextField
             onKeyUp={e => {
                 if (e.key === 'Enter') {
-                    console.log('Enter key pressed')
                     setUrl(value)
                 }
             }}
@@ -25,10 +24,10 @@ export function CustomUrl({ onChoose, getUrlInfo }: CustomUrlProps) {
             fullWidth={true}
             InputProps={{
                 endAdornment: (
-                    <Button variant="text" onClick={() => setUrl(value)}>
+                    <Button variant='text' onClick={() => setUrl(value)}>
                         GO
                     </Button>
-                ),
+                )
             }}
             onChange={e => {
                 setValue(e.target.value)

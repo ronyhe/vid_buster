@@ -56,7 +56,6 @@ async function handleReq(req: http.IncomingMessage): Promise<Message | null> {
         return urlInfoMessage(title, formats)
     }
     if (isDownloadMessage(message)) {
-        console.log(`Download requested for ${message.url}`)
         const readline = downloadVideo(
             message.url,
             message.format_id,
