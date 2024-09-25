@@ -6,7 +6,8 @@ import {
     isRequestUrlInfoMessage,
     Message,
     createResponseReportsMessage,
-    createResponseUrlInfoMessage
+    createResponseUrlInfoMessage,
+    isRequestDeleteMessage
 } from '../messages'
 import { Tracker } from './tracking'
 
@@ -67,6 +68,9 @@ async function handleReq(req: http.IncomingMessage): Promise<Message | null> {
     }
     if (isRequestReportsMessage(message)) {
         return createResponseReportsMessage(tracker.getStatus())
+    }
+    if (isRequestDeleteMessage(message)) {
+        tracker.delete(message.id)
     }
     throw new Error(`Unexpected message kind: ${message.kind}`)
 }

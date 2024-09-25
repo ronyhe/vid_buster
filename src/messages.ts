@@ -30,13 +30,15 @@ export type Message =
     | RequestDownloadMessage
     | RequestReportsMessage
     | ResponseReportsMessage
+    | RequestDeleteMessage
 
 export const MessageKinds = {
     RequestUrlInfo: 'requestUrlInfo',
     ResponseUrlInfo: 'responseUrlInfo',
     RequestDownload: 'requestDownload',
     RequestReports: 'requestReports',
-    ResponseReports: 'responseReports'
+    ResponseReports: 'responseReports',
+    RequestDelete: 'requestDelete'
 }
 
 export interface RequestUrlInfoMessage {
@@ -65,6 +67,11 @@ export interface RequestReportsMessage {
 export interface ResponseReportsMessage {
     kind: typeof MessageKinds.ResponseReports
     reports: TrackingReport[]
+}
+
+export interface RequestDeleteMessage {
+    kind: typeof MessageKinds.RequestDelete
+    id: number
 }
 
 export interface Format {
@@ -125,6 +132,13 @@ export function createResponseReportsMessage(
     }
 }
 
+export function createRequestDeleteMessage(id: number): RequestDeleteMessage {
+    return {
+        kind: MessageKinds.RequestDelete,
+        id
+    }
+}
+
 export function isRequestUrlInfoMessage(
     m: Message
 ): m is RequestUrlInfoMessage {
@@ -153,4 +167,8 @@ export function isResponseReportsMessage(
     m: Message
 ): m is ResponseReportsMessage {
     return m.kind === MessageKinds.ResponseReports
+}
+
+export function isRequestDeleteMessage(m: Message): m is RequestDeleteMessage {
+    return m.kind === MessageKinds.RequestDelete
 }
