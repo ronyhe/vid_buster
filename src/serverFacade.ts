@@ -1,15 +1,15 @@
 import {
-    downloadMessage,
-    getStatusMessage,
-    getUrlInfoMessage,
+    createRequestDownloadMessage,
+    createRequestReportsMessage,
+    createRequestUrlInfoMessage,
     Message,
-    Status,
+    ResponseReportsMessage,
     TrackingReport,
-    UrlInfo
+    ResponseUrlInfoMessage
 } from './messages'
 
-export async function getUrlInfo(url: string): Promise<UrlInfo> {
-    return await sendMessage(getUrlInfoMessage(url))
+export async function getUrlInfo(url: string): Promise<ResponseUrlInfoMessage> {
+    return await sendMessage(createRequestUrlInfoMessage(url))
 }
 
 export async function downloadFormat(
@@ -18,11 +18,15 @@ export async function downloadFormat(
     filename: string,
     destination: string
 ): Promise<void> {
-    await sendMessage(downloadMessage(url, format_id, filename, destination))
+    await sendMessage(
+        createRequestDownloadMessage(url, format_id, filename, destination)
+    )
 }
 
 export async function getReports(): Promise<TrackingReport[]> {
-    const res: Status = await sendMessage(getStatusMessage())
+    const res: ResponseReportsMessage = await sendMessage(
+        createRequestReportsMessage()
+    )
     return res.reports
 }
 

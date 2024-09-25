@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { Box, Button, TextField } from '@mui/material'
 import { UrlDisplay } from './UrlDisplay'
-import { Format, UrlInfo } from '../messages'
+import { Format, ResponseUrlInfoMessage } from '../messages'
 
 export interface CustomUrlProps {
     onChoose(url: string, format: Format, filename: string): void
-    getUrlInfo(url: string): Promise<UrlInfo>
+    getUrlInfo(url: string): Promise<ResponseUrlInfoMessage>
 }
 
 export function CustomUrl({ onChoose, getUrlInfo }: CustomUrlProps) {

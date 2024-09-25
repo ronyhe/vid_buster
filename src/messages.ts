@@ -1,8 +1,8 @@
 /** Communication between the server and the popup
  *
  * The download dialogue will generally go as follows:
- * Client -> Server: GetUrlInfo { url }
- * Server -> Client: UrlInfo { title, formats }
+ * Client -> Server: RequestUrlInfoMessage { url }
+ * Server -> Client: ResponseUrlInfoMessage { title, formats }
  * Client -> Server: Download { id, url, filename, destination }
  *
  * A status update will go as follows:
@@ -10,33 +10,47 @@
  * Server -> Client: Status { reports }
  */
 
-export type Message = GetUrlInfo | UrlInfo | Download | GetStatus | Status
+export type Message =
+    | RequestUrlInfoMessage
+    | ResponseUrlInfoMessage
+    | RequestDownloadMessage
+    | RequestReportsMessage
+    | ResponseReportsMessage
 
 export const MessageKinds = {
-    GetUrlInfo: 'getUrlInfo',
-    UrlInfo: 'urlInfo',
-    Download: 'download',
-    GetStatus: 'getStatus',
-    Status: 'status'
+    RequestUrlInfo: 'requestUrlInfo',
+    ResponseUrlInfo: 'responseUrlInfo',
+    RequestDownload: 'requestDownload',
+    RequestReports: 'requestReports',
+    ResponseReports: 'responseReports'
 }
 
-export interface GetUrlInfo {
-    kind: typeof MessageKinds.GetUrlInfo
+export interface RequestUrlInfoMessage {
+    kind: typeof MessageKinds.RequestUrlInfo
     url: string
 }
 
-export interface UrlInfo {
-    kind: typeof MessageKinds.UrlInfo
-    title: string | null
+export interface ResponseUrlInfoMessage {
+    kind: typeof MessageKinds.ResponseUrlInfo
+    title: string
     formats: Format[]
 }
 
-export interface Download {
-    kind: typeof MessageKinds.Download
+export interface RequestDownloadMessage {
+    kind: typeof MessageKinds.RequestDownload
     format_id: string
     filename: string
     destination: string
     url: string
+}
+
+export interface RequestReportsMessage {
+    kind: typeof MessageKinds.RequestReports
+}
+
+export interface ResponseReportsMessage {
+    kind: typeof MessageKinds.ResponseReports
+    reports: TrackingReport[]
 }
 
 export interface Format {
@@ -56,34 +70,27 @@ export interface TrackingReport {
     title: string
 }
 
-export interface GetStatus {
-    kind: typeof MessageKinds.GetStatus
+export function createRequestUrlInfoMessage(
+    url: string
+): RequestUrlInfoMessage {
+    return { kind: MessageKinds.RequestUrlInfo, url }
 }
 
-export interface Status {
-    kind: typeof MessageKinds.Status
-    reports: TrackingReport[]
-}
-
-export function getUrlInfoMessage(url: string): GetUrlInfo {
-    return { kind: MessageKinds.GetUrlInfo, url }
-}
-
-export function urlInfoMessage(
-    title: string | null,
+export function createResponseUrlInfoMessage(
+    title: string,
     formats: Format[]
-): UrlInfo {
-    return { kind: MessageKinds.UrlInfo, title, formats }
+): ResponseUrlInfoMessage {
+    return { kind: MessageKinds.ResponseUrlInfo, title, formats }
 }
 
-export function downloadMessage(
+export function createRequestDownloadMessage(
     url: string,
     format_id: string,
     filename: string,
     destination: string
-): Download {
+): RequestDownloadMessage {
     return {
-        kind: MessageKinds.Download,
+        kind: MessageKinds.RequestDownload,
         url,
         format_id,
         filename,
@@ -91,33 +98,45 @@ export function downloadMessage(
     }
 }
 
-export function statusMessage(reports: TrackingReport[]): Status {
+export function createRequestReportsMessage(): RequestReportsMessage {
+    return { kind: MessageKinds.RequestReports }
+}
+
+export function createResponseReportsMessage(
+    reports: TrackingReport[]
+): ResponseReportsMessage {
     return {
-        kind: MessageKinds.Status,
+        kind: MessageKinds.ResponseReports,
         reports
     }
 }
 
-export function getStatusMessage(): GetStatus {
-    return { kind: MessageKinds.GetStatus }
+export function isRequestUrlInfoMessage(
+    m: Message
+): m is RequestUrlInfoMessage {
+    return m.kind === MessageKinds.RequestUrlInfo
 }
 
-export function isDownloadMessage(m: Message): m is Download {
-    return m.kind === MessageKinds.Download
+export function isResponseUrlInfoMessage(
+    m: Message
+): m is ResponseUrlInfoMessage {
+    return m.kind === MessageKinds.ResponseUrlInfo
 }
 
-export function isUrlInfoMessage(m: Message): m is UrlInfo {
-    return m.kind === MessageKinds.UrlInfo
+export function isRequestDownloadMessage(
+    m: Message
+): m is RequestDownloadMessage {
+    return m.kind === MessageKinds.RequestDownload
 }
 
-export function isStatusMessage(m: Message): m is Status {
-    return m.kind === MessageKinds.Status
+export function isRequestReportsMessage(
+    m: Message
+): m is RequestReportsMessage {
+    return m.kind === MessageKinds.RequestReports
 }
 
-export function isGetStatusMessage(m: Message): m is GetStatus {
-    return m.kind === MessageKinds.GetStatus
-}
-
-export function isGetUrlInfoMessage(m: Message): m is GetUrlInfo {
-    return m.kind === MessageKinds.GetUrlInfo
+export function isResponseReportsMessage(
+    m: Message
+): m is ResponseReportsMessage {
+    return m.kind === MessageKinds.ResponseReports
 }

@@ -5,13 +5,13 @@ import { UrlDisplay } from './UrlDisplay'
 import { downloadFormat } from '../serverFacade'
 import { CustomUrl } from './CustomUrl'
 import { Settings } from './Settings'
-import { UrlInfo } from '../messages'
+import { ResponseUrlInfoMessage } from '../messages'
 
 interface AppProps {
     url: string
     getSettings(): Promise<Settings>
     updateSettings(settings: Settings): Promise<void>
-    getUrlInfo(url: string): Promise<UrlInfo>
+    getUrlInfo(url: string): Promise<ResponseUrlInfoMessage>
 }
 
 export function App({

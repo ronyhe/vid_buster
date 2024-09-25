@@ -10,7 +10,7 @@ import { CssBaseline } from '@mui/material'
 import { App } from '../src/components/App'
 import { Settings } from '../src/components/Settings'
 import { getUrlInfo } from '../src/serverFacade'
-import { urlInfoMessage } from '../src/messages'
+import { createResponseUrlInfoMessage } from '../src/messages'
 
 let settings: Settings = {
     downloadDirectory: '~/Downloads'
@@ -19,7 +19,7 @@ let settings: Settings = {
 const EXAMPLE_URL = 'https://www.example.com'
 async function getInfo(url: string) {
     if (url === EXAMPLE_URL) {
-        return urlInfoMessage('Example', [
+        return createResponseUrlInfoMessage('Example', [
             {
                 extension: 'mp4',
                 note: '720p',

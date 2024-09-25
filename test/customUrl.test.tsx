@@ -2,7 +2,7 @@ import React from 'react'
 import { test, expect } from './asserts'
 import { cleanup, render } from './render'
 import { CustomUrl } from '../src/components/CustomUrl'
-import { urlInfoMessage } from '../src/messages'
+import { createResponseUrlInfoMessage } from '../src/messages'
 
 test('<CustomUrl />', async t => {
     t.afterEach(cleanup)
@@ -11,7 +11,7 @@ test('<CustomUrl />', async t => {
         const onChoose = t.mock.fn()
         const getUrlInfo = createGetInfo()
         const { screen, user } = render(
-            <CustomUrl getUrlInfo={getUrlInfo} onChoose={onChoose} />,
+            <CustomUrl getUrlInfo={getUrlInfo} onChoose={onChoose} />
         )
         const url = 'https://example.com'
         const textbox = screen.getByRole('textbox')
@@ -24,7 +24,7 @@ test('<CustomUrl />', async t => {
         const onChoose = t.mock.fn()
         const getUrlInfo = createGetInfo()
         const { screen, user } = render(
-            <CustomUrl getUrlInfo={getUrlInfo} onChoose={onChoose} />,
+            <CustomUrl getUrlInfo={getUrlInfo} onChoose={onChoose} />
         )
         const url = 'https://example.com'
         const textbox = screen.getByRole('textbox')
@@ -35,17 +35,17 @@ test('<CustomUrl />', async t => {
     function createGetInfo() {
         return t.mock.fn(() =>
             Promise.resolve(
-                urlInfoMessage('title', [
+                createResponseUrlInfoMessage('title', [
                     {
                         id: '1',
                         url: 'https://example.com',
                         extension: 'mp4',
                         note: 'Note',
                         size: 'Size',
-                        resolution: 'Resolution',
-                    },
-                ]),
-            ),
+                        resolution: 'Resolution'
+                    }
+                ])
+            )
         )
     }
 })

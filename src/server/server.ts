@@ -1,12 +1,12 @@
 import * as http from 'node:http'
 import { downloadVideo, getInfo } from './videos'
 import {
-    isDownloadMessage,
-    isGetStatusMessage,
-    isGetUrlInfoMessage,
+    isRequestDownloadMessage,
+    isRequestReportsMessage,
+    isRequestUrlInfoMessage,
     Message,
-    statusMessage,
-    urlInfoMessage
+    createResponseReportsMessage,
+    createResponseUrlInfoMessage
 } from '../messages'
 import { Tracker } from './tracking'
 
@@ -51,11 +51,11 @@ server.listen(port, hostname, () => {
 async function handleReq(req: http.IncomingMessage): Promise<Message | null> {
     const text = await requestBody(req)
     const message = JSON.parse(text)
-    if (isGetUrlInfoMessage(message)) {
+    if (isRequestUrlInfoMessage(message)) {
         const { title, formats } = await getInfo(message.url)
-        return urlInfoMessage(title, formats)
+        return createResponseUrlInfoMessage(title, formats)
     }
-    if (isDownloadMessage(message)) {
+    if (isRequestDownloadMessage(message)) {
         const readline = downloadVideo(
             message.url,
             message.format_id,
@@ -65,8 +65,8 @@ async function handleReq(req: http.IncomingMessage): Promise<Message | null> {
         tracker.track(message.url, readline)
         return null
     }
-    if (isGetStatusMessage(message)) {
-        return statusMessage(tracker.getStatus())
+    if (isRequestReportsMessage(message)) {
+        return createResponseReportsMessage(tracker.getStatus())
     }
     throw new Error(`Unexpected message kind: ${message.kind}`)
 }

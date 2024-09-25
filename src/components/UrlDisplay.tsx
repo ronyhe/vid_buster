@@ -1,5 +1,5 @@
 import React from 'react'
-import { Format, UrlInfo } from '../messages'
+import { Format, ResponseUrlInfoMessage } from '../messages'
 import { useState } from 'react'
 import { FormatList } from './FormatList'
 import { Box, Typography } from '@mui/material'
@@ -9,12 +9,12 @@ import { Loader } from './Loader'
 type OnChoose = (format: Format, filename: string) => void
 
 export interface UrlDisplayProps {
-    load(): Promise<UrlInfo>
+    load(): Promise<ResponseUrlInfoMessage>
     onChoose: OnChoose
 }
 
 interface InternalProps {
-    info: UrlInfo
+    info: ResponseUrlInfoMessage
     onChoose: OnChoose
 }
 
@@ -25,7 +25,7 @@ export function UrlDisplay({ load, onChoose }: UrlDisplayProps) {
             createContent={info => <Internal info={info} onChoose={onChoose} />}
             createError={e => (
                 <Box>
-                    <Typography variant="h6">Error loading URL</Typography>
+                    <Typography variant='h6'>Error loading URL</Typography>
                     <Typography>{e.message}</Typography>
                 </Box>
             )}

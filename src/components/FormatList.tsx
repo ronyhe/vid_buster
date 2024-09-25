@@ -1,16 +1,16 @@
 import React from 'react'
 import { Box, Button, Divider, List, ListItem, Typography } from '@mui/material'
-import { Format, UrlInfo } from '../messages'
+import { Format, ResponseUrlInfoMessage } from '../messages'
 
 export interface FormatListProps {
     onChoose(format: Format): void
-    info: UrlInfo
+    info: ResponseUrlInfoMessage
 }
 
 export function FormatList({ onChoose, info }: FormatListProps) {
     return (
         <Box>
-            <Typography variant="h6">{info.title}</Typography>
+            <Typography variant='h6'>{info.title}</Typography>
             <List>
                 {info.formats.map(f => (
                     <Box key={f.id}>
