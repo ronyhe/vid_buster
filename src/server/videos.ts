@@ -9,7 +9,7 @@ const exec = util.promisify(_exec)
 export async function getInfo(
     url: string
 ): Promise<{ title: string | null; formats: Format[] }> {
-    const command = `yt-dlp --dump-single-json --flat-playlist --no-warnings ${url}`
+    const command = `yt-dlp --dump-single-json --flat-playlist --no-warnings "${url}"`
     console.log('command:', command)
     const { stdout, stderr } = await exec(command)
     if (stderr) {
