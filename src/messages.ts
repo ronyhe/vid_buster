@@ -3,11 +3,11 @@
  * The download dialogue will generally go as follows:
  * Client -> Server: RequestUrlInfoMessage { url }
  * Server -> Client: ResponseUrlInfoMessage { title, formats }
- * Client -> Server: Download { id, url, filename, destination }
+ * Client -> Server: RequestDownloadMessage { format_id, url, filename, destination }
  *
  * A status update will go as follows:
- * Client -> Server: GetStatus
- * Server -> Client: Status { reports }
+ * Client -> Server: RequestReportsMessage
+ * Server -> Client: ResponseReportsMessage { reports }
  */
 
 export type Message =
