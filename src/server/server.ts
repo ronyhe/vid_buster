@@ -1,14 +1,6 @@
 import * as http from 'node:http'
 import { downloadVideo, getInfo } from './videos'
-import {
-    isRequestDownloadMessage,
-    isRequestReportsMessage,
-    isRequestUrlInfoMessage,
-    Message,
-    createResponseReportsMessage,
-    createResponseUrlInfoMessage,
-    isRequestDeleteMessage
-} from '../messages'
+import * as messages from '../messages'
 import { Tracker } from './tracking'
 
 const hostname = '127.0.0.1'
@@ -17,7 +9,6 @@ const tracker = new Tracker()
 
 const server = http.createServer((req, res) => {
     const headers = {
-        // Taken from https://stackoverflow.com/a/54309023/3129333
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
         'Access-Control-Max-Age': 2592000,
@@ -49,14 +40,16 @@ server.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`)
 })
 
-async function handleReq(req: http.IncomingMessage): Promise<Message | null> {
+async function handleReq(
+    req: http.IncomingMessage
+): Promise<messages.Message | null> {
     const text = await requestBody(req)
     const message = JSON.parse(text)
-    if (isRequestUrlInfoMessage(message)) {
+    if (messages.isRequestUrlInfoMessage(message)) {
         const { title, formats } = await getInfo(message.url)
-        return createResponseUrlInfoMessage(title, formats)
+        return messages.createResponseUrlInfoMessage(title, formats)
     }
-    if (isRequestDownloadMessage(message)) {
+    if (messages.isRequestDownloadMessage(message)) {
         const readline = downloadVideo(
             message.url,
             message.format_id,
@@ -66,10 +59,10 @@ async function handleReq(req: http.IncomingMessage): Promise<Message | null> {
         tracker.track(message.url, readline)
         return null
     }
-    if (isRequestReportsMessage(message)) {
-        return createResponseReportsMessage(tracker.getStatus())
+    if (messages.isRequestReportsMessage(message)) {
+        return messages.createResponseReportsMessage(tracker.getStatus())
     }
-    if (isRequestDeleteMessage(message)) {
+    if (messages.isRequestDeleteMessage(message)) {
         tracker.delete(message.id)
     }
     throw new Error(`Unexpected message kind: ${message.kind}`)
