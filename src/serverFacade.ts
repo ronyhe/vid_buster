@@ -3,8 +3,8 @@ import {
     getStatusMessage,
     getUrlInfoMessage,
     Message,
-    SingleStatusReport,
     Status,
+    TrackingReport,
     UrlInfo
 } from './messages'
 
@@ -21,7 +21,7 @@ export async function downloadFormat(
     await sendMessage(downloadMessage(url, format_id, filename, destination))
 }
 
-export async function getReports(): Promise<SingleStatusReport[]> {
+export async function getReports(): Promise<TrackingReport[]> {
     const res: Status = await sendMessage(getStatusMessage())
     return res.reports
 }

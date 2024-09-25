@@ -17,7 +17,7 @@ export const MessageKinds = {
     UrlInfo: 'urlInfo',
     Download: 'download',
     GetStatus: 'getStatus',
-    Status: 'status',
+    Status: 'status'
 }
 
 export interface GetUrlInfo {
@@ -48,18 +48,21 @@ export interface Format {
     url: string
 }
 
+export interface TrackingReport {
+    id: number
+    closed: boolean
+    error: string | null
+    lastStatus: string
+    title: string
+}
+
 export interface GetStatus {
     kind: typeof MessageKinds.GetStatus
 }
 
 export interface Status {
     kind: typeof MessageKinds.Status
-    reports: SingleStatusReport[]
-}
-
-export interface SingleStatusReport {
-    title: string
-    status: string
+    reports: TrackingReport[]
 }
 
 export function getUrlInfoMessage(url: string): GetUrlInfo {
@@ -68,7 +71,7 @@ export function getUrlInfoMessage(url: string): GetUrlInfo {
 
 export function urlInfoMessage(
     title: string | null,
-    formats: Format[],
+    formats: Format[]
 ): UrlInfo {
     return { kind: MessageKinds.UrlInfo, title, formats }
 }
@@ -77,24 +80,22 @@ export function downloadMessage(
     url: string,
     format_id: string,
     filename: string,
-    destination: string,
+    destination: string
 ): Download {
     return {
         kind: MessageKinds.Download,
         url,
         format_id,
         filename,
-        destination,
+        destination
     }
 }
 
-export function statusMessage(
-    reports: {
-        title: string
-        status: string
-    }[],
-): Status {
-    return { kind: MessageKinds.Status, reports }
+export function statusMessage(reports: TrackingReport[]): Status {
+    return {
+        kind: MessageKinds.Status,
+        reports
+    }
 }
 
 export function getStatusMessage(): GetStatus {

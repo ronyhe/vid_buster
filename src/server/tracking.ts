@@ -1,25 +1,24 @@
 import { Interface as ReadLine } from 'readline'
+import { TrackingReport } from '../messages'
 export interface TerminalStreams {
     stdout: ReadLine
     stderr: ReadLine
 }
 
-interface Status {
-    closed: boolean
-    error: string | null
-    last: string
-}
-
-type Key = string
+type Key = number
 
 export class Tracker {
-    private map: Map<Key, Status> = new Map()
+    private map: Map<Key, TrackingReport> = new Map()
+    private lastId = 0
 
-    track(key: Key, streams: TerminalStreams) {
+    track(title: string, streams: TerminalStreams) {
+        const key = this.lastId++
         this.map.set(key, {
+            id: key,
+            title,
             closed: false,
             error: null,
-            last: ''
+            lastStatus: ''
         })
         streams.stderr.on('line', line => {
             this.update(key, {
@@ -29,7 +28,7 @@ export class Tracker {
         })
         streams.stdout.on('line', line => {
             this.update(key, {
-                last: line
+                lastStatus: line
             })
         })
         streams.stdout.on('close', () => {
@@ -39,7 +38,7 @@ export class Tracker {
         })
     }
 
-    update(key: Key, partialStatus: Partial<Status>) {
+    update(key: Key, partialStatus: Partial<TrackingReport>) {
         this.map.set(key, {
             ...this.map.get(key)!,
             ...partialStatus
@@ -50,14 +49,7 @@ export class Tracker {
         this.map.delete(key)
     }
 
-    getReports() {
-        return Array.from(this.map.entries())
-            .map(([key, status]) => ({
-                title: key,
-                status: status.last
-            }))
-            .sort((a, b) =>
-                a.title.localeCompare(b.title, undefined, { numeric: true })
-            )
+    getStatus(): TrackingReport[] {
+        return Array.from(this.map.values())
     }
 }

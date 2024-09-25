@@ -6,9 +6,9 @@ import {
     isGetUrlInfoMessage,
     Message,
     statusMessage,
-    urlInfoMessage,
+    urlInfoMessage
 } from '../messages'
-import { Tracker } from './status'
+import { Tracker } from './tracking'
 
 const hostname = '127.0.0.1'
 const port = 3000
@@ -20,7 +20,7 @@ const server = http.createServer((req, res) => {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
         'Access-Control-Max-Age': 2592000,
-        'Access-Control-Allow-Headers': 'content-type',
+        'Access-Control-Allow-Headers': 'content-type'
     }
     const method = req.method
     if (method === 'OPTIONS') {
@@ -61,13 +61,13 @@ async function handleReq(req: http.IncomingMessage): Promise<Message | null> {
             message.url,
             message.format_id,
             message.destination,
-            message.filename,
+            message.filename
         )
         tracker.track(message.url, readline)
         return null
     }
     if (isGetStatusMessage(message)) {
-        return statusMessage(tracker.getReports())
+        return statusMessage(tracker.getStatus())
     }
     throw new Error(`Unexpected message kind: ${message.kind}`)
 }

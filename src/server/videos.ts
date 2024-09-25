@@ -2,12 +2,12 @@ import { Format } from '../messages'
 import util from 'node:util'
 import child_process from 'node:child_process'
 import { createInterface } from 'node:readline'
-import { TerminalStreams } from './status'
+import { TerminalStreams } from './tracking'
 import { exec as _exec } from 'node:child_process'
 const exec = util.promisify(_exec)
 
 export async function getInfo(
-    url: string,
+    url: string
 ): Promise<{ title: string | null; formats: Format[] }> {
     const command = `yt-dlp --dump-single-json --flat-playlist --no-warnings ${url}`
     console.log('command:', command)
@@ -18,7 +18,7 @@ export async function getInfo(
     const result = JSON.parse(stdout)
     return {
         title: result.title,
-        formats: result.formats.map(jsonToFormat).reverse(),
+        formats: result.formats.map(jsonToFormat).reverse()
     }
 }
 
@@ -26,7 +26,7 @@ export function downloadVideo(
     url: string,
     formatId: string,
     downloadDestination: string,
-    filename: string,
+    filename: string
 ): TerminalStreams {
     const command = `yt-dlp --no-warnings --newline -f ${formatId} -P "${downloadDestination}" -o "${filename}" "${url}"`
     console.log('command:', command)
@@ -39,7 +39,7 @@ export function downloadVideo(
     }
     return {
         stdout: createInterface(stdout),
-        stderr: createInterface(stderr),
+        stderr: createInterface(stderr)
     }
 }
 
@@ -66,6 +66,6 @@ function jsonToFormat(json: Record<string, never>): Format {
         size: fileSizeString(json.filesize ?? json.filesize_approx),
         resolution: json.resolution,
         id: json.format_id,
-        url: json.url,
+        url: json.url
     }
 }
