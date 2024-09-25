@@ -15,7 +15,11 @@ function setupTracker() {
             expect.objectContaining({ ...status, ...details })
         ])
     }
-    return { stdout, expectStatus, stderr }
+    const checkRemoval = () => {
+        tracker.delete(id)
+        expect(tracker.getStatus()).toEqual([])
+    }
+    return { stdout, expectStatus, stderr, testRemoval: checkRemoval }
 }
 
 test('Tracker', async t => {
@@ -48,5 +52,16 @@ test('Tracker', async t => {
         const error = 'stderr error'
         stderr.emit('line', error)
         expectStatus({ error, closed: true })
+    })
+
+    await t.test('deletes a tracking report', () => {
+        const { stdout, expectStatus } = setupTracker()
+        stdout.emit('close')
+        expectStatus({ closed: true })
+    })
+
+    await t.test('deletes a tracking report', () => {
+        const { testRemoval } = setupTracker()
+        testRemoval()
     })
 })
