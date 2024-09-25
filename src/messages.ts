@@ -8,6 +8,20 @@
  * A status update will go as follows:
  * Client -> Server: RequestReportsMessage
  * Server -> Client: ResponseReportsMessage { reports }
+ *
+ * Each message object has a `kind` field that identifies the type of message.
+ *
+ * This module exports the following for each message type:
+ * - A constant that holds the kind of the message
+ * - A type guard function that checks if a message is of that type
+ * - A function to create a message of that type
+ * - An interface that describes the message
+ *
+ * For example, the RequestUrlInfoMessage type exports the following:
+ * - `MessageKinds.RequestUrlInfo` constant
+ * - `isRequestUrlInfoMessage` type guard function
+ * - `createRequestUrlInfoMessage` function
+ * - `RequestUrlInfoMessage` interface
  */
 
 export type Message =
