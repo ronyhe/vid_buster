@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
-import { Divider, List, ListItem, Typography } from '@mui/material'
+import { List, ListItem } from '@mui/material'
+// Some sort of bug, triggers a React error when imported from @mui/material
+import ListItemText from '@mui/material/ListItemText'
 import { TrackingReport } from '../messages'
 
 export interface ReportsProps {
@@ -32,12 +34,11 @@ export function Reports({ onDelete, getReports }: ReportsProps) {
 }
 
 function Report({ report, onDelete }: ReportProps) {
+    const primary = shortTitle(report.title)
+    const secondary = report.error ?? report.lastStatus
     return (
         <ListItem onClick={onDelete}>
-            <Typography variant='body1'>
-                {shortTitle(report.title)} - {report.error ?? report.lastStatus}
-            </Typography>
-            <Divider />
+            <ListItemText primary={primary} secondary={secondary} />
         </ListItem>
     )
 }
