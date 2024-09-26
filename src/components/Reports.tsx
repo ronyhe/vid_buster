@@ -1,8 +1,13 @@
 import React, { useEffect } from 'react'
-import { List, ListItem } from '@mui/material'
-// Some sort of bug, triggers a React error when imported from @mui/material
-import ListItemText from '@mui/material/ListItemText'
+import { Avatar, List, ListItem } from '@mui/material'
+import DownloadingIcon from '@mui/icons-material/Downloading'
+import ErrorIcon from '@mui/icons-material/ReportGmailerrorred'
+import DoneIcon from '@mui/icons-material/Done'
 import { TrackingReport } from '../messages'
+
+// Some sort of bug, ListItem* components trigger a React error when imported from @mui/material
+import ListItemText from '@mui/material/ListItemText'
+import ListItemAvatar from '@mui/material/ListItemAvatar'
 
 export interface ReportsProps {
     onDelete: (id: number) => void
@@ -38,9 +43,22 @@ function Report({ report, onDelete }: ReportProps) {
     const secondary = report.error ?? report.lastStatus
     return (
         <ListItem onClick={onDelete}>
+            <ListItemAvatar>
+                <Icon report={report} />
+            </ListItemAvatar>
             <ListItemText primary={primary} secondary={secondary} />
         </ListItem>
     )
+}
+
+function Icon({ report }: { report: TrackingReport }) {
+    if (report.error) {
+        return <ErrorIcon />
+    }
+    if (report.closed) {
+        return <DoneIcon />
+    }
+    return <DownloadingIcon />
 }
 
 function shortTitle(title: string): string {
