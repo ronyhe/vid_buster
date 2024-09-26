@@ -49,8 +49,23 @@ function main() {
                         id: 1,
                         closed: false,
                         error: null,
-                        lastStatus: 'Downloading...',
+                        lastStatus:
+                            '0.5% of  104.29MiB at   10.86MiB/s ETA 00:09',
                         title: 'Example'
+                    },
+                    {
+                        id: 2,
+                        closed: true,
+                        error: 'Failed to download',
+                        lastStatus: 'whatever',
+                        title: 'Example 2'
+                    },
+                    {
+                        id: 3,
+                        closed: true,
+                        error: null,
+                        lastStatus: 'Downloaded',
+                        title: 'Example 3'
                     }
                 ]}
             ></App>
