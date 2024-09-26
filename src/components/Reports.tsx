@@ -33,7 +33,7 @@ export function Reports({ onDelete, getReports }: ReportsProps) {
 
 function Report({ report, onDelete }: ReportProps) {
     return (
-        <ListItem>
+        <ListItem onClick={onDelete}>
             <Typography variant='body1'>
                 {shortTitle(report.title)} - {report.error ?? report.lastStatus}
             </Typography>
