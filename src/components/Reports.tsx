@@ -74,7 +74,13 @@ function secondary(report: TrackingReport) {
         )
     }
     if (closed) {
-        return <LinearProgressWithLabel variant='determinate' value={100} />
+        return (
+            <LinearProgressWithLabel
+                variant='determinate'
+                value={100}
+                color={'success'}
+            />
+        )
     }
     const progress = getProgress(report)
     if (progress) {
@@ -96,10 +102,10 @@ function secondary(report: TrackingReport) {
 
 function Icon({ report: { error, closed } }: { report: TrackingReport }) {
     if (error) {
-        return <ErrorIcon />
+        return <ErrorIcon color={'error'} />
     }
     if (closed) {
-        return <DoneIcon />
+        return <DoneIcon color={'success'} />
     }
     return <DownloadingIcon />
 }
@@ -124,7 +130,8 @@ function LinearProgressWithLabel(
 }
 
 function shortTitle(title: string): string {
-    return title.length > 20 ? title.slice(0, 20) + '...' : title
+    const length = 40
+    return title.length > length ? title.slice(0, length) + '...' : title
 }
 
 function getProgress({ lastStatus }: TrackingReport): Progress | null {
