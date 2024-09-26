@@ -46,6 +46,13 @@ function main() {
                 }}
                 getReports={async () => [
                     {
+                        id: 0,
+                        closed: false,
+                        error: null,
+                        lastStatus: 'Nope',
+                        title: 'Example'
+                    },
+                    {
                         id: 1,
                         closed: false,
                         error: null,

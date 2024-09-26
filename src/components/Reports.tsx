@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Avatar, List, ListItem } from '@mui/material'
+import { List, ListItem } from '@mui/material'
 import DownloadingIcon from '@mui/icons-material/Downloading'
 import ErrorIcon from '@mui/icons-material/ReportGmailerrorred'
 import DoneIcon from '@mui/icons-material/Done'
