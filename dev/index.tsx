@@ -44,6 +44,7 @@ function main() {
                 updateSettings={async s => {
                     settings = s
                 }}
+                getReports={async () => []}
             ></App>
         </CssBaseline>
     )

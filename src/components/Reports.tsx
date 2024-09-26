@@ -1,9 +1,18 @@
 import React, { useEffect } from 'react'
-import { getReports } from '../serverFacade'
-import { Box, Divider, List, Typography } from '@mui/material'
+import { Divider, List, ListItem, Typography } from '@mui/material'
 import { TrackingReport } from '../messages'
 
-export function Reports() {
+export interface ReportsProps {
+    onDelete: (id: number) => void
+    getReports: () => Promise<TrackingReport[]>
+}
+
+interface ReportProps {
+    report: TrackingReport
+    onDelete: () => void
+}
+
+export function Reports({ onDelete, getReports }: ReportsProps) {
     const [reports, setReports] = React.useState<TrackingReport[] | null>(null)
     useEffect(() => {
         const interval = setInterval(async () => {
@@ -16,14 +25,20 @@ export function Reports() {
     return (
         <List>
             {reports?.map(r => (
-                <Box key={r.title}>
-                    <Typography variant='body1'>
-                        {shortTitle(r.title)} - {r.error ?? r.lastStatus}
-                    </Typography>
-                    <Divider />
-                </Box>
+                <Report key={r.id} report={r} onDelete={() => onDelete(r.id)} />
             ))}
         </List>
+    )
+}
+
+function Report({ report, onDelete }: ReportProps) {
+    return (
+        <ListItem>
+            <Typography variant='body1'>
+                {shortTitle(report.title)} - {report.error ?? report.lastStatus}
+            </Typography>
+            <Divider />
+        </ListItem>
     )
 }
 

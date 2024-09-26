@@ -1,6 +1,6 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import { getUrlInfo } from './serverFacade'
+import { getReports, getUrlInfo } from './serverFacade'
 
 import '@fontsource/roboto/300.css'
 import '@fontsource/roboto/400.css'
@@ -25,6 +25,7 @@ async function main() {
                 getUrlInfo={getUrlInfo}
                 getSettings={getSettings}
                 updateSettings={updateSettings}
+                getReports={getReports}
             ></App>
         </CssBaseline>
     )

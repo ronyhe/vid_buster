@@ -5,20 +5,22 @@ import { UrlDisplay } from './UrlDisplay'
 import { downloadFormat } from '../serverFacade'
 import { CustomUrl } from './CustomUrl'
 import { Settings } from './Settings'
-import { ResponseUrlInfoMessage } from '../messages'
+import { ResponseUrlInfoMessage, TrackingReport } from '../messages'
 
 interface AppProps {
     url: string
     getSettings(): Promise<Settings>
     updateSettings(settings: Settings): Promise<void>
     getUrlInfo(url: string): Promise<ResponseUrlInfoMessage>
+    getReports(): Promise<TrackingReport[]>
 }
 
 export function App({
     url,
     getSettings,
     updateSettings,
-    getUrlInfo
+    getUrlInfo,
+    getReports
 }: AppProps) {
     const [tabValue, setTabValue] = React.useState(0)
 
@@ -63,7 +65,14 @@ export function App({
             )
         }
         if (tabValue === 1) {
-            return <Reports />
+            return (
+                <Reports
+                    onDelete={id => {
+                        console.log('Delete', id)
+                    }}
+                    getReports={getReports}
+                />
+            )
         }
         if (tabValue === 2) {
             return (
