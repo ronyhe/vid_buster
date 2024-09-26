@@ -56,7 +56,7 @@ async function handleReq(
             message.destination,
             message.filename
         )
-        tracker.track(message.url, readline)
+        tracker.track(message.filename, readline)
         return null
     }
     if (messages.isRequestReportsMessage(message)) {

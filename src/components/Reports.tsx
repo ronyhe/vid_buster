@@ -1,5 +1,12 @@
 import React, { useEffect } from 'react'
-import { List, ListItem } from '@mui/material'
+import {
+    Box,
+    LinearProgress,
+    LinearProgressProps,
+    List,
+    ListItem,
+    Typography
+} from '@mui/material'
 import DownloadingIcon from '@mui/icons-material/Downloading'
 import ErrorIcon from '@mui/icons-material/ReportGmailerrorred'
 import DoneIcon from '@mui/icons-material/Done'
@@ -12,6 +19,13 @@ import ListItemAvatar from '@mui/material/ListItemAvatar'
 export interface ReportsProps {
     onDelete: (id: number) => void
     getReports: () => Promise<TrackingReport[]>
+}
+
+interface Progress {
+    percent: number
+    total: string
+    speed: string
+    eta: string
 }
 
 interface ReportProps {
@@ -40,27 +54,91 @@ export function Reports({ onDelete, getReports }: ReportsProps) {
 
 function Report({ report, onDelete }: ReportProps) {
     const primary = shortTitle(report.title)
-    const secondary = report.error ?? report.lastStatus
     return (
         <ListItem onClick={onDelete}>
             <ListItemAvatar>
                 <Icon report={report} />
             </ListItemAvatar>
-            <ListItemText primary={primary} secondary={secondary} />
+            <ListItemText primary={primary} secondary={secondary(report)} />
         </ListItem>
     )
 }
 
-function Icon({ report }: { report: TrackingReport }) {
-    if (report.error) {
+function secondary(report: TrackingReport) {
+    const { error, closed } = report
+    if (error) {
+        return (
+            <Typography variant={'caption'} color={'error'}>
+                {error}
+            </Typography>
+        )
+    }
+    if (closed) {
+        return <LinearProgressWithLabel variant='determinate' value={100} />
+    }
+    const progress = getProgress(report)
+    if (progress) {
+        return (
+            <>
+                <LinearProgressWithLabel
+                    variant='determinate'
+                    value={progress.percent}
+                />
+                <Typography
+                    variant={'caption'}
+                    color={'text.secondary'}
+                >{`ETA: ${progress.eta}. Downloading ${progress.total} at ${progress.speed}`}</Typography>
+            </>
+        )
+    }
+    return <LinearProgress />
+}
+
+function Icon({ report: { error, closed } }: { report: TrackingReport }) {
+    if (error) {
         return <ErrorIcon />
     }
-    if (report.closed) {
+    if (closed) {
         return <DoneIcon />
     }
     return <DownloadingIcon />
 }
 
+function LinearProgressWithLabel(
+    props: LinearProgressProps & { value: number }
+) {
+    // https://mui.com/material-ui/react-progress/#linear-with-label
+    return (
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box sx={{ width: '100%', mr: 1 }}>
+                <LinearProgress variant='determinate' {...props} />
+            </Box>
+            <Box sx={{ minWidth: 35 }}>
+                <Typography
+                    variant='body2'
+                    sx={{ color: 'text.secondary' }}
+                >{`${Math.round(props.value)}%`}</Typography>
+            </Box>
+        </Box>
+    )
+}
+
 function shortTitle(title: string): string {
     return title.length > 20 ? title.slice(0, 20) + '...' : title
+}
+
+function getProgress({ lastStatus }: TrackingReport): Progress | null {
+    // 0.5% of  104.29MiB at   10.86MiB/s ETA 00:09
+    const regex = /(\S+)%\s+of\s+(\S+)\s+at\s+(\S+)\sETA\s(\S+)/
+    const match = regex.exec(lastStatus)
+    if (!match) {
+        return null
+    }
+    const [_, percent, total, speed, eta] = match
+    return {
+        percent: parseFloat(percent),
+        total,
+        speed,
+        eta
+    }
 }
