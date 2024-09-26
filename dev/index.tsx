@@ -44,7 +44,15 @@ function main() {
                 updateSettings={async s => {
                     settings = s
                 }}
-                getReports={async () => []}
+                getReports={async () => [
+                    {
+                        id: 1,
+                        closed: false,
+                        error: null,
+                        lastStatus: 'Downloading...',
+                        title: 'Example'
+                    }
+                ]}
             ></App>
         </CssBaseline>
     )
