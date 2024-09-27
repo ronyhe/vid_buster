@@ -7,8 +7,8 @@ function setupTracker() {
     const tracker = new Tracker()
     const stdout = new EventEmitter()
     const stderr = new EventEmitter()
-    const streams = { stdout, stderr }
-    const id = tracker.track('title', streams)
+    const proc = { stdout, stderr, kill: () => {} }
+    const id = tracker.track('title', proc)
     const details = { title: 'title', id }
     const expectStatus = (status: Partial<TrackingReport>) => {
         expect(tracker.getStatus()).toEqual([

@@ -1,7 +1,4 @@
 import { Format } from '../messages'
-import child_process from 'node:child_process'
-import { createInterface } from 'node:readline'
-import { TerminalStreams } from './tracking'
 import { createProc, execJson, Proc } from './proc'
 
 export async function getInfo(
