@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { List } from '@mui/material'
 import { TrackingReport } from '../messages'
 import { Report } from './Report'
@@ -9,7 +9,7 @@ export interface ReportsProps {
 }
 
 export function Reports({ onDelete, getReports }: ReportsProps) {
-    const [reports, setReports] = React.useState<TrackingReport[] | null>(null)
+    const [reports, setReports] = useState<TrackingReport[] | null>(null)
     useEffect(() => {
         const interval = setInterval(async () => {
             const reports = await getReports()
