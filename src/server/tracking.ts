@@ -1,41 +1,39 @@
 import { TrackingReport } from '../messages'
+import { Proc } from './proc'
+import { ignoreErrors } from '../utils'
 
-export interface ReadlineFacade {
-    on(event: 'line' | 'close', listener: (line: string) => void): void
-}
-
-export interface TerminalStreams {
-    stdout: ReadlineFacade
-    stderr: ReadlineFacade
+interface TrackingReportWithProc extends TrackingReport {
+    proc: Proc
 }
 
 type Key = number
 
 export class Tracker {
-    private map: Map<Key, TrackingReport> = new Map()
+    private map: Map<Key, TrackingReportWithProc> = new Map()
     private lastId = 0
 
-    track(title: string, streams: TerminalStreams): number {
+    track(title: string, proc: Proc): number {
         const key = this.lastId++
         this.map.set(key, {
             id: key,
             title,
             closed: false,
             error: null,
-            lastStatus: ''
+            lastStatus: '',
+            proc
         })
-        streams.stderr.on('line', line => {
+        proc.stderr.on('line', line => {
             this.update(key, {
                 error: line,
                 closed: true
             })
         })
-        streams.stdout.on('line', line => {
+        proc.stdout.on('line', line => {
             this.update(key, {
                 lastStatus: line
             })
         })
-        streams.stdout.on('close', () => {
+        proc.stdout.on('close', () => {
             this.update(key, {
                 closed: true
             })
@@ -51,10 +49,14 @@ export class Tracker {
     }
 
     delete(key: Key) {
+        const report = this.map.get(key)
+        ignoreErrors(() => report!.proc.kill())
         this.map.delete(key)
     }
 
     getStatus(): TrackingReport[] {
-        return Array.from(this.map.values())
+        return Array.from(this.map.values()).map(
+            ({ proc: _proc, ...rest }) => rest
+        )
     }
 }

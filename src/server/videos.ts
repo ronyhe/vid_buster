@@ -1,21 +1,15 @@
 import { Format } from '../messages'
-import util from 'node:util'
 import child_process from 'node:child_process'
 import { createInterface } from 'node:readline'
 import { TerminalStreams } from './tracking'
-import { exec as _exec } from 'node:child_process'
-const exec = util.promisify(_exec)
+import { createProc, execJson, Proc } from './proc'
 
 export async function getInfo(
     url: string
 ): Promise<{ title: string; formats: Format[] }> {
     const command = `yt-dlp --dump-single-json --flat-playlist --no-warnings "${url}"`
     console.log('command:', command)
-    const { stdout, stderr } = await exec(command)
-    if (stderr) {
-        throw new Error(stderr)
-    }
-    const result = JSON.parse(stdout)
+    const result = await execJson<{ title: string; formats: never[] }>(command)
     return {
         title: result.title,
         formats: result.formats.map(jsonToFormat).reverse()
@@ -27,20 +21,10 @@ export function downloadVideo(
     formatId: string,
     downloadDestination: string,
     filename: string
-): TerminalStreams {
+): Proc {
     const command = `yt-dlp --no-warnings --newline -f ${formatId} -P "${downloadDestination}" -o "${filename}" "${url}"`
     console.log('command:', command)
-    const { stdout, stderr } = child_process.exec(command)
-    if (!stdout) {
-        throw new Error('No stdout')
-    }
-    if (!stderr) {
-        throw new Error('No stderr')
-    }
-    return {
-        stdout: createInterface(stdout),
-        stderr: createInterface(stderr)
-    }
+    return createProc(command)
 }
 
 function fileSizeString(sizeInBytes: number): string {
