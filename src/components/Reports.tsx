@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import {
     Box,
+    IconButton,
     LinearProgress,
     LinearProgressProps,
     List,
@@ -10,6 +11,7 @@ import {
 import DownloadingIcon from '@mui/icons-material/Downloading'
 import ErrorIcon from '@mui/icons-material/ReportGmailerrorred'
 import DoneIcon from '@mui/icons-material/Done'
+import CloseIcon from '@mui/icons-material/CancelRounded'
 import { TrackingReport } from '../messages'
 
 // Some sort of bug, ListItem* components trigger a React error when imported from @mui/material
@@ -55,7 +57,14 @@ export function Reports({ onDelete, getReports }: ReportsProps) {
 function Report({ report, onDelete }: ReportProps) {
     const primary = shortTitle(report.title)
     return (
-        <ListItem onClick={onDelete}>
+        <ListItem
+            onClick={onDelete}
+            secondaryAction={
+                <IconButton edge={'end'}>
+                    <CloseIcon fontSize={'small'} />
+                </IconButton>
+            }
+        >
             <ListItemAvatar>
                 <Icon report={report} />
             </ListItemAvatar>
