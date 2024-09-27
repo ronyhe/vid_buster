@@ -16,3 +16,5 @@ export function ignoreErrors(fn: () => void): void {
         // ignore
     }
 }
+
+export type ValueOf<T> = T[keyof T]

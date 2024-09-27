@@ -6,6 +6,7 @@ import { downloadFormat } from '../serverFacade'
 import { CustomUrl } from './CustomUrl'
 import { Settings } from './Settings'
 import { ResponseUrlInfoMessage, TrackingReport } from '../messages'
+import { ValueOf } from '../utils'
 
 interface AppProps {
     url: string
@@ -16,6 +17,14 @@ interface AppProps {
     deleteReport(id: number): Promise<void>
 }
 
+const TabNames = {
+    Here: 'Here',
+    Downloads: 'Downloads',
+    Url: 'Url',
+    Settings: 'Settings'
+}
+type TabName = ValueOf<typeof TabNames>
+
 export function App({
     url,
     getSettings,
@@ -24,10 +33,10 @@ export function App({
     getReports,
     deleteReport
 }: AppProps) {
-    const [tabValue, setTabValue] = React.useState(0)
+    const [tabValue, setTabValue] = React.useState<TabName>(TabNames.Here)
 
     const handleChange = useCallback(
-        (_: React.SyntheticEvent, newValue: number) => {
+        (_: React.SyntheticEvent, newValue: TabName) => {
             setTabValue(newValue)
         },
         []
@@ -41,21 +50,21 @@ export function App({
     const tabs = (
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={tabValue} onChange={handleChange}>
-                <Tab label='Here' />
-                <Tab label='Downloads' />
-                <Tab label='Url' />
-                <Tab label={'Settings'} />
+                <Tab label='Here' value={TabNames.Here} />
+                <Tab label='Downloads' value={TabNames.Downloads} />
+                <Tab label='Url' value={TabNames.Url} />
+                <Tab label={'Settings'} value={TabNames.Settings} />
             </Tabs>
         </Box>
     )
 
     const content = (() => {
-        if (tabValue === 0) {
+        if (tabValue === TabNames.Here) {
             return (
                 <UrlDisplay
                     load={() => getUrlInfo(url)}
                     onChoose={async (f, filename) => {
-                        setTabValue(1)
+                        setTabValue(TabNames.Downloads)
                         await downloadFormat(
                             url,
                             f.id,
@@ -66,15 +75,15 @@ export function App({
                 />
             )
         }
-        if (tabValue === 1) {
+        if (tabValue === TabNames.Downloads) {
             return <Reports onDelete={deleteReport} getReports={getReports} />
         }
-        if (tabValue === 2) {
+        if (tabValue === TabNames.Url) {
             return (
                 <CustomUrl
                     getUrlInfo={getUrlInfo}
                     onChoose={async (url, f, filename) => {
-                        setTabValue(1)
+                        setTabValue(TabNames.Downloads)
                         await downloadFormat(
                             url,
                             f.id,
@@ -85,7 +94,7 @@ export function App({
                 />
             )
         }
-        if (tabValue === 3) {
+        if (tabValue === TabNames.Settings) {
             return (
                 <Settings
                     updateSettings={updateSettings}
