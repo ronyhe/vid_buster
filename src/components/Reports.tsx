@@ -93,16 +93,17 @@ function secondary(report: TrackingReport) {
     }
     const progress = getProgress(report)
     if (progress) {
+        const { percent, speed, total, eta } = progress
         return (
             <>
                 <LinearProgressWithLabel
                     variant='determinate'
-                    value={progress.percent}
+                    value={percent}
                 />
                 <Typography
                     variant={'caption'}
                     color={'text.secondary'}
-                >{`ETA: ${progress.eta}. Downloading ${progress.total} at ${progress.speed}`}</Typography>
+                >{`ETA: ${eta}. Downloading ${total} at ${speed}`}</Typography>
             </>
         )
     }
