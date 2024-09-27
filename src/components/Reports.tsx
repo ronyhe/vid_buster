@@ -123,10 +123,10 @@ function Icon({ report: { error, closed } }: { report: TrackingReport }) {
     return <DownloadingIcon />
 }
 
+// https://mui.com/material-ui/react-progress/#linear-with-label
 function LinearProgressWithLabel(
     props: LinearProgressProps & { value: number }
 ) {
-    // https://mui.com/material-ui/react-progress/#linear-with-label
     return (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Box sx={{ width: '100%', mr: 1 }}>
