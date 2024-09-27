@@ -13,14 +13,30 @@ Pre-requisites:
 - node.js (version specified in .nvmrc)
 - ffmpeg (optional, but recommended. It enables yt-dlp to give a better experience)
 
-Steps:
-1. Clone this repo
-2. Run `npm install`
-3. Run `npm run build`
-4. Run `npm run start` to start the server
-5. Open chrome extensions page (chrome://extensions)
-6. Enable developer mode
-7. Click "Load unpacked" and select the `dist/extension` folder
+```bash
+git clone git@github.com:ronyhe/vid_buster.git
+cd vid_buster
+npm install
+npm run build
+
+# Start the server
+npm run start
+```
+
+Now you can install `vid_buster/dist/extension` as an [unpacked extension](https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world#load-unpacked).
+
+## Development
+### Server side
+Start the server and restart it on file changes:
+```bash
+npm run dev:server
+```
+
+### Client side
+Open a [parcel](https://parceljs.org/) development server:
+```bash
+npm run dev:client
+```
 
 ## Disclaimer
 I am not a legal or security expert, the project is provided as-is, use at your own risk.

@@ -12,7 +12,7 @@
         "check": "npm run lint && npm run typecheck && npm test",
         "build": "parcel build",
         "build:server": "parcel build --target server",
-        "prod:start": "node dist/server.js",
+        "start": "node dist/server.js",
         "dev:server": "npx tsx --watch src/server/server.ts",
         "dev:client": "parcel serve --target dev",
         "dev:open": "npm run dev:client -- --open",
