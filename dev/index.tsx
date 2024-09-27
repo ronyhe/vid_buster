@@ -9,7 +9,7 @@ import '@fontsource/roboto/700.css'
 import { CssBaseline } from '@mui/material'
 import { App } from '../src/components/App'
 import { Settings } from '../src/components/Settings'
-import { getUrlInfo } from '../src/serverFacade'
+import { deleteReport, getReports, getUrlInfo } from '../src/serverFacade'
 import { createResponseUrlInfoMessage } from '../src/messages'
 
 let settings: Settings = {
@@ -44,37 +44,8 @@ function main() {
                 updateSettings={async s => {
                     settings = s
                 }}
-                getReports={async () => [
-                    {
-                        id: 0,
-                        closed: false,
-                        error: null,
-                        lastStatus: 'Nope',
-                        title: 'Example'
-                    },
-                    {
-                        id: 1,
-                        closed: false,
-                        error: null,
-                        lastStatus:
-                            '0.5% of  104.29MiB at   10.86MiB/s ETA 00:09',
-                        title: 'Example'
-                    },
-                    {
-                        id: 2,
-                        closed: true,
-                        error: 'Failed to download',
-                        lastStatus: 'whatever',
-                        title: 'Example 2'
-                    },
-                    {
-                        id: 3,
-                        closed: true,
-                        error: null,
-                        lastStatus: 'Downloaded',
-                        title: 'Example 3'
-                    }
-                ]}
+                getReports={getReports}
+                deleteReport={deleteReport}
             ></App>
         </CssBaseline>
     )

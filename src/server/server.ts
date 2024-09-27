@@ -64,6 +64,7 @@ async function handleReq(
     }
     if (messages.isRequestDeleteMessage(message)) {
         tracker.delete(message.id)
+        return null
     }
     throw new Error(`Unexpected message kind: ${message.kind}`)
 }

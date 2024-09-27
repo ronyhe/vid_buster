@@ -5,7 +5,8 @@ import {
     Message,
     ResponseReportsMessage,
     TrackingReport,
-    ResponseUrlInfoMessage
+    ResponseUrlInfoMessage,
+    createRequestDeleteMessage
 } from './messages'
 
 export async function getUrlInfo(url: string): Promise<ResponseUrlInfoMessage> {
@@ -28,6 +29,10 @@ export async function getReports(): Promise<TrackingReport[]> {
         createRequestReportsMessage()
     )
     return res.reports
+}
+
+export async function deleteReport(id: number): Promise<void> {
+    await sendMessage(createRequestDeleteMessage(id))
 }
 
 async function sendMessage<Result extends Message>(

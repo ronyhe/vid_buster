@@ -13,6 +13,7 @@ interface AppProps {
     updateSettings(settings: Settings): Promise<void>
     getUrlInfo(url: string): Promise<ResponseUrlInfoMessage>
     getReports(): Promise<TrackingReport[]>
+    deleteReport(id: number): Promise<void>
 }
 
 export function App({
@@ -20,7 +21,8 @@ export function App({
     getSettings,
     updateSettings,
     getUrlInfo,
-    getReports
+    getReports,
+    deleteReport
 }: AppProps) {
     const [tabValue, setTabValue] = React.useState(0)
 
@@ -65,14 +67,7 @@ export function App({
             )
         }
         if (tabValue === 1) {
-            return (
-                <Reports
-                    onDelete={id => {
-                        console.log('Delete', id)
-                    }}
-                    getReports={getReports}
-                />
-            )
+            return <Reports onDelete={deleteReport} getReports={getReports} />
         }
         if (tabValue === 2) {
             return (
