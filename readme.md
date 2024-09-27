@@ -28,3 +28,6 @@ I am not a legal or security expert, the project is provided as-is, use at your 
 ## Possible future features
 - Better progress reporting
 
+---
+> Icon courtesy of https://www.svgrepo.com/svg/421064/evil-monster-viral
+
