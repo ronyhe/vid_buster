@@ -68,12 +68,15 @@ function Report({ report, onDelete }: ReportProps) {
             <ListItemAvatar>
                 <Icon report={report} />
             </ListItemAvatar>
-            <ListItemText primary={primary} secondary={secondary(report)} />
+            <ListItemText
+                primary={primary}
+                secondary={<ListItemSecondaryText report={report} />}
+            />
         </ListItem>
     )
 }
 
-function secondary(report: TrackingReport) {
+function ListItemSecondaryText({ report }: { report: TrackingReport }) {
     const { error, closed } = report
     if (error) {
         return (
