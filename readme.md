@@ -13,6 +13,10 @@ Pre-requisites:
 - node.js (version specified in .nvmrc)
 - ffmpeg (optional, but recommended. It enables yt-dlp to give a better experience)
 
+Until https://github.com/jestjs/jest/pull/15288 is merged, you'll also need:
+- jq
+- sponge
+
 ```bash
 git clone git@github.com:ronyhe/vid_buster.git
 cd vid_buster
