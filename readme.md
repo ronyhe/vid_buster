@@ -43,11 +43,6 @@ npm run dev:client
 ```
 
 ## Disclaimer
+Icon courtesy of https://www.svgrepo.com/svg/421064/evil-monster-viral.
 I am not a legal or security expert, the project is provided as-is, use at your own risk.
-
----
-> Icon courtesy of https://www.svgrepo.com/svg/421064/evil-monster-viral
->
-> As far as I can tell, it's free to use, but I'm not a legal expert. 
-> Please correct me if I'm wrong
-
+If I inadvertently violate any terms of service, please let me know.
