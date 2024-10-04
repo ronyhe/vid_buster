@@ -40,7 +40,7 @@ export function Loader<T>({
         fetchData()
     }, [])
 
-    if (interval) {
+    if (interval !== undefined) {
         useEffect(() => {
             const id = setInterval(fetchData, interval)
             return () => clearInterval(id)
