@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { List } from '@mui/material'
+import React from 'react'
+import { List, Card, CardContent, Box } from '@mui/material'
 import { TrackingReport } from '../messages'
 import { Report } from './Report'
+import { Loader } from './Loader'
 
 export interface ReportsProps {
     onDelete: (id: number) => void
@@ -10,24 +11,34 @@ export interface ReportsProps {
 }
 
 export function Reports({ onDelete, getReports, interval }: ReportsProps) {
-    const [reports, setReports] = useState<TrackingReport[] | null>(null)
-    useEffect(() => {
-        if (interval !== 0) {
-            const handle = setInterval(async () => {
-                const reports = await getReports()
-                setReports(reports)
-            }, interval)
-            return () => clearInterval(handle)
-        } else {
-            getReports().then(reports => setReports(reports))
-        }
-    }, [])
-
     return (
-        <List>
-            {reports?.map(r => (
-                <Report key={r.id} report={r} onDelete={() => onDelete(r.id)} />
-            ))}
-        </List>
+        <Loader
+            getData={getReports}
+            createContent={reports =>
+                reports.length ? (
+                    reports.map(r => (
+                        <Report
+                            key={r.id}
+                            report={r}
+                            onDelete={() => onDelete(r.id)}
+                        />
+                    ))
+                ) : (
+                    <Empty />
+                )
+            }
+            createError={err => <div>{err.message}</div>}
+            interval={interval}
+        />
+    )
+}
+
+function Empty() {
+    return (
+        <Box>
+            <Card>
+                <CardContent>No Reports</CardContent>
+            </Card>
+        </Box>
     )
 }

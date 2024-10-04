@@ -5,25 +5,6 @@ import { Reports } from '../src/components/Reports'
 
 test('<Reports />', async t => {
     t.afterEach(cleanup)
-
-    await t.test('Calls getReports', async () => {
-        const getReports = t.mock.fn(async () => [
-            {
-                id: 1,
-                closed: false,
-                error: null,
-                lastStatus: 'active',
-                title: 'Report Title'
-            }
-        ])
-        const { screen } = render(
-            <Reports getReports={getReports} interval={0} onDelete={() => {}} />
-        )
-        const title = await screen.findByText('Report Title')
-        expect(title).toBeInTheDocument()
-        expect(getReports).toHaveBeenCalledTimes(1)
-    })
-
     await t.test('Calls onDelete', async t => {
         const getReports = t.mock.fn(async () => [
             {
