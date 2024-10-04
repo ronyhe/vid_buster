@@ -74,4 +74,30 @@ test('<Loader />', async t => {
         t.mock.timers.tick(100)
         expect(getData).toHaveBeenCalledTimes(2)
     })
+
+    await t.test('Goes to the error state on polling error', async t => {
+        t.mock.timers.enable(['setInterval'])
+        const getData = t.mock.fn(async () => {
+            if (getData.mock.calls.length >= 0) {
+                throw new Error('error')
+            }
+        })
+        const { screen } = render(
+            <Loader
+                getData={getData}
+                createContent={() => <div />}
+                createError={error => <div>{error.message}</div>}
+                loader={<div>Loader</div>}
+                interval={100}
+            />
+        )
+        expect(getData).toHaveBeenCalledTimes(1)
+        t.mock.timers.tick(100)
+        expect(getData).toHaveBeenCalledTimes(2)
+        await screen.findByText('error')
+        const calls = getData.mock.calls.length
+        t.mock.timers.tick(100)
+        t.mock.timers.tick(100)
+        expect(getData).toHaveBeenCalledTimes(calls)
+    })
 })

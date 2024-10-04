@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from 'react'
+import React, { ReactNode, useCallback, useEffect, useState } from 'react'
 import { Spinner } from './Spinner'
 
 export interface LoaderProps<T> {
@@ -22,7 +22,10 @@ export function Loader<T>({
     const [data, setData] = useState<T | null>(null)
     const [error, setError] = useState<Error | null>(null)
 
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
+        if (state === 'error') {
+            return
+        }
         try {
             const d = await getData()
             setData(d)
@@ -31,15 +34,18 @@ export function Loader<T>({
             setError(e as Error)
             setState('error')
         }
-    }
+    }, [getData, state, setState, setError])
 
     useEffect(() => {
         fetchData()
-        if (interval !== undefined) {
-            const handle = setInterval(fetchData, interval)
-            return () => clearInterval(handle)
-        }
-    }, [getData, interval])
+    }, [])
+
+    if (interval) {
+        useEffect(() => {
+            const id = setInterval(fetchData, interval)
+            return () => clearInterval(id)
+        }, [fetchData, interval])
+    }
 
     if (state === 'loading') {
         return loader ?? <Spinner />
