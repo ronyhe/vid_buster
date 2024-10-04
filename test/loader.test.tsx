@@ -57,4 +57,21 @@ test('<Loader />', async t => {
         expect(screen.queryByText('Loader')).toBeNull()
         expect(getData).toHaveBeenCalledTimes(1)
     })
+
+    await t.test('Calls getData at regular intervals', async t => {
+        t.mock.timers.enable(['setInterval'])
+        const getData = t.mock.fn(async () => {})
+        render(
+            <Loader
+                getData={getData}
+                createContent={() => <div />}
+                createError={() => <div />}
+                loader={<div>Loader</div>}
+                interval={100}
+            />
+        )
+        expect(getData).toHaveBeenCalledTimes(1)
+        t.mock.timers.tick(100)
+        expect(getData).toHaveBeenCalledTimes(2)
+    })
 })
