@@ -22,36 +22,24 @@ export function Loader<T>({
     const [data, setData] = useState<T | null>(null)
     const [error, setError] = useState<Error | null>(null)
 
-    useEffect(() => {
-        ;(async () => {
-            try {
-                const d = await getData()
-                setData(d)
-                setState('success')
-            } catch (e) {
-                setError(e as Error)
-                setState('error')
-            }
-        })()
-    }, [])
-
-    if (interval !== undefined) {
-        useEffect(() => {
-            if (interval !== undefined) {
-                const handle = setInterval(async () => {
-                    try {
-                        const d = await getData()
-                        setData(d)
-                        setState('success')
-                    } catch (e) {
-                        setError(e as Error)
-                        setState('error')
-                    }
-                }, interval)
-                return () => clearInterval(handle)
-            }
-        }, [])
+    const fetchData = async () => {
+        try {
+            const d = await getData()
+            setData(d)
+            setState('success')
+        } catch (e) {
+            setError(e as Error)
+            setState('error')
+        }
     }
+
+    useEffect(() => {
+        fetchData()
+        if (interval !== undefined) {
+            const handle = setInterval(fetchData, interval)
+            return () => clearInterval(handle)
+        }
+    }, [getData, interval])
 
     if (state === 'loading') {
         return loader ?? <Spinner />
