@@ -40,6 +40,7 @@ export function Loader<T>({
         fetchData()
     }, [])
 
+    // 0 is a valid interval so a truthy check is insufficient
     if (interval !== undefined) {
         useEffect(() => {
             const id = setInterval(fetchData, interval)
