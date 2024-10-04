@@ -6,16 +6,17 @@ import { Report } from './Report'
 export interface ReportsProps {
     onDelete: (id: number) => void
     getReports: () => Promise<TrackingReport[]>
+    interval: number // An interval of 0 means no polling, show the reports once. Useful for testing.
 }
 
-export function Reports({ onDelete, getReports }: ReportsProps) {
+export function Reports({ onDelete, getReports, interval }: ReportsProps) {
     const [reports, setReports] = useState<TrackingReport[] | null>(null)
     useEffect(() => {
-        const interval = setInterval(async () => {
+        const handle = setInterval(async () => {
             const reports = await getReports()
             setReports(reports)
-        }, 500)
-        return () => clearInterval(interval)
+        }, interval)
+        return () => clearInterval(handle)
     }, [])
 
     return (

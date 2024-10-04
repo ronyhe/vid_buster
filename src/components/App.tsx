@@ -76,7 +76,13 @@ export function App({
             )
         }
         if (tabValue === TabNames.Downloads) {
-            return <Reports onDelete={deleteReport} getReports={getReports} />
+            return (
+                <Reports
+                    onDelete={deleteReport}
+                    getReports={getReports}
+                    interval={500}
+                />
+            )
         }
         if (tabValue === TabNames.Url) {
             return (
