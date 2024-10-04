@@ -1,4 +1,3 @@
-import _assert from 'node:assert/strict'
 import _test, { Mock } from 'node:test'
 import _expect from 'expect'
 // This work around, and the corresponding `postinstall` script in `package.json will not be necessary once
@@ -14,25 +13,33 @@ _expect.extend(
                 all() {
                     return received.mock.calls.map(
                         (c: Mock<typeof received>) => ({
-                            args: c.arguments,
-                        }),
+                            args: c.arguments
+                        })
                     )
                 },
                 count() {
                     return received.mock.calls.length
-                },
+                }
             }
 
             // @ts-expect-error - unexported JS file
             return matcher.call(this, received, ...args)
         }
-    }),
+    })
 )
-
-export function expectConnected(element: HTMLElement | null) {
-    _expect(element).toBeTruthy()
-    _expect(element!.isConnected).toBeTruthy()
-}
+_expect.extend({
+    toBeInTheDocument(received?: HTMLElement | null) {
+        const pass = received?.isConnected ?? false
+        const message = () =>
+            pass
+                ? `expected ${received} not to be in the document, but it was`
+                : `expected ${received} to be in the document, but it was not`
+        return {
+            pass,
+            message
+        }
+    }
+})
 
 export const test = _test
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { test, expect, expectConnected } from './asserts'
+import { test, expect } from './asserts'
 import { cleanup, render } from './render'
 import { Reports } from '../src/components/Reports'
 
@@ -19,7 +19,8 @@ test('<Reports />', async t => {
         const { screen } = render(
             <Reports getReports={getReports} interval={0} onDelete={() => {}} />
         )
-        expectConnected(await screen.findByText('Report Title'))
+        const title = await screen.findByText('Report Title')
+        expect(title).toBeInTheDocument()
         expect(getReports).toHaveBeenCalledTimes(1)
     })
 

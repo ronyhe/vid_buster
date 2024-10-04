@@ -1,5 +1,5 @@
 import React from 'react'
-import { test, expect, expectConnected } from './asserts'
+import { test, expect } from './asserts'
 import { cleanup, render } from './render'
 import { UrlDisplay } from '../src/components/UrlDisplay'
 import { ResponseUrlInfoMessage } from '../src/messages'
@@ -13,7 +13,7 @@ test('<UrlDisplay />', async t => {
                 onChoose={() => {}}
             />
         )
-        expectConnected(screen.getByRole('progressbar'))
+        expect(screen.getByRole('progressbar')).toBeInTheDocument()
     })
 
     await t.test('Displays URL after loading', async () => {
@@ -38,10 +38,8 @@ test('<UrlDisplay />', async t => {
                 onChoose={() => {}}
             />
         )
-        // Should we await for something here?
-        // await waitFor(() => screen.queryByRole('progressbar') === null)
         const element = await screen.findByText(e.message)
-        expectConnected(element)
+        expect(element).toBeInTheDocument()
     })
 
     await t.test('Calls onChoose when URL is clicked', async t => {

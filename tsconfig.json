@@ -9,7 +9,7 @@
   ],
   "compilerOptions": {
     "moduleResolution": "node",
-    "types": ["node", "./node_modules/chrome-types/index.d.ts", "./node_modules/@types/node/index.d.ts"],
+    "types": ["node", "./node_modules/chrome-types/index.d.ts", "./node_modules/@types/node/index.d.ts", "./test/customMatchers.d.ts"],
     "noEmit": true,
     "target": "esnext",
     "strict": true,

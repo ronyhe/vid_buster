@@ -1,5 +1,5 @@
 import React from 'react'
-import { test, expect, expectConnected } from './asserts'
+import { test, expect } from './asserts'
 import { render, cleanup } from './render'
 import { Loader } from '../src/components/Loader'
 
@@ -13,9 +13,9 @@ test('<Loader />', async t => {
                 createContent={() => <div />}
                 createError={() => <div />}
                 loader={<div>Loader</div>}
-            />,
+            />
         )
-        expectConnected(screen.getByText('Loader'))
+        expect(screen.getByText('Loader')).toBeInTheDocument()
     })
 
     await t.test('Hides loader after loading', async () => {
@@ -25,7 +25,7 @@ test('<Loader />', async t => {
                 createContent={data => <div>{data}</div>}
                 createError={() => <div />}
                 loader={<div>Loader</div>}
-            />,
+            />
         )
         await screen.findByText('data')
         expect(screen.queryByText('Loader')).toBeNull()
@@ -38,7 +38,7 @@ test('<Loader />', async t => {
                 createContent={() => <div />}
                 createError={error => <div>{error.message}</div>}
                 loader={<div>Loader</div>}
-            />,
+            />
         )
         await screen.findByText('error')
     })
@@ -51,7 +51,7 @@ test('<Loader />', async t => {
                 createContent={data => <div>{data}</div>}
                 createError={() => <div />}
                 loader={<div>Loader</div>}
-            />,
+            />
         )
         await screen.findByText('data')
         expect(screen.queryByText('Loader')).toBeNull()
