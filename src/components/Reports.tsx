@@ -12,11 +12,15 @@ export interface ReportsProps {
 export function Reports({ onDelete, getReports, interval }: ReportsProps) {
     const [reports, setReports] = useState<TrackingReport[] | null>(null)
     useEffect(() => {
-        const handle = setInterval(async () => {
-            const reports = await getReports()
-            setReports(reports)
-        }, interval)
-        return () => clearInterval(handle)
+        if (interval !== 0) {
+            const handle = setInterval(async () => {
+                const reports = await getReports()
+                setReports(reports)
+            }, interval)
+            return () => clearInterval(handle)
+        } else {
+            getReports().then(reports => setReports(reports))
+        }
     }, [])
 
     return (
