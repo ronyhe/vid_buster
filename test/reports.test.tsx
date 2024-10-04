@@ -43,8 +43,4 @@ test('<Reports />', async t => {
         expect(onDelete).toHaveBeenCalledWith(1)
         expect(onDelete).toHaveBeenCalledTimes(1)
     })
-
-    await t.test('Shows loading state', { todo: true })
-    await t.test('Shows empty state', { todo: true })
-    await t.test('Shows error state', { todo: true })
 })
