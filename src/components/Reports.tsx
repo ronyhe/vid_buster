@@ -7,7 +7,7 @@ import { Loader } from './Loader'
 export interface ReportsProps {
     onDelete: (id: number) => void
     getReports: () => Promise<TrackingReport[]>
-    interval: number // An interval of 0 means no polling, show the reports once. Useful for testing.
+    interval: number
 }
 
 export function Reports({ onDelete, getReports, interval }: ReportsProps) {
